@@ -1,0 +1,4 @@
+!yamlable/automl.benchmark.Dataset
+loader_func_name: load_sst_en
+name: sst-en
+url: https://github.com/autogoal/benchmark/releases/download/sst-en/sst-en.zip
