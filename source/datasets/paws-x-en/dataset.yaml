@@ -1,0 +1,4 @@
+!yamlable/automl.benchmark.Dataset
+loader_func_name: load_paws_en
+name: paws-x-en
+url: https://github.com/autogoal/benchmark/releases/download/price-book/price-book.zip
