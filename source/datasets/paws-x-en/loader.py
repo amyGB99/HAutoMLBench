@@ -1,4 +1,4 @@
-def load_paws_en(self):
+def load_two_sentences(self,format = "pandas",complet = False ,samples =  2):
     '''
     Return 
     Train 
@@ -12,27 +12,49 @@ def load_paws_en(self):
     y_te : list(int)
     
     '''
-    
     import pandas as pd 
     import os 
     path = self.download()
 
     train = os.path.join(path,'train.txt')
-    dev =  os.path.join(path,'dev.txt')
     test =  os.path.join(path,'test.txt')
-    dftr = pd.read_csv(train,sep='\t')
-    dfte = pd.read_csv(test,sep='\t')
-    dfde = pd.read_csv(dev,sep='\t')
+    all = os.path.join(path,'all.txt')
     
-    dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-    y_tr = list(dftr['label'])
-    X_tr = dummy_tr.to_numpy().tolist()
+    # dftr = pd.read_table(train)
+    # dfte = pd.read_table(test)
+    # dfde = pd.read_table(dev)
+    # dfall = 
+    dftr = pd.read_csv(train,sep="\t")
+    dfte = pd.read_csv(test,sep="\t")
+    dfall = pd.read_csv(all,sep="\t")
+    if complet == True:
+        if samples == 1:
+            return dfall.drop(['id'],axis=1)
+        elif samples ==2:
+            return dftr.drop(['id'],axis=1),dfte.drop(['id'],axis=1)
+        else:
+            print("Incorrect params") 
+    else:
+        dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
+        y_tr = dftr.filter(regex='label')
 
-    dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
-    y_de = list(dfde['label'])
-    X_de = dummy_de.to_numpy().tolist()
-    
-    dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-    y_te = list(dfte['label'])
-    X_te = dummy_te.to_numpy().tolist()
-    return X_tr,y_tr, X_de, y_de, X_te,y_te   
+        dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
+        y_te = dfte.filter(regex='label') 
+        
+        if samples== 1:
+            dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
+            y = dfall.filter(regex='label')
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = dummy_all.to_numpy().tolist()
+                return X,list(y['label']) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                X_tr = dummy_tr.to_numpy().tolist()
+                X_te = dummy_te.to_numpy().tolist()
+                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+        else:
+            print("Incorrect params")    

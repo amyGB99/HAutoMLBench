@@ -1,6 +1,9 @@
 
 ######################## Text #################################
-def load_paws_es(self):
+
+
+#paws-x-es,paws-x-en,wnli
+def load_two_sentences(self,format = "pandas",in_x_y = True ,samples =  2):
     '''
     Return 
     Train 
@@ -14,109 +17,54 @@ def load_paws_es(self):
     y_te : list(int)
     
     '''
-    
     import pandas as pd 
     import os 
     path = self.download()
 
-    train = os.path.join(path,'train.tsv')
-    dev =  os.path.join(path,'dev1.tsv')
-    test =  os.path.join(path,'test.tsv')
-    dftr = pd.read_table(train)
-    dfte = pd.read_table(test)
-    dfde = pd.read_table(dev)
+    train = os.path.join(path,'train.txt')
+    test =  os.path.join(path,'test.txt')
+    all = os.path.join(path,'all.txt')
     
-    dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-    y_tr = dftr['label'].to_numpy().tolist() 
-    X_tr = dummy_tr.to_numpy().tolist()
+    # dftr = pd.read_table(train)
+    # dfte = pd.read_table(test)
+    # dfde = pd.read_table(dev)
+    # dfall = 
+    dftr = pd.read_csv(train,sep="\t")
+    dfte = pd.read_csv(test,sep="\t")
+    dfall = pd.read_csv(all,sep="\t")
+    if in_x_y == False:
+        if samples == 1:
+            return dfall.drop(['id'],axis=1)
+        elif samples ==2:
+            return dftr.drop(['id'],axis=1),dfte.drop(['id'],axis=1)
+        else:
+            print("Incorrect params") 
+    else:
+        dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
+        y_tr = dftr.filter(regex='label')
 
-    dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
-    y_de = dfde['label'].to_numpy().tolist()
-    X_de = dummy_de.to_numpy().tolist()
+        dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
+        y_te = dfte.filter(regex='label') 
+        
+        if samples== 1:
+            dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
+            y = dfall.filter(regex='label')
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = dummy_all.to_numpy().tolist()
+                return X,list(y['label']) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                X_tr = dummy_tr.to_numpy().tolist()
+                X_te = dummy_te.to_numpy().tolist()
+                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+        else:
+            print("Incorrect params")    
     
-    dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-    y_te = dfte['label'].to_numpy().tolist()
-    X_te = dummy_te.to_numpy().tolist()
-    return X_tr,y_tr, X_de, y_de, X_te,y_te  
- 
-def load_paws_en(self):
-    '''
-    Return 
-    Train 
-    X_tr : list (list(string)) : Strings are sentences
-    y_tr : list(int)
-    Validation 
-    X_de : list (list(string)) : Strings are sentences
-    y_de : list(int)
-    Test
-    X_te : list (list(strings)) Strings are sentences
-    y_te : list(int)
-    
-    '''
-    
-    import pandas as pd 
-    import os 
-    path = self.download()
-
-    train = os.path.join(path,'train1.tsv')
-    dev =  os.path.join(path,'dev.tsv')
-    test =  os.path.join(path,'test.tsv')
-    dftr = pd.read_table(train)
-    dfte = pd.read_table(test)
-    dfde = pd.read_table(dev)
-    
-    dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-    y_tr = dftr['label'].to_numpy().tolist() 
-    X_tr = dummy_tr.to_numpy().tolist()
-
-    dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
-    y_de = dfde['label'].to_numpy().tolist()
-    X_de = dummy_de.to_numpy().tolist()
-    
-    dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-    y_te = dfte['label'].to_numpy().tolist()
-    X_te = dummy_te.to_numpy().tolist()
-    return X_tr,y_tr, X_de, y_de, X_te,y_te   
-
-def load_wnli(self):
-    import pandas as pd 
-    import os 
-    import numpy as np
-    path = self.download()
-    
-
-    ptrain = os.path.join(path,'train.txt')
-    pdev = os.path.join(path,'dev.txt')
-    ptest = os.path.join(path,'test.txt')
-    
-    dftr = pd.read_csv(ptrain,sep="\t")
-    
-    dfde = pd.read_csv(pdev,sep="\t")
-    
-    dfte = pd.read_csv(ptest,sep="\t")
-    # ptrain = os.path.join(path,'train.tsv')
-    # pdev =  os.path.join(path,'dev.tsv')
-    # ptest =  os.path.join(path,'test.tsv')
-
-    # dftr = pd.read_table(ptrain)
-    # dfte = pd.read_table(ptest)
-    # dfde = pd.read_table(pdev)
-
-    dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-    y_tr = list(dftr['label'])
-    X_tr = dummy_tr.to_numpy().tolist()
-
-    dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
-    y_de = list(dfde['label'])
-    X_de = dummy_de.to_numpy().tolist()
-    
-    dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-    y_te = list(dfte['label'])
-
-    X_te = list(dummy_te.iloc[:, 0:2])
-    return X_tr,y_tr, X_de, y_de, X_te,y_te  
-
-def load_wikiann(self):#falta
+def load_wikiann(self, format = "pandas", samples =3):#falta
     '''
     Return :
      dict:   {
@@ -165,7 +113,9 @@ def load_wikiann(self):#falta
         yte.append(item['ner_tags'])       
     return Xtr,ytr, Xde, yde, Xte,yte  
 
-def load_wikicat(self):
+
+#wikicat, sst-en
+def load_wikicat(self, format = "pandas", samples =3):
     import pandas as pd 
     import os 
     import numpy as np
@@ -201,7 +151,7 @@ def load_wikicat(self):
     
     return X_tr,y_tr, X_de, y_de, X_te,y_te  
  
-def load_sst_en(self):
+def load_sst_en(self, format = "pandas", samples =3):
     import pandas as pd
     import os 
     path = self.download()
@@ -238,7 +188,7 @@ def load_sst_en(self):
 
     return Xtr,ytr,Xde,yde,Xte,yte
     
-def load_inferes(self):
+def load_inferes(self, format = "pandas", samples =3):
     import pandas as pd
     import os 
     path = self.download()
@@ -261,10 +211,11 @@ def load_inferes(self):
     X_te = dummy_te.to_numpy().tolist()
     return X_tr,y_tr, X_de, y_de, X_te,y_te  
  
-def load_stsb_en(self):
+def load_stsb_en(self, format = "pandas", samples =3):
     import pandas as pd
     import os 
     path = self.download()
+    
     train = os.path.join(path,'stsb-en-train.csv')
     dev =  os.path.join(path,'stsb-en-dev.csv')
     test =  os.path.join(path,'stsb-en-test.csv')
@@ -286,7 +237,7 @@ def load_stsb_en(self):
    
     return X_tr,y_tr, X_de, y_de, X_te,y_te  
 
-def load_stsb_es(self):
+def load_stsb_es(self, format = "pandas", samples =3):
     import pandas as pd
     import os 
     path = self.download()
@@ -314,7 +265,7 @@ def load_stsb_es(self):
 
 ################## Multimodales  ###########################
 
-def load_predict_salary(self):
+def load_predict_salary(self, format = "pandas", samples =3):
     import pandas as pd
     import os 
     path = self.download()
@@ -337,7 +288,7 @@ def load_predict_salary(self):
     X_de= dev.drop(['salary'], axis=1).to_numpy().tolist()
     return X_tr,y_tr,X_de,y_de ,X_te,y_te
 
-def load_price_book(self):   
+def load_price_book(self, format = "pandas", samples =3):   
     '''
         Return 
         Train 
@@ -358,8 +309,11 @@ def load_price_book(self):
     # Load the xlsx file
 
     ptrain = os.path.join(path,'train.xlsx')
-    pdev =  os.path.join(path,'dev.xlsx')
     ptest = os.path.join(path,'test.xlsx')
+    # df_te["Class Name"] = df_te["Class Name"].astype("category")
+    # print(df_te['Class Name'])
+    # df_te = df_te[df_te["Class Name"].notna()]
+    # print(df_te.isnull().sum())
     
     train = pd.read_excel(ptrain)
     dev = pd.read_excel(pdev)
@@ -382,7 +336,7 @@ def load_price_book(self):
     
     return X_tr,y_tr,X_de,y_de ,X_te,y_te
 
-def load_stroke(self):
+def load_stroke(self, format = "pandas", samples =3):
     '''
         Return 
         Train 
@@ -424,7 +378,7 @@ def load_stroke(self):
     
     return X_tr, y_tr, X_de,y_de ,X_te,y_te           
 
-def load_wines(self):
+def load_wines(self, format = "pandas", samples =3):
     import pandas as pd 
     import os 
     path = self.download()
@@ -450,7 +404,7 @@ def load_wines(self):
     
     return X_tr, y_tr, X_de,y_de ,X_te,y_te
 
-def load_women_clothing(self):
+def load_women_clothing(self, format = "pandas", samples =3):
     import pandas as pd 
     import os 
     path = self.download()
@@ -475,7 +429,7 @@ def load_women_clothing(self):
     X_te = df_te.to_numpy().tolist()
     return X_tr, y_tr, X_de,y_de ,X_te,y_te
 
-def load_project_kickstarter(self):
+def load_project_kickstarter(self, format = "pandas", samples =3):
     import pandas as pd 
     import os 
     path = self.download()
@@ -500,7 +454,7 @@ def load_project_kickstarter(self):
 
     return X_tr,y_tr,X_de,y_de ,X_te,y_te
 
-def load_jobs(self):
+def load_jobs(self, format = "pandas", samples =3):
     import pandas as pd 
     import os 
     path = self.download()
@@ -546,3 +500,79 @@ def load_fashion(self):
     del df_de['label']
     del df_te['label']
     return df_tr, y_tr, df_de,y_de ,df_te,y_te 
+# def load_paws_en(self, format = "pandas", samples =3):
+#     '''
+#     Return 
+#     Train 
+#     X_tr : list (list(string)) : Strings are sentences
+#     y_tr : list(int)
+#     Validation 
+#     X_de : list (list(string)) : Strings are sentences
+#     y_de : list(int)
+#     Test
+#     X_te : list (list(strings)) Strings are sentences
+#     y_te : list(int)
+    
+#     '''
+    
+#     import pandas as pd 
+#     import os 
+#     path = self.download()
+
+#     train = os.path.join(path,'train1.tsv')
+#     dev =  os.path.join(path,'dev.tsv')
+#     test =  os.path.join(path,'test.tsv')
+#     dftr = pd.read_table(train)
+#     dfte = pd.read_table(test)
+#     dfde = pd.read_table(dev)
+    
+#     dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
+#     y_tr = dftr['label'].to_numpy().tolist() 
+#     X_tr = dummy_tr.to_numpy().tolist()
+
+#     dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
+#     y_de = dfde['label'].to_numpy().tolist()
+#     X_de = dummy_de.to_numpy().tolist()
+    
+#     dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
+#     y_te = dfte['label'].to_numpy().tolist()
+#     X_te = dummy_te.to_numpy().tolist()
+#     return X_tr,y_tr, X_de, y_de, X_te,y_te   
+
+# def load_wnli(self, format = "pandas", samples =3):
+#     import pandas as pd 
+#     import os 
+#     import numpy as np
+#     path = self.download()
+    
+
+#     ptrain = os.path.join(path,'train.txt')
+#     pdev = os.path.join(path,'dev.txt')
+#     ptest = os.path.join(path,'test.txt')
+    
+#     dftr = pd.read_csv(ptrain,sep="\t")
+    
+#     dfde = pd.read_csv(pdev,sep="\t")
+    
+#     dfte = pd.read_csv(ptest,sep="\t")
+#     # ptrain = os.path.join(path,'train.tsv')
+#     # pdev =  os.path.join(path,'dev.tsv')
+#     # ptest =  os.path.join(path,'test.tsv')
+
+#     # dftr = pd.read_table(ptrain)
+#     # dfte = pd.read_table(ptest)
+#     # dfde = pd.read_table(pdev)
+
+#     dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
+#     y_tr = list(dftr['label'])
+#     X_tr = dummy_tr.to_numpy().tolist()
+
+#     dummy_de = dfde.filter(regex='(sentence1|sentence2)') 
+#     y_de = list(dfde['label'])
+#     X_de = dummy_de.to_numpy().tolist()
+    
+#     dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
+#     y_te = list(dfte['label'])
+
+#     X_te = list(dummy_te.iloc[:, 0:2])
+#     return X_tr,y_tr, X_de, y_de, X_te,y_te  
