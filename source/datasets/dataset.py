@@ -65,8 +65,9 @@ def fone(url):
 
 # def ftwo(url):
 #     print("2 " + url)
+#a = Dataset("paws-x-en", "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip", load_two_sentences)
+#a = Dataset("paws-x-es", "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip", load_two_sentences)
 
-#a = Dataset("paws-x-en", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-es.zip", load_two_sentences )
 #a = Dataset("wnli-es", "https://github.com/autogoal/benchmark/releases/download/wnli-es/wnli-es.zip", load_wnli)
 #a = Dataset("wikiann-es", "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip", load_wikiann)
 #a = Dataset("wikicat-es", "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip", load_wikicat)
@@ -77,7 +78,6 @@ def fone(url):
 #a = Dataset("spnish-wine", "https://github.com/autogoal/benchmark/releases/download/wine/spnish-wine.zip", load_wines)
 #a = Dataset("project-kickstarter", "https://github.com/autogoal/benchmark/releases/download/project-kickstarter/project-kickstarter.zip", load_project_kickstarter)
 #a = Dataset("price-book", "https://github.com/autogoal/benchmark/releases/download/price-book/price-book.zip", load_price_book)
-#a = Dataset("paws-x-es", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-en.zip", load_two_sentences)
 #a = Dataset("inferes", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-en.zip", load_inferes)
 #a = Dataset("predict-salary", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-en.zip", load_predict_salary)
 #a = Dataset("stsb-en", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-en.zip", load_stsb_en)

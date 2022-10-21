@@ -10,10 +10,10 @@ from autogoal.search import (
      RichLogger,
      PESearch,
  )
-a = Dataset("paws-x-es", "https://github.com/autogoal/benchmark/releases/download/paws-x/paws-x-en.zip", load_two_sentences)
+a = Dataset("paws-x-en", "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip", load_two_sentences)
 #a = Dataset("sst-en", "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip", load_sst_en )
 utils.save_dataset_definition(a)
-d = utils.load_dataset_definition("paws-x-es")
+d = utils.load_dataset_definition("paws-x-en")
 X_train,y_train,X_test,y_test = d.loader_func(a,format = "list")
 ytr1= np.asarray(y_train)
 #yte1= np.asarray(y_test)
