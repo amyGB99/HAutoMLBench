@@ -58,7 +58,13 @@ def load_two_sentences(self,format = "pandas",in_x_y = True ,samples =  2):
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
+                #X_tr = list()
+                #for i in range(len(dummy_tr.axes[0])):
+                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
                 X_tr = dummy_tr.to_numpy().tolist()
+                #X_te = list()
+                #for i in range(len(dummy_te.axes[0])):
+                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
         else:
