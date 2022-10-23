@@ -2,10 +2,10 @@
 #from importlib.resources import path
 from random import sample
 from yamlable import yaml_info, YamlAble
-from functions_load import *
+from .functions_load import *
  
 import inspect
-import utils
+from .utils import *
 
 
 @yaml_info(yaml_tag_ns="automl.benchmark")
@@ -31,7 +31,7 @@ class Dataset(YamlAble):
     @classmethod
     def __from_yaml_dict__(cls, dct, yaml_tag):
         # Accept a default value for b
-        loader = utils.import_loader(dct["name"], dct["loader_func_name"],)
+        loader = import_loader(dct["name"], dct["loader_func_name"],)
         return cls(dct["name"], dct["url"], loader)
     
     def download(self):
@@ -46,12 +46,15 @@ class Dataset(YamlAble):
         import shutil
     
         local_path = os.path.dirname(os.path.realpath(__file__))
-        save_path = os.path.join(local_path, self.name)
+        print(local_path)
+        save_path = os.path.join(local_path, f'datasets/{self.name}')
+        print(save_path)
         zip = os.path.join(save_path,f'{self.name}.zip')
         file = os.path.join(save_path,f'{self.name}')
         if not os.path.exists(zip) and not os.path.isfile(file) :
             try:
                 wget.download(self.url, save_path) 
+                print("kaka")
             except:
                 print("Download failed please try again")        
         if os.path.exists(zip) and not os.path.isfile(file):

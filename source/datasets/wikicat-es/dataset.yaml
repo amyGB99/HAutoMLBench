@@ -1,4 +1,0 @@
-!yamlable/automl.benchmark.Dataset
-loader_func_name: load_wikicat
-name: wikicat-es
-url: https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip

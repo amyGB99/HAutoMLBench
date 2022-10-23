@@ -1,4 +1,0 @@
-!yamlable/automl.benchmark.Dataset
-loader_func_name: load_wnli
-name: wnli-es
-url: https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip
