@@ -2,21 +2,7 @@
 ######################## Text #################################
 
 
-#paws-x-es,paws-x-en,wnli
-def load_two_sentences(self,format = "pandas",in_x_y = True ,samples =  2):
-    '''
-    Return 
-    Train 
-    X_tr : list (list(string)) : Strings are sentences
-    y_tr : list(int)
-    Validation 
-    X_de : list (list(string)) : Strings are sentences
-    y_de : list(int)
-    Test
-    X_te : list (list(strings)) Strings are sentences
-    y_te : list(int)
-    
-    '''
+def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8"):
     import pandas as pd 
     import os 
     path = self.download()
@@ -25,13 +11,12 @@ def load_two_sentences(self,format = "pandas",in_x_y = True ,samples =  2):
     test =  os.path.join(path,'test.txt')
     all = os.path.join(path,'all.txt')
     
-    # dftr = pd.read_table(train)
-    # dfte = pd.read_table(test)
-    # dfde = pd.read_table(dev)
-    # dfall = 
-    dftr = pd.read_csv(train,sep="\t")
-    dfte = pd.read_csv(test,sep="\t")
-    dfall = pd.read_csv(all,sep="\t")
+    dftr = pd.read_csv(train,sep="\t",encoding=encoding)
+    dfte = pd.read_csv(test,sep="\t",encoding=encoding)
+    dfall = pd.concat([dftr,dfte],axis=0)
+    
+    
+    #dfall = pd.read_csv(all,sep="\t",encoding=encoding)
     if in_x_y == False:
         if samples == 1:
             return dfall.drop(['id'],axis=1)
@@ -69,6 +54,61 @@ def load_two_sentences(self,format = "pandas",in_x_y = True ,samples =  2):
                 return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
         else:
             print("Incorrect params")    
+    
+#paws-x-es,paws-x-en,wnli
+def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8'):
+    import pandas as pd 
+    import os 
+    path = self.download()
+    
+    #path = os.path.dirname(os.path.realpath(__file__))
+    ptrain = os.path.join(path,'wnli-train-es.tsv')
+    ptest =  os.path.join(path,'wnli-dev-es.tsv') 
+    
+    dftr = pd.read_csv(ptrain,sep='\t',encoding= encoding)  
+    dfte = pd.read_csv(ptest,sep='\t',encoding= encoding)  
+    
+    dfte = dfte[dfte["label"].notna()]
+    dfte["label"] = dfte["label"].astype("int")
+    dfall = pd.concat([dftr,dfte],axis=0)
+    
+    if in_x_y == False:
+        if samples == 1:
+            return dfall.drop(['index'],axis=1)
+        elif samples ==2:
+            return dftr.drop(['index'],axis=1),dfte.drop(['index'],axis=1)
+        else:
+            print("Incorrect params") 
+    else:
+        dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
+        y_tr = dftr.filter(regex='label')
+
+        dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
+        y_te = dfte.filter(regex='label') 
+        
+        if samples== 1:
+            dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
+            y = dfall.filter(regex='label')
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = dummy_all.to_numpy().tolist()
+                return X,list(y['label']) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                #X_tr = list()
+                #for i in range(len(dummy_tr.axes[0])):
+                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                X_tr = dummy_tr.to_numpy().tolist()
+                #X_te = list()
+                #for i in range(len(dummy_te.axes[0])):
+                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
+                X_te = dummy_te.to_numpy().tolist()
+                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+        else:
+            print("Incorrect params")
     
 def load_wikiann(self, format = "pandas", samples =3):#falta
     '''
@@ -157,42 +197,52 @@ def load_wikicat(self, format = "pandas", samples =3):
     
     return X_tr,y_tr, X_de, y_de, X_te,y_te  
  
-def load_sst_en(self, format = "pandas", samples =3):
+def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
     import pandas as pd
     import os 
     path = self.download()
     ptrain = os.path.join(path,'sst_train.txt')
-    pdev = os.path.join(path,'sst_dev.txt')
     ptest = os.path.join(path,'sst_test.txt')
     
-    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=['label','text'])
+    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=['label','text'],encoding=encoding)
     dftr['label'] = dftr['label'].str.replace("__label__","").astype('int')
     
-    dfde = pd.read_csv(pdev,sep="\t",header=None,names=['label','text'])
-    dfde['label'] = dfde['label'].str.replace("__label__","").astype('int')
-    
-    dfte = pd.read_csv(ptest,sep="\t",header=None,names=['label','text'])
+    dfte = pd.read_csv(ptest,sep="\t",header=None,names=['label','text'],encoding=encoding)
     dfte['label'] = dfte['label'].str.replace("__label__","").astype('int')
+    
+    all_ = pd.concat([dftr,dfte],axis=0)
+    if in_x_y == False:
+        if samples == 1:
+            return all_
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        dummy_tr = dftr.filter(regex='text') 
+        y_tr = dftr.filter(regex='label')
 
-    #ptrain = os.path.join(path,'train.tsv')
-    # pdev = os.path.join(path,'dev.tsv')
-    # ptest = os.path.join(path,'test.tsv')
+        dummy_te = dfte.filter(regex='text') 
+        y_te = dfte.filter(regex='label') 
+        
+        if samples == 1:
+            dummy_all = all_.filter(regex='text') 
+            y = all_.filter(regex='label')
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = list(dummy_all["text"])
+                return X,list(y['label']) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                X_tr = list(dftr['text'])
+                X_te = list(dfte['text'])
+                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+        else:
+             print("Incorrect params")
     
-    # dftr = pd.read_table(ptrain)
-    # dfte = pd.read_table(ptest)
-    # dfde = pd.read_table(pdev)
-    
-    Xtr= list(dftr['text'])
-    ytr = list(dftr['label'])
-    
-    Xde = list(dfde['text'])
-    yde = list(dfde['label'])
-    
-    
-    Xte = list(dfte['text'])
-    yte = list(dfte['label'])
-
-    return Xtr,ytr,Xde,yde,Xte,yte
     
 def load_inferes(self, format = "pandas", samples =3):
     import pandas as pd

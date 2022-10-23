@@ -1,7 +1,7 @@
 name	url	func
-paws-x-en	https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip	load_two_sentences
-paws-x-es	https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip	load_two_sentences
-wnli-es	https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip	load_two_sentences
+paws-x-en	https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip	load_paws
+paws-x-es	https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip	load_paws
+wnli-es	https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip	load_wnli
 wikiann-es	https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip	load_wikiann
 wikicat-es	https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip	load_wikicat
 sst-en	https://github.com/autogoal/benchmark/releases/download/sst-en/sst-en.zip	load_sst_en

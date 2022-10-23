@@ -46,15 +46,12 @@ class Dataset(YamlAble):
         import shutil
     
         local_path = os.path.dirname(os.path.realpath(__file__))
-        print(local_path)
         save_path = os.path.join(local_path, f'datasets/{self.name}')
-        print(save_path)
         zip = os.path.join(save_path,f'{self.name}.zip')
         file = os.path.join(save_path,f'{self.name}')
         if not os.path.exists(zip) and not os.path.isfile(file) :
             try:
                 wget.download(self.url, save_path) 
-                print("kaka")
             except:
                 print("Download failed please try again")        
         if os.path.exists(zip) and not os.path.isfile(file):
@@ -105,7 +102,6 @@ def fone(url):
 #print(ytr)
 # print(len(yde))
 #print(X_test)
-print("##########################################")
 #print(c, c.loader_func_definition, sep="\n")
 # print(d, d.loader_func_definition, sep="\n")
 

@@ -68,9 +68,9 @@ class AutoMLBench():
         function(*args)
     
     @classmethod
-    def load_dataset(cls, name, format ="panda", in_xy = True, samples = 2):
+    def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8'):
         dataset = utils.load_dataset_definition(name)
-        return dataset.loader_func(cls.inst[name],format , in_xy , samples)
+        return dataset.loader_func(cls.inst[name],format , in_xy , samples, encoding)
     
     @classmethod
     def new_dataset(cls,name: str, url: str,function):
