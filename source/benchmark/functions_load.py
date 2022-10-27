@@ -1,6 +1,9 @@
 
 ######################## Text #################################
 
+from logging import exception
+
+
 def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8"):
     import pandas as pd 
     import os 
@@ -216,6 +219,9 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
     
     dftr = pd.read_csv(ptrain,sep="\t", encoding = encoding)
     dfte = pd.read_csv(ptest,sep="\t",encoding = encoding)
+    
+    dftr['label'] = dftr['label'].astype('category')
+    dfte['label'] = dfte['label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis=0)
     
     if in_x_y == False:
@@ -583,9 +589,164 @@ def load_meddocan(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     
     return X_train, y_train, X_test, y_test
 
+def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
+    import pandas as pd 
+    import os 
+    import numpy as np
+    path = self.download()
+    ptrain = os.path.join(path,'train.csv')
+    ptest =  os.path.join(path,'test.csv')
+
+    dftr = pd.read_csv(ptrain, encoding = encoding).drop(['tweet_id','user_id'],axis= 1)
+    dfte = pd.read_csv(ptest,encoding = encoding).drop(['tweet_id','user_id'],axis =1)
+    dfall = pd.concat([dftr,dfte],axis=0)
     
+    if in_x_y == False:
+        if samples == 1:
+            return dfall
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        X_tr = dftr.filter(regex='text') 
+        y_tr = dftr.filter(regex=target)
+
+        X_te = dfte.filter(regex='text') 
+        y_te = dfte.filter(regex=target) 
+        
+        if samples== 1:
+            X_all = dfall.filter(regex='text') 
+            y = dfall.filter(regex= target)
+            if format == "pandas":
+                return X_all,y
+            else:
+                return list(X_all['text']),list(y[target]) 
+        elif samples ==2:
+            if format == "pandas":
+                return X_tr,y_tr,X_te,y_te 
+            else:
+               
+                return list(X_tr['text']), list(y_tr[target]),list(X_te['text']), list(y_te[target])  
+        else:
+            print("Incorrect params")
+   
+
+def load_sentiment():
+    pass 
+
+def load_wikineural():
+    pass 
+
+def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "labels"):
+   
+    import pandas as pd 
+    import os 
+    import numpy as np
+    path = self.download()
+    ptrain = os.path.join(path,'train.csv')
+    pdev =  os.path.join(path,'valid.csv')
+    ptest =  os.path.join(path,'test.csv')
+
+    dftr1 = pd.read_csv(ptrain, encoding = encoding)
+    dfde = pd.read_csv(pdev,encoding = encoding)
+    dfte = pd.read_csv(ptest,encoding = encoding)
+    
+    dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
+    dftr = pd.concat([dftr1,dfde],axis=0).reset_index(drop= True)
+    if in_x_y == False:
+        if samples == 1:
+            return dfall
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        X_tr = dftr.filter(regex='text') 
+        y_tr = dftr.filter(regex=target)
+
+        X_te = dfte.filter(regex='text') 
+        y_te = dfte.filter(regex=target) 
+        
+        if samples== 1:
+            X_all = dfall.filter(regex='text') 
+            y = dfall.filter(regex= target)
+            if format == "pandas":
+                return X_all,y
+            else:
+                return list(X_all['text']),list(y[target]) 
+        elif samples ==2:
+            if format == "pandas":
+                return X_tr,y_tr,X_te,y_te 
+            else:
+               
+                return list(X_tr['text']), list(y_tr[target]),list(X_te['text']), list(y_te[target])  
+        else:
+            print("Incorrect params")
+
+
 ################## Multimodales  ###########################
 
+def load_twiter_human():
+    pass 
+
+def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "question_well_written"):
+   
+    import pandas as pd 
+    import os 
+    path = self.download()
+    ptrain = os.path.join(path,'train.csv',)
+    ptest = os.path.join(path,'test.csv')
+    pplabel = os.path.join(path,'sample_submission.csv')
+    
+    dftr = pd.read_csv(ptrain,encoding= 'utf-8').drop(['qa_id'],axis=1)
+    dfte1 = pd.read_csv(ptest,encoding= 'utf-8').drop(['qa_id'],axis=1)
+    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8').drop(['qa_id'],axis=1)
+    
+    dftr['category'] = dftr['category'].astype('category')
+    dfte = pd.concat([dfte1,dfte2],axis=1)
+    dfte['category'] = dfte['category'].astype('category')
+    dfall = pd.concat([dftr,dfte],axis=0)
+  
+    if in_x_y == False:
+        if samples == 1:
+            return dfall
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
+
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
+        if samples== 1:
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
+        
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = dummy_all.to_numpy().tolist()
+                return X,list(y[target]) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                #X_tr = list()
+                #for i in range(len(dummy_tr.axes[0])):
+                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                X_tr = dummy_tr.to_numpy().tolist()
+                #X_te = list()
+                #for i in range(len(dummy_te.axes[0])):
+                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
+                X_te = dummy_te.to_numpy().tolist()
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
+        else:
+            print("Incorrect params") 
+
+     
 def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
     import pandas as pd
     import os 
@@ -912,15 +1073,15 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2,
     import pandas as pd 
     import os 
     path = self.download()
-    ptrain = os.path.join(path,'train.csv',encoding= 'utf-8')
-    ptest = os.path.join(path,'test.csv',encoding= 'utf-8')
-    pplabel = os.path.join(path,'samplesubmission.csv',encoding= 'utf-8')
+    ptrain = os.path.join(path,'train.csv')
+    ptest = os.path.join(path,'test.csv')
+    pplabel = os.path.join(path,'samplesubmission.csv')
 
     
     # Read the values of the file in the datafrae
-    dftr = pd.read_csv(ptrain)
-    dfte1 = pd.read_csv(ptest)
-    dfte2 = pd.read_csv(pplabel)
+    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
+    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
+    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
 
     dfte = pd.concat([dfte1,dfte2],axis=1).drop(['project_id'],axis=1)
     dftr = dftr.drop(['project_id','backers_count'],axis=1)

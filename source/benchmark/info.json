@@ -1,0 +1,369 @@
+{
+    "paws-x-en": {
+        "columns": 3,
+        "instances": [
+            49401,
+            4000
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "paws-x-es": {
+        "columns": 3,
+        "instances": [
+            49401,
+            4000
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "wnli-es": {
+        "columns": 3,
+        "instances": [
+            635,
+            70
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "wikiann-es": {
+        "columns": 0,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": null,
+        "class imbalance": 0.23
+    },
+    "wikicat-es": {
+        "columns": 3,
+        "instances": [
+            7908,
+            3402
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "sst-en": {
+        "columns": 2,
+        "instances": [
+            8544,
+            2210
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": false,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "stroke-prediction": {
+        "columns": 2,
+        "instances": [
+            4088,
+            1022
+        ],
+        "targets": [
+            "fraudulent"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "women-clothing": {
+        "columns": 2,
+        "instances": [
+            16440,
+            7046
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "fraudulent-jobs": {
+        "columns": 2,
+        "instances": [
+            12516,
+            5304
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "spanish-wine": {
+        "columns": 2,
+        "instances": [
+            6000,
+            1612
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "project-kickstarter": {
+        "columns": 2,
+        "instances": [
+            108129,
+            63465
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "price-book": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "inferes": {
+        "columns": 2,
+        "instances": [
+            6444,
+            1612
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "predict-salary": {
+        "columns": 2,
+        "instances": [
+            19802,
+            6001
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "stsb-en": {
+        "columns": 3,
+        "instances": [
+            7249,
+            1378
+        ],
+        "targets": [
+            "score"
+        ],
+        "null_values": false,
+        "classes": null,
+        "class imbalance": null
+    },
+    "stsb-es": {
+        "columns": 3,
+        "instances": [
+            7249,
+            1378
+        ],
+        "targets": [
+            "score"
+        ],
+        "null_values": false,
+        "classes": null,
+        "class imbalance": null
+    },
+    "haha": {
+        "columns": 2,
+        "instances": [
+            24000,
+            6000
+        ],
+        "targets": [
+            "is_humor",
+            "average"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "meddocan": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "vaccine-es": {
+        "columns": 2,
+        "instances": [
+            2003,
+            694
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "vaccine-en": {
+        "columns": 2,
+        "instances": [
+            1770,
+            312
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "sentiment-lexicons-es": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "wikineural-en": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "wikineural-es": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "language-identification": {
+        "columns": 2,
+        "instances": [
+            80000,
+            10000
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "twiter-human-bots": {
+        "columns": 2,
+        "instances": [
+            0,
+            0
+        ],
+        "targets": [
+            "label"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "google-guest": {
+        "columns": 40,
+        "instances": [
+            6079,
+            476
+        ],
+        "targets": [
+            "question_asker_intent_understanding",
+            "question_body_critical,question_conversational",
+            "question_expect_short_answer",
+            "question_fact_seeking",
+            "question_has_commonly_accepted_answer",
+            "question_interestingness_others",
+            "question_interestingness_self",
+            "question_multi_intent",
+            "question_not_really_a_question",
+            "question_opinion_seeking",
+            "question_type_choice",
+            "question_type_compare",
+            "question_type_consequence",
+            "question_type_definition",
+            "question_type_entity",
+            "question_type_instructions",
+            "question_type_procedure",
+            "question_type_reason_explanation",
+            "question_type_spelling",
+            "question_well_written",
+            "answer_helpful",
+            "answer_level_of_information",
+            "answer_plausible",
+            "answer_relevance",
+            "answer_satisfaction",
+            "answer_type_instructions",
+            "answer_type_procedure",
+            "answer_type_reason_explanation",
+            "answer_well_written"
+        ],
+        "null_values": false,
+        "classes": 0,
+        "class imbalance": null
+    }
+}

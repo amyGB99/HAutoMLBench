@@ -17,3 +17,11 @@ stsb-en	https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-
 stsb-es	https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip	load_stsb
 haha	https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip	load_haha
 meddocan	https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip	load_meddocan
+vaccine-es	vaccine-es	load_vaccine
+vaccine-en	vaccine-en	load_vaccine
+sentiment-lexicons-es	sentiment-lexicons-es	load_sentiment
+wikineural-en	wikineural-en	load_wikineural
+wikineural-es	wikineural-es	load_wikineural
+language-identification	languague-identification	load_language
+twiter-human-bots	twiter-human-bots	load_twiter_human
+google-guest	google-guest	load_google_guest

@@ -10,8 +10,9 @@ from .utils import *
 
 @yaml_info(yaml_tag_ns="automl.benchmark")
 class Dataset(YamlAble):
-    def __init__(self, name: str, url: str, loader_func=None):
-        self.name, self.url, self.loader_func = name, url, loader_func
+    def __init__(self, name: str, url: str,info = None, loader_func=None):
+        #self.name, self.url, self.loader_func = name, url, loader_func
+        self.name, self.url, self.info, self.loader_func = name, url, info,loader_func
 
         if self.loader_func is not None:
             self.loader_func_name = self.loader_func.__name__
@@ -19,20 +20,21 @@ class Dataset(YamlAble):
 
     def __repr__(self):
         """String representation for prints"""
-        return f"{type(self).__name__} - { {'name': self.name, 'url': self.url, 'loader': self.loader_func_name} }"
+        return f"{type(self).__name__} - { {'name': self.name, 'url': self.url, 'info': self.info, 'loader': self.loader_func_name} }"
 
     def __to_yaml_dict__(self):
         # Do not dump 'irrelevant'
         return {
             "name": self.name,
             "url": self.url,
+            "info": self.info,
             "loader_func_name": self.loader_func_name,            
         }
     @classmethod
     def __from_yaml_dict__(cls, dct, yaml_tag):
         # Accept a default value for b
         loader = import_loader(dct["name"], dct["loader_func_name"],)
-        return cls(dct["name"], dct["url"], loader)
+        return cls(dct["name"], dct["url"], dct['info'] ,loader)
     
     def download(self):
         '''
@@ -59,6 +61,11 @@ class Dataset(YamlAble):
             shutil.unpack_archive(zip, save_path)   
         return file    
      
-
-
-
+# info = { 'columns_name': ['hola','hello'], 'columns_type':['int','string'], 'targets': ['label']}
+# #info = 9
+# def f(url):
+#     print(url)
+# a  = Dataset('h','jsjsj',info,f)
+# save_dataset_definition(a)
+# m = load_dataset_definition('h')
+# print(m.info)
