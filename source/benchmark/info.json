@@ -1,7 +1,7 @@
 {
     "paws-x-en": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             49401,
             4000
         ],
@@ -13,21 +13,21 @@
         "class imbalance": 0.23
     },
     "paws-x-es": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             49401,
             4000
         ],
         "targets": [
             "label"
         ],
-        "null_values": false,
+        "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "wnli-es": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             635,
             70
         ],
@@ -39,8 +39,8 @@
         "class imbalance": 0.23
     },
     "wikiann-es": {
-        "columns": 0,
-        "instances": [
+        "n_columns": 0,
+        "n_instances": [
             0,
             0
         ],
@@ -52,8 +52,8 @@
         "class imbalance": 0.23
     },
     "wikicat-es": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             7908,
             3402
         ],
@@ -65,8 +65,8 @@
         "class imbalance": 0.23
     },
     "sst-en": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             8544,
             2210
         ],
@@ -78,8 +78,8 @@
         "class imbalance": 0.23
     },
     "stroke-prediction": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             4088,
             1022
         ],
@@ -91,8 +91,8 @@
         "class imbalance": 0.23
     },
     "women-clothing": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             16440,
             7046
         ],
@@ -104,8 +104,8 @@
         "class imbalance": 0.23
     },
     "fraudulent-jobs": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             12516,
             5304
         ],
@@ -117,8 +117,8 @@
         "class imbalance": 0.23
     },
     "spanish-wine": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             6000,
             1612
         ],
@@ -130,8 +130,8 @@
         "class imbalance": 0.23
     },
     "project-kickstarter": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             108129,
             63465
         ],
@@ -143,8 +143,8 @@
         "class imbalance": 0.23
     },
     "price-book": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             0,
             0
         ],
@@ -156,8 +156,8 @@
         "class imbalance": 0.23
     },
     "inferes": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             6444,
             1612
         ],
@@ -169,8 +169,8 @@
         "class imbalance": 0.23
     },
     "predict-salary": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             19802,
             6001
         ],
@@ -182,8 +182,8 @@
         "class imbalance": 0.23
     },
     "stsb-en": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             7249,
             1378
         ],
@@ -195,8 +195,8 @@
         "class imbalance": null
     },
     "stsb-es": {
-        "columns": 3,
-        "instances": [
+        "n_columns": 3,
+        "n_instances": [
             7249,
             1378
         ],
@@ -208,8 +208,8 @@
         "class imbalance": null
     },
     "haha": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             24000,
             6000
         ],
@@ -222,8 +222,8 @@
         "class imbalance": 0.23
     },
     "meddocan": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             0,
             0
         ],
@@ -235,8 +235,8 @@
         "class imbalance": 0.23
     },
     "vaccine-es": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             2003,
             694
         ],
@@ -248,8 +248,8 @@
         "class imbalance": 0.23
     },
     "vaccine-en": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             1770,
             312
         ],
@@ -261,8 +261,8 @@
         "class imbalance": 0.23
     },
     "sentiment-lexicons-es": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             0,
             0
         ],
@@ -274,8 +274,8 @@
         "class imbalance": 0.23
     },
     "wikineural-en": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             0,
             0
         ],
@@ -287,8 +287,8 @@
         "class imbalance": 0.23
     },
     "wikineural-es": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             0,
             0
         ],
@@ -300,8 +300,8 @@
         "class imbalance": 0.23
     },
     "language-identification": {
-        "columns": 2,
-        "instances": [
+        "n_columns": 2,
+        "n_instances": [
             80000,
             10000
         ],
@@ -312,22 +312,22 @@
         "classes": 2,
         "class imbalance": 0.23
     },
-    "twiter-human-bots": {
-        "columns": 2,
-        "instances": [
-            0,
-            0
+    "twiteer-human-bots": {
+        "n_columns": 2,
+        "n_instances": [
+            29950,
+            7488
         ],
         "targets": [
-            "label"
+            "account_type"
         ],
         "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "google-guest": {
-        "columns": 40,
-        "instances": [
+        "n_columns": 40,
+        "n_instances": [
             6079,
             476
         ],
