@@ -21,7 +21,7 @@ class AutoMLBench():
                      "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
                      "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
                      "stsb-es","haha", "meddocan","vaccine-es","vaccine-en","sentiment-lexicons-es",
-                      "wikineural-en","wikineural-es","language-identification","twiteer-human-bots","google-guest"]
+                      "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
     
     urls = ["https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
@@ -41,13 +41,13 @@ class AutoMLBench():
                 "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
+                "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
                 "wikineural-en",
                 "wikineural-es",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/twiteer-human-bots/twiteer-human-bots.zip",
+                "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
                 "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
     
     columns = {"paws-x-en": {'sentence1':'text','sentence1':'text', 'label':'categorical'},
@@ -74,7 +74,7 @@ class AutoMLBench():
                     "wikineural-en":{'tokens':'Seqtokens','tags':'Seqtags'},
                     "wikineural-es":{'tokens':'Seqtokens','tags':'Seqtags'},
                     "language-identification":['text','categorical'],
-                    'twiter-human-bots': { 'created_at': 'datetime' ,'default_profile': 'boolean' ,'default_profile_image': 'boolean','description': 'text','favourites_count':'int','followers_count':'int','friends_count':'int','geo_enabled':'boolean','lang':'string','location':'string','profile_background_image_url':'image_url','profile_image_url':'image_url','screen_name':'text','statuses_count':'int','verified':'boolean' ,'average_tweets_per_day':'float' ,'account_age_days':'int' ,'account_type':'category'}, 
+                    'twitter-human-bots': { 'created_at': 'datetime' ,'default_profile': 'boolean' ,'default_profile_image': 'boolean','description': 'text','favourites_count':'int','followers_count':'int','friends_count':'int','geo_enabled':'boolean','lang':'string','location':'string','profile_background_image_url':'image_url','profile_image_url':'image_url','screen_name':'text','statuses_count':'int','verified':'boolean' ,'average_tweets_per_day':'float' ,'account_age_days':'int' ,'account_type':'category'}, 
                     'google-guest': ['text','text','text','text','text','text','text','text','categorical','text','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float']}
     
     
@@ -102,7 +102,7 @@ class AutoMLBench():
             "wikineural-en": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "wikineural-es": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "language-identification": { 'n_columns': 2,'n_instances': [80000,10000] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "twiteer-human-bots": { 'n_columns': 2,'n_instances': [29950,7488] , 'targets': ['account_type'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "twitter-human-bots": { 'n_columns': 2,'n_instances': [29950,7488] , 'targets': ['account_type'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             
            "google-guest": { 'n_columns': 40,'n_instances': [6079,476] ,'targets':['question_asker_intent_understanding','question_body_critical,question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice',
             'question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written'], 'null_values': False,'classes': 0, 'class imbalance': None },
@@ -117,7 +117,7 @@ class AutoMLBench():
                  "load_sst_en","load_stroke", "load_women_clothing" , "load_jobs","load_wines","load_project_kickstarter",
                  "load_price_book","load_inferes", "load_predict_salary","load_stsb","load_stsb","load_haha","load_meddocan",
                  "load_vaccine","load_vaccine","load_sentiment","load_wikineural","load_wikineural","load_language",
-                 "load_twiteer_human","load_google_guest"]
+                 "load_twitter_human","load_google_guest"]
     
     @classmethod
     def init(cls):

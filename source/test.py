@@ -6,45 +6,51 @@ AutoMLBench.init()
 
 names  =AutoMLBench.names
 print(names)
-# for dataset in names:
-#     try:
-#         print(dataset)
-#         if dataset =='meddocan':
-#             continue
-#         #train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
-#         all = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
-#         print(all.isnull().sum())
-#         print(all['label'].unique())
+for dataset in names:
+    try:
+        print(dataset)
+        if dataset =='meddocan':
+            continue
+        #train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
+        all = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
+        print(all.isnull().sum())
+        print(all['label'].unique())
 #         #print(all)
         
 #         #print(train)
-#     except:
-#         if dataset =='women-clothing': 
-#             print(all['Class Name'].unique())
-#             continue
-#         if dataset =='stroke-prediction': 
-#             print(all['stroke'].unique())
-#             continue
-#         if dataset =='fraudulent-jobs': 
-#             print(all['fraudulent'].unique())
-#             continue
-#         if dataset =='spanish-wine': 
-#             print(all['price'].unique())
-#             continue
-#         if dataset =='project-kickstarter': 
-#             print(all['final_status'].unique())
-#             continue
-#         if dataset =='inferes': 
-#             print(all['Label'].unique())
-#             continue
-#         if dataset =='predict-salary': 
-#             print(all['salary'].unique())
-#             continue
-#         if dataset =='twiteer-human-bots': 
-#             print(all['account_type'].unique())
-#             continue
+    except:
+        if dataset =='women-clothing': 
+            print(all['Class Name'].unique())
+            continue
+        if dataset =='stroke-prediction': 
+            print(all['stroke'].unique())
+            continue
+        if dataset =='fraudulent-jobs': 
+            print(all['fraudulent'].unique())
+            continue
+        if dataset =='spanish-wine': 
+            print(all['price'].unique())
+            continue
+        if dataset =='project-kickstarter': 
+            print(all['final_status'].unique())
+            continue
+        if dataset =='inferes': 
+            print(all['Label'].unique())
+            continue
+        if dataset =='predict-salary': 
+            print(all['salary'].unique())
+            continue
+        if dataset =='twitter-human-bots': 
+            print(all['account_type'].unique())
+            continue
+        if dataset =='google-guest': 
+            print(all['question_well_written'].unique())
+            continue
+        if dataset =='language-identification': 
+            print(all['labels'].unique())
+            continue
             
-#         print(f'Error{dataset}')
+        print(f'Error{dataset}')
 
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-en",format='list',in_xy=True,samples=2)
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-es",in_xy=True,samples=2)

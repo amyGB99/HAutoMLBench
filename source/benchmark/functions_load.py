@@ -2,7 +2,7 @@
 ######################## Text #################################
 
 
-def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8"):
+def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8",target = "label"):
     import pandas as pd 
     import os 
     path = self.download()
@@ -26,19 +26,19 @@ def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "u
             print("Incorrect params") 
     else:
         dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-        y_tr = dftr.filter(regex='label')
+        y_tr = dftr.filter(regex= target)
 
         dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-        y_te = dfte.filter(regex='label') 
+        y_te = dfte.filter(regex= target) 
         
         if samples== 1:
             dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
-            y = dfall.filter(regex='label')
+            y = dfall.filter(regex=target)
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['label']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -51,11 +51,11 @@ def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "u
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")    
     
-def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8'):
+def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8',target = "label"):
     import pandas as pd 
     import os 
     path = self.download()
@@ -67,8 +67,8 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
     dftr = pd.read_csv(ptrain,sep='\t',encoding= encoding)  
     dfte = pd.read_csv(ptest,sep='\t',encoding= encoding)  
     
-    dfte = dfte[dfte["label"].notna()]
-    dfte["label"] = dfte["label"].astype("int")
+    dfte = dfte[dfte[target].notna()]
+    dfte[target] = dfte[target].astype("int")
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -80,19 +80,19 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
             print("Incorrect params") 
     else:
         dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-        y_tr = dftr.filter(regex='label')
+        y_tr = dftr.filter(regex= target)
 
         dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-        y_te = dfte.filter(regex='label') 
+        y_te = dfte.filter(regex=target) 
         
         if samples== 1:
             dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
-            y = dfall.filter(regex='label')
+            y = dfall.filter(regex=target)
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['label']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -105,7 +105,7 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")
     
@@ -158,18 +158,18 @@ def load_wikiann(self, format = "pandas", samples =3):#falta
         yte.append(item['ner_tags'])       
     return Xtr,ytr, Xde, yde, Xte,yte  
 
-def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
     import pandas as pd
     import os 
     path = self.download()
     ptrain = os.path.join(path,'sst_train.txt')
     ptest = os.path.join(path,'sst_test.txt')
     
-    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=['label','text'],encoding=encoding)
-    dftr['label'] = dftr['label'].str.replace("__label__","").astype('int')
+    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=[target,'text'],encoding=encoding)
+    dftr['label'] = dftr[target].str.replace("__label__","").astype('int')
     
-    dfte = pd.read_csv(ptest,sep="\t",header=None,names=['label','text'],encoding=encoding)
-    dfte['label'] = dfte['label'].str.replace("__label__","").astype('int')
+    dfte = pd.read_csv(ptest,sep="\t",header=None,names=[target,'text'],encoding=encoding)
+    dfte['label'] = dfte[target].str.replace("__label__","").astype('int')
     
     all_ = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     if in_x_y == False:
@@ -181,30 +181,30 @@ def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'u
             print("Incorrect params") 
     else:
         dummy_tr = dftr.filter(regex='text') 
-        y_tr = dftr.filter(regex='label')
+        y_tr = dftr.filter(regex=target)
 
         dummy_te = dfte.filter(regex='text') 
-        y_te = dfte.filter(regex='label') 
+        y_te = dfte.filter(regex= target) 
         
         if samples == 1:
             dummy_all = all_.filter(regex='text') 
-            y = all_.filter(regex='label')
+            y = all_.filter(regex=target)
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = list(dummy_all["text"])
-                return X,list(y['label']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
                 X_tr = list(dftr['text'])
                 X_te = list(dfte['text'])
-                return X_tr, list(y_tr['label']),X_te, list(y_te['label'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
              print("Incorrect params") 
 
-def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = 'utf-8'):
+def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = 'utf-8',target = "label"):
     import pandas as pd 
     import os 
     import numpy as np
@@ -231,28 +231,28 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
             print("Incorrect params") 
     else:
         X_tr = dftr.filter(regex='text') 
-        y_tr = dftr.filter(regex='label')
+        y_tr = dftr.filter(regex= target)
 
         X_te = dfte.filter(regex='text') 
-        y_te = dfte.filter(regex='label') 
+        y_te = dfte.filter(regex= target) 
         
         if samples== 1:
             X_all = dfall.filter(regex='text') 
-            y = dfall.filter(regex='label')
+            y = dfall.filter(regex= target)
             if format == "pandas":
                 return X_all,y
             else:
-                return list(X_all['text']),list(y['label']) 
+                return list(X_all['text']),list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return X_tr,y_tr,X_te,y_te 
             else:
                
-                return list(X_tr['text']), list(y_tr['label']),list(X_te['text']), list(y_te['label'])  
+                return list(X_tr['text']), list(y_tr[target]),list(X_te['text']), list(y_te[target])  
         else:
             print("Incorrect params")
 
-def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = 'score'):
     import pandas as pd
     import os 
     path = self.download()
@@ -261,9 +261,9 @@ def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
     dev =  os.path.join(path,'dev.csv')
     test =  os.path.join(path,'test.csv')
     
-    dftr1 = pd.read_csv(train, names=['sentence1','sentence2','score'],encoding= encoding)
-    dftr2 = pd.read_csv(dev, names=['sentence1','sentence2','score'],encoding= encoding)
-    dfte = pd.read_csv(test ,names=['sentence1','sentence2','score'],encoding= encoding)
+    dftr1 = pd.read_csv(train, names=['sentence1','sentence2',target],encoding= encoding)
+    dftr2 = pd.read_csv(dev, names=['sentence1','sentence2',target],encoding= encoding)
+    dfte = pd.read_csv(test ,names=['sentence1','sentence2',target],encoding= encoding)
     dftr = pd.concat([dftr1,dftr2],axis=0).reset_index(drop = True)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -278,19 +278,19 @@ def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
             print("Incorrect params") 
     else:
         dummy_tr = dftr.filter(regex='(sentence1|sentence2)') 
-        y_tr = dftr.filter(regex='score')
+        y_tr = dftr.filter(regex= target)
 
         dummy_te = dfte.filter(regex='(sentence1|sentence2)') 
-        y_te = dfte.filter(regex='score') 
+        y_te = dfte.filter(regex=target) 
         
         if samples== 1:
             dummy_all = dfall.filter(regex='(sentence1|sentence2)') 
-            y = dfall.filter(regex='score')
+            y = dfall.filter(regex= target)
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X, list(y['score']) 
+                return X, list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -303,11 +303,11 @@ def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['score']),X_te, list(y_te['score'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")
     
-def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target= 'is_humor' ):
+def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target= 'is_humor'):
     
     import pandas as pd 
     import os 
@@ -579,9 +579,8 @@ def load_meddocan(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     #     X_test = X_test[:max_examples]
     #     y_train = y_train[:max_examples]
     #     y_test = y_test[:max_examples]
-    print(len(X_train))
-    print(len(X_test))
-    
+ 
+
     return X_train, y_train, X_test, y_test
 
 def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
@@ -642,8 +641,8 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
         negative = content.split('\n')    
     positive.pop(-1) 
     negative.pop(-1) 
-    dftr = pd.DataFrame(columns=['word','label'])
-    dfte = pd.DataFrame(columns=['word','label'])
+    dftr = pd.DataFrame(columns=['word',target])
+    dfte = pd.DataFrame(columns=['word',target])
     
     lptrain = 1455 *[1]
     lptest = 100 *[1]
@@ -660,9 +659,9 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     lptrain.extend(lntrain)
     lptest.extend(lntest)
     dftr['word'] = wptrain
-    dftr['label'] = lptrain
+    dftr[target] = lptrain
     dfte['word'] = wptest
-    dfte['label'] = lptest
+    dfte[target] = lptest
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -713,7 +712,11 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     dfte = pd.read_csv(ptest,encoding = encoding)
     
     dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
+    dfall['labels'] = dfall['labels'].astype('category')
+    dfte['labels'] = dfte['labels'].astype('category')
+    
     dftr = pd.concat([dftr1,dfde],axis=0).reset_index(drop= True)
+    dftr['labels'] = dftr['labels'].astype('category')
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -747,14 +750,15 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
 
 ################## Multimodales  ###########################
 
-def load_twiteer_human(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = 'account_type'):
+def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = 'account_type'):
     import pandas as pd 
     import os 
     path = self.download()
     pall  = os.path.join(path,'twitter_human_bots_dataset.csv')
   
     
-    dfall = pd.read_csv(pall,encoding= 'utf-8').drop(['id','Unnamed: 0'],axis=1)
+    dfall = pd.read_csv(pall,encoding= 'utf-8')
+    dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
     dfall['account_type'] = dfall['account_type'].astype('category')
     dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
     dftr = dfall.iloc[0:29950].reset_index()
@@ -798,7 +802,7 @@ def load_twiteer_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
         else:
             print("Incorrect params")  
 
-def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "question_well_written"):
+def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = "question_well_written"):
    
     import pandas as pd 
     import os 
@@ -854,7 +858,7 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
         else:
             print("Incorrect params") 
      
-def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "Label"):
     import pandas as pd
     import os 
     path = self.download()
@@ -878,20 +882,20 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
             else:
                 print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='Label')
-        dummy_tr = dftr.drop(['Label','ID'],axis=1)
+        y_tr = dftr.filter(regex= target)
+        dummy_tr = dftr.drop([target,'ID'],axis=1)
 
-        y_te = dfte.filter(regex='Label') 
-        dummy_te = dfte.drop(['Label','ID'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target,'ID'],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='Label')
-            dummy_all = dfall.drop(['Label','ID'],axis=1) 
+            y = dfall.filter(regex= target)
+            dummy_all = dfall.drop([target,'ID'],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['Label']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -904,11 +908,11 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
                 #for i in range(len(dummy_te.axes[0])):
                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['Label']),X_te, list(y_te['Label'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'salary'):
     import pandas as pd
     import os 
     path = self.download()
@@ -932,20 +936,20 @@ def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encod
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='salary')
-        dummy_tr = dftr.drop(['salary'],axis=1)
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
 
-        y_te = dfte.filter(regex='salary') 
-        dummy_te = dfte.drop(['salary'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='salary')
-            dummy_all = dfall.drop(['salary'],axis=1) 
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['salary']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -958,11 +962,11 @@ def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encod
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['salary']),X_te, list(y_te['salary'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")    
 
-def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8'):   
+def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'Price'):   
    
      
     import pandas as pd 
@@ -978,7 +982,7 @@ def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding=
     # df_te = df_te[df_te["Class Name"].notna()]
     # print(df_te.isnull().sum())
     
-    train = pd.read_excel(ptrain,engine='openpyxl',)
+    train = pd.read_excel(ptrain,engine='openpyxl')
     test = pd.read_excel(ptest,engine='openpyxl')
     label_test = pd.read_excel(plabel_test,engine='openpyxl')
     
@@ -997,20 +1001,20 @@ def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding=
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='Price')
-        dummy_tr = dftr.drop(['Price'],axis=1)
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
 
-        y_te = dfte.filter(regex='Price') 
-        dummy_te = dfte.drop(['Price'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='Price')
-            dummy_all = dfall.drop(['Price'],axis=1) 
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['Price']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -1023,7 +1027,7 @@ def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding=
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['Price']),X_te, list(y_te['Price'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
     
@@ -1127,7 +1131,7 @@ def load_wines(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
         else:
             print("Incorrect params") 
 
-def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'Class Name'):
     import pandas as pd 
     import os 
     path = self.download()
@@ -1146,20 +1150,20 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='Class Name')
-        dummy_tr = dftr.drop(['Class Name'],axis=1)
+        y_tr = dftr.filter(regex= target)
+        dummy_tr = dftr.drop([target],axis=1)
 
-        y_te = dfte.filter(regex='Class Name') 
-        dummy_te = dfte.drop(['Class Name'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='Class Name')
-            dummy_all = dfall.drop(['Class Name'],axis=1) 
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['Class Name']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -1172,15 +1176,15 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['Class Name']),X_te, list(y_te['Class Name'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
     
     
     
-    print(dfte)
+
    
-def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'final_status'):
     import pandas as pd 
     import os 
     path = self.download()
@@ -1206,20 +1210,20 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2,
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='final_status')
-        dummy_tr = dftr.drop(['final_status'],axis=1)
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
 
-        y_te = dfte.filter(regex='final_status') 
-        dummy_te = dfte.drop(['final_status'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='final_status')
-            dummy_all = dfall.drop(['final_status'],axis=1) 
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['final_status']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -1232,11 +1236,11 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2,
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['final_status']),X_te, list(y_te['final_status'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'fraudulent'):
     import pandas as pd 
     import os 
     import numpy as np
@@ -1256,20 +1260,20 @@ def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex='fraudulent')
-        dummy_tr = dftr.drop(['fraudulent'],axis=1)
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
 
-        y_te = dfte.filter(regex='fraudulent') 
-        dummy_te = dfte.drop(['fraudulent'],axis=1) 
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
         if samples== 1:
-            y = dfall.filter(regex='fraudulent')
-            dummy_all = dfall.drop(['fraudulent'],axis=1) 
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y['fraudulent']) 
+                return X,list(y[target]) 
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -1282,7 +1286,7 @@ def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr['fraudulent']),X_te, list(y_te['fraudulent'])  
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
    
