@@ -1,5 +1,9 @@
 from cmath import inf
 from distutils.log import info
+from numpy import average
+    
+from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
+from sklearn.metrics  import make_scorer
 from benchmark import dataset
 from benchmark import utils
 from benchmark import functions_load
@@ -17,6 +21,7 @@ class AutoMLBench():
     intances = {}
     inst = {}
     info = []
+    metrics= []
     datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
                      "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
                      "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
@@ -82,27 +87,27 @@ class AutoMLBench():
             "paws-x-es":{ 'n_columns': 3 ,'n_instances': [49401,4000],'targets': ['label'] ,'null_values': True, 'classes': 2, 'class imbalance': 0.23},
             "wnli-es":{ 'n_columns': 3, 'n_instances': [635,70],'targets': ['label'], 'null_values': False,'classes': 2, 'class imbalance': 0.23 },
             "wikiann-es":{ 'n_columns': 0,'n_instances': [0,0] , 'targets': ['label'], 'null_values': False,'classes': None, 'class imbalance': 0.23 },
-            "wikicat-es":{ 'n_columns': 3,'n_instances': [7908,3402] , 'targets': ['label'], 'null_values': False,'classes': 2, 'class imbalance': 0.23 },
+            "wikicat-es":{ 'n_columns': 2,'n_instances': [7909,3402] , 'targets': ['label'], 'null_values': False,'classes': 2, 'class imbalance': 0.23 },
             "sst-en":{ 'n_columns': 2,'n_instances': [8544,2210] , 'targets': ['label'], 'null_values': False,'classes': 2, 'class imbalance': 0.23 },
-            "stroke-prediction": { 'n_columns': 2,'n_instances': [4088,1022] , 'targets': ['fraudulent'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "women-clothing": { 'n_columns': 2,'n_instances': [16440,7046] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "fraudulent-jobs": { 'n_columns': 2,'n_instances': [12516,5304] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "spanish-wine": { 'n_columns': 2,'n_instances': [6000,1612] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "project-kickstarter": { 'n_columns': 2,'n_instances': [108129,63465] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "price-book": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "inferes": { 'n_columns': 2,'n_instances': [6444,1612] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "predict-salary": { 'n_columns': 2,'n_instances': [19802,6001] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "stroke-prediction": { 'n_columns': 11,'n_instances': [4088,1022] , 'targets': ['stroke'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "women-clothing": { 'n_columns': 9,'n_instances': [16440,7046] , 'targets': ['Class Name'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "fraudulent-jobs": { 'n_columns': 17,'n_instances': [12516,5304] , 'targets': ['fraudulent'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "spanish-wine": { 'n_columns': 11,'n_instances': [6000,1612] , 'targets': ['price'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "project-kickstarter": { 'n_columns': 12,'n_instances': [108129,63465] , 'targets': ['final_status'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "price-book": { 'n_columns': 9,'n_instances': [6237,1650] , 'targets': ['Price'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "inferes": { 'n_columns': 6,'n_instances': [6444,1612] , 'targets': ['Label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "predict-salary": { 'n_columns': 8,'n_instances': [19802,6001] , 'targets': ['salary'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "stsb-en": { 'n_columns': 3,'n_instances': [7249,1378] , 'targets': ['score'], 'null_values': False,'classes': None, 'class imbalance': None },
             "stsb-es": { 'n_columns': 3,'n_instances': [7249,1378] , 'targets': ['score'], 'null_values': False,'classes': None, 'class imbalance': None},
             "haha": { 'n_columns': 2,'n_instances': [24000,6000] , 'targets': ['is_humor','average'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "meddocan": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "meddocan": { 'n_columns': 0,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "vaccine-es": { 'n_columns': 2,'n_instances': [2003,694] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "vaccine-en": { 'n_columns': 2,'n_instances': [1770,312] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "sentiment-lexicons-es": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "wikineural-en": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "wikineural-es": { 'n_columns': 2,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "language-identification": { 'n_columns': 2,'n_instances': [80000,10000] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "twitter-human-bots": { 'n_columns': 2,'n_instances': [29950,7488] , 'targets': ['account_type'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "sentiment-lexicons-es": { 'n_columns': 2,'n_instances': [4075,200] , 'targets': ['label'], 'null_values': False,'classes': 2, 'class imbalance': 0.23 },
+            "wikineural-en": { 'n_columns': 0,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "wikineural-es": { 'n_columns': 0,'n_instances': [0,0] , 'targets': ['label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "language-identification": { 'n_columns': 2,'n_instances': [80000,10000] , 'targets': ['labels'], 'null_values': False,'classes': 20, 'class imbalance': 0.23 },
+            "twitter-human-bots": { 'n_columns': 18,'n_instances': [29950,7488] , 'targets': ['account_type'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             
            "google-guest": { 'n_columns': 40,'n_instances': [6079,476] ,'targets':['question_asker_intent_understanding','question_body_critical,question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice',
             'question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written'], 'null_values': False,'classes': 0, 'class imbalance': None },
@@ -160,7 +165,20 @@ class AutoMLBench():
     @classmethod
     def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8'):
         dataset = utils.load_dataset_definition(name)
-        return dataset.loader_func(cls.inst[name],format , in_xy , samples, encoding)
+        if dataset is not None:
+            try:
+                return dataset.loader_func(cls.inst[name],format , in_xy , samples, encoding)
+            except Exception as error :
+                print(error)
+                return None
+    
+    @classmethod
+    def load_info(cls,name):
+        try:
+            return cls.info[name]
+        except:
+            print("There is no registered dataset with that name")
+            return None
     
     @classmethod
     def new_dataset(cls,name: str, url: str,info = None,function= None):
@@ -173,4 +191,31 @@ class AutoMLBench():
         utils.save_dataset_definition(inst)
         cls.name_func.append(function.__name__)
         # except:
-        #     print(f"Error in introduce a {name} dataset.")    
+        #     print(f"Error in introduce a {name} dataset.")           
+#       
+class Metric():
+    @classmethod    
+    def auroc(cls):
+        auroc = make_scorer(name= 'roc_auc',
+        score_func=roc_auc_score,
+        optimum= 1,
+        greater_is_better=True)
+        return auroc
+    @classmethod
+    def f1(cls):
+        f1 = make_scorer(name= 'f1',
+        score_func= f1_score,
+        optimum= 1,
+        greater_is_better=True)
+        return f1
+    @classmethod
+    def accuracy(cls):
+        accuracy = make_scorer(name= 'accuracy',
+        score_func= accuracy_score,
+        optimum= 1,
+        greater_is_better=True) 
+        return accuracy   
+ 
+        
+            
+        

@@ -322,9 +322,9 @@ def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
     
     if in_x_y == False:
         if samples == 1:
-            return dfall
+            return dfall.filter(regex=f'(text|{target})')
         elif samples ==2:
-            return dftr,dfte
+            return dftr.filter(regex=f'(text|{target})') ,dfte.filter(regex=f'(text|{target})')
         else:
             print("Incorrect params") 
     else:
@@ -644,15 +644,15 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     dftr = pd.DataFrame(columns=['word',target])
     dfte = pd.DataFrame(columns=['word',target])
     
-    lptrain = 1455 *[1]
-    lptest = 100 *[1]
+    lptrain = 1455 *['positive']
+    lptest = 100 *['positive']
     
     wptrain = positive[0:1455]
     wptest = positive[1455:]
     wntrain = negative[0:2620]
     wntest = negative[2620:]
-    lntrain = 2620 *[0]
-    lntest = 100 *[0]
+    lntrain = 2620 *['negative']
+    lntest = 100 *['negative']
     
     wptrain.extend(wntrain)
     wptest.extend(wntest)
@@ -662,6 +662,10 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     dftr[target] = lptrain
     dfte['word'] = wptest
     dfte[target] = lptest
+    
+    dftr[target] = dftr[target].astype('category')
+    dfte[target] = dfte[target].astype('category')
+    
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -811,14 +815,15 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
     ptest = os.path.join(path,'test.csv')
     pplabel = os.path.join(path,'sample_submission.csv')
     
-    dftr = pd.read_csv(ptrain,encoding= 'utf-8').drop(['qa_id'],axis=1)
-    dfte1 = pd.read_csv(ptest,encoding= 'utf-8').drop(['qa_id'],axis=1)
-    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8').drop(['qa_id'],axis=1)
-    
+    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
+    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
+    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
     dftr['category'] = dftr['category'].astype('category')
-    dfte = pd.concat([dfte1,dfte2],axis=1)
+    dftr =dftr.drop(['qa_id'],axis=1)
+    dfte = pd.merge(left=dfte1,right=dfte2, left_on='qa_id', right_on='qa_id').drop(['qa_id'],axis=1)
     dfte['category'] = dfte['category'].astype('category')
-    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
+    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop=True)
+    
   
     if in_x_y == False:
         if samples == 1:
@@ -1137,10 +1142,14 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
     path = self.download()
     all = os.path.join(path,'womens_clothing.csv')
 
-    dfall = pd.read_csv(all).filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)')
+    dfall = pd.read_csv(all, encoding= encoding)
+    dfall = dfall.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
+
     dfall['Class Name'] = dfall['Class Name'].astype('category')
     dftr = dfall.iloc[:16440]
-    dfte = dfall.iloc[16440:].reset_index(drop= True)
+    dfte = dfall.iloc[16440:].reset_index(drop=True)
+    #dfte = dfte.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
+    
     
     if in_x_y == False:
         if samples == 1:
@@ -1180,10 +1189,6 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
         else:
             print("Incorrect params") 
     
-    
-    
-
-   
 def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'final_status'):
     import pandas as pd 
     import os 

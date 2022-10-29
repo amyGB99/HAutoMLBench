@@ -52,9 +52,9 @@
         "class imbalance": 0.23
     },
     "wikicat-es": {
-        "n_columns": 3,
+        "n_columns": 2,
         "n_instances": [
-            7908,
+            7909,
             3402
         ],
         "targets": [
@@ -78,10 +78,36 @@
         "class imbalance": 0.23
     },
     "stroke-prediction": {
-        "n_columns": 2,
+        "n_columns": 11,
         "n_instances": [
             4088,
             1022
+        ],
+        "targets": [
+            "stroke"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "women-clothing": {
+        "n_columns": 9,
+        "n_instances": [
+            16440,
+            7046
+        ],
+        "targets": [
+            "Class Name"
+        ],
+        "null_values": true,
+        "classes": 2,
+        "class imbalance": 0.23
+    },
+    "fraudulent-jobs": {
+        "n_columns": 17,
+        "n_instances": [
+            12516,
+            5304
         ],
         "targets": [
             "fraudulent"
@@ -90,92 +116,66 @@
         "classes": 2,
         "class imbalance": 0.23
     },
-    "women-clothing": {
-        "n_columns": 2,
-        "n_instances": [
-            16440,
-            7046
-        ],
-        "targets": [
-            "label"
-        ],
-        "null_values": true,
-        "classes": 2,
-        "class imbalance": 0.23
-    },
-    "fraudulent-jobs": {
-        "n_columns": 2,
-        "n_instances": [
-            12516,
-            5304
-        ],
-        "targets": [
-            "label"
-        ],
-        "null_values": true,
-        "classes": 2,
-        "class imbalance": 0.23
-    },
     "spanish-wine": {
-        "n_columns": 2,
+        "n_columns": 11,
         "n_instances": [
             6000,
             1612
         ],
         "targets": [
-            "label"
+            "price"
         ],
         "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "project-kickstarter": {
-        "n_columns": 2,
+        "n_columns": 12,
         "n_instances": [
             108129,
             63465
         ],
         "targets": [
-            "label"
+            "final_status"
         ],
         "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "price-book": {
-        "n_columns": 2,
+        "n_columns": 9,
         "n_instances": [
-            0,
-            0
+            6237,
+            1650
         ],
         "targets": [
-            "label"
+            "Price"
         ],
         "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "inferes": {
-        "n_columns": 2,
+        "n_columns": 6,
         "n_instances": [
             6444,
             1612
         ],
         "targets": [
-            "label"
+            "Label"
         ],
         "null_values": true,
         "classes": 2,
         "class imbalance": 0.23
     },
     "predict-salary": {
-        "n_columns": 2,
+        "n_columns": 8,
         "n_instances": [
             19802,
             6001
         ],
         "targets": [
-            "label"
+            "salary"
         ],
         "null_values": true,
         "classes": 2,
@@ -222,7 +222,7 @@
         "class imbalance": 0.23
     },
     "meddocan": {
-        "n_columns": 2,
+        "n_columns": 0,
         "n_instances": [
             0,
             0
@@ -263,18 +263,18 @@
     "sentiment-lexicons-es": {
         "n_columns": 2,
         "n_instances": [
-            0,
-            0
+            4075,
+            200
         ],
         "targets": [
             "label"
         ],
-        "null_values": true,
+        "null_values": false,
         "classes": 2,
         "class imbalance": 0.23
     },
     "wikineural-en": {
-        "n_columns": 2,
+        "n_columns": 0,
         "n_instances": [
             0,
             0
@@ -287,7 +287,7 @@
         "class imbalance": 0.23
     },
     "wikineural-es": {
-        "n_columns": 2,
+        "n_columns": 0,
         "n_instances": [
             0,
             0
@@ -306,14 +306,14 @@
             10000
         ],
         "targets": [
-            "label"
+            "labels"
         ],
-        "null_values": true,
-        "classes": 2,
+        "null_values": false,
+        "classes": 20,
         "class imbalance": 0.23
     },
-    "twiteer-human-bots": {
-        "n_columns": 2,
+    "twitter-human-bots": {
+        "n_columns": 18,
         "n_instances": [
             29950,
             7488
