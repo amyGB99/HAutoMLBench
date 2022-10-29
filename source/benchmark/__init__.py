@@ -92,9 +92,9 @@ class AutoMLBench():
             "stroke-prediction": { 'n_columns': 11,'n_instances': [4088,1022] , 'targets': ['stroke'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "women-clothing": { 'n_columns': 9,'n_instances': [16440,7046] , 'targets': ['Class Name'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "fraudulent-jobs": { 'n_columns': 17,'n_instances': [12516,5304] , 'targets': ['fraudulent'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "spanish-wine": { 'n_columns': 11,'n_instances': [6000,1612] , 'targets': ['price'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "spanish-wine": { 'n_columns': 11,'n_instances': [6000,1612] , 'targets': ['price'], 'null_values': True,'classes': None, 'class imbalance': 0.23 },
             "project-kickstarter": { 'n_columns': 12,'n_instances': [108129,63465] , 'targets': ['final_status'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
-            "price-book": { 'n_columns': 9,'n_instances': [6237,1650] , 'targets': ['Price'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
+            "price-book": { 'n_columns': 9,'n_instances': [6237,1650] , 'targets': ['Price'], 'null_values': True,'classes': None, 'class imbalance': 0.23 },
             "inferes": { 'n_columns': 6,'n_instances': [6444,1612] , 'targets': ['Label'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "predict-salary": { 'n_columns': 8,'n_instances': [19802,6001] , 'targets': ['salary'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             "stsb-en": { 'n_columns': 3,'n_instances': [7249,1378] , 'targets': ['score'], 'null_values': False,'classes': None, 'class imbalance': None },
@@ -109,8 +109,8 @@ class AutoMLBench():
             "language-identification": { 'n_columns': 2,'n_instances': [80000,10000] , 'targets': ['labels'], 'null_values': False,'classes': 20, 'class imbalance': 0.23 },
             "twitter-human-bots": { 'n_columns': 18,'n_instances': [29950,7488] , 'targets': ['account_type'], 'null_values': True,'classes': 2, 'class imbalance': 0.23 },
             
-           "google-guest": { 'n_columns': 40,'n_instances': [6079,476] ,'targets':['question_asker_intent_understanding','question_body_critical,question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice',
-            'question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written'], 'null_values': False,'classes': 0, 'class imbalance': None },
+           "google-guest": { 'n_columns': 40,'n_instances': [6079,476] ,'targets':['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice',
+            'question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written'], 'null_values': False,'classes': None, 'class imbalance': None },
             
             
             
