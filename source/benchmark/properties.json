@@ -1,0 +1,222 @@
+{
+    "paws-x-en": {
+        "n_columns": 3,
+        "n_instances": [
+            49401,
+            4000
+        ],
+        "null_values": 0,
+        "classes": 2,
+        "balance": 0.7917089801247642
+    },
+    "paws-x-es": {
+        "n_columns": 3,
+        "n_instances": [
+            49401,
+            4000
+        ],
+        "null_values": 544,
+        "classes": 2,
+        "balance": 0.7917089801247642
+    },
+    "wnli-es": {
+        "n_columns": 3,
+        "n_instances": [
+            635,
+            70
+        ],
+        "null_values": 0,
+        "classes": 2,
+        "balance": 0.9659442724458205
+    },
+    "wikicat-es": {
+        "n_columns": 2,
+        "n_instances": [
+            7909,
+            3402
+        ],
+        "null_values": 0,
+        "classes": 19,
+        "balance": 0.03602484472049689
+    },
+    "sst-en": {
+        "n_columns": 2,
+        "n_instances": [
+            8544,
+            2210
+        ],
+        "null_values": 0,
+        "classes": 5,
+        "balance": 0.4702842377260982
+    },
+    "stroke-prediction": {
+        "n_columns": 11,
+        "n_instances": [
+            4088,
+            1022
+        ],
+        "null_values": 201,
+        "classes": 2,
+        "balance": 0.051169966572383645
+    },
+    "women-clothing": {
+        "n_columns": 9,
+        "n_instances": [
+            16440,
+            7046
+        ],
+        "null_values": 4697,
+        "classes": 21,
+        "balance": 0.0002247696111485727
+    },
+    "fraudulent-jobs": {
+        "n_columns": 17,
+        "n_instances": [
+            12516,
+            5364
+        ],
+        "null_values": 70103,
+        "classes": 2,
+        "balance": 0.042305129913391075
+    },
+    "spanish-wine": {
+        "n_columns": 11,
+        "n_instances": [
+            6000,
+            1500
+        ],
+        "null_values": 2885,
+        "classes": null,
+        "balance": null
+    },
+    "project-kickstarter": {
+        "n_columns": 12,
+        "n_instances": [
+            108129,
+            63465
+        ],
+        "null_values": 16,
+        "classes": 2,
+        "balance": 0.4697830578512397
+    },
+    "price-book": {
+        "n_columns": 9,
+        "n_instances": [
+            6237,
+            1560
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
+    "inferes": {
+        "n_columns": 6,
+        "n_instances": [
+            6444,
+            1612
+        ],
+        "null_values": 0,
+        "classes": 3,
+        "balance": 0.8072390572390572
+    },
+    "predict-salary": {
+        "n_columns": 8,
+        "n_instances": [
+            19802,
+            6601
+        ],
+        "null_values": 25910,
+        "classes": 6,
+        "balance": 0.35
+    },
+    "stsb-en": {
+        "n_columns": 3,
+        "n_instances": [
+            7249,
+            1379
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
+    "stsb-es": {
+        "n_columns": 3,
+        "n_instances": [
+            7249,
+            1379
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
+    "haha": {
+        "n_columns": 2,
+        "n_instances": [
+            24000,
+            6000
+        ],
+        "null_values": 0,
+        "classes": 2,
+        "balance": 0.6274496507764291
+    },
+    "vaccine-es": {
+        "n_columns": 2,
+        "n_instances": [
+            2003,
+            694
+        ],
+        "null_values": 0,
+        "classes": 3,
+        "balance": 0.5069370330843116
+    },
+    "vaccine-en": {
+        "n_columns": 2,
+        "n_instances": [
+            1070,
+            312
+        ],
+        "null_values": 0,
+        "classes": 3,
+        "balance": 0.4179389312977099
+    },
+    "sentiment-lexicons-es": {
+        "n_columns": 2,
+        "n_instances": [
+            4075,
+            200
+        ],
+        "null_values": 0,
+        "classes": 2,
+        "balance": 0.5553435114503816
+    },
+    "language-identification": {
+        "n_columns": 2,
+        "n_instances": [
+            80000,
+            10000
+        ],
+        "null_values": 0,
+        "classes": 20,
+        "balance": 1.0
+    },
+    "twitter-human-bots": {
+        "n_columns": 19,
+        "n_instances": [
+            29950,
+            7488
+        ],
+        "null_values": 19716,
+        "classes": 2,
+        "balance": 0.5019306955518781
+    },
+    "google-guest": {
+        "n_columns": 40,
+        "n_instances": [
+            6079,
+            476
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    }
+}

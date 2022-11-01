@@ -13,8 +13,8 @@ def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "u
     
     dftr = pd.read_csv(train,sep="\t",encoding=encoding)
     dfte = pd.read_csv(test,sep="\t",encoding=encoding)
-    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
+    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     #dfall = pd.read_csv(all,sep="\t",encoding=encoding)
     if in_x_y == False:
@@ -218,8 +218,8 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
     dftr = pd.read_csv(ptrain,sep="\t", encoding = encoding)
     dfte = pd.read_csv(ptest,sep="\t",encoding = encoding)
     
-    dftr['label'] = dftr['label'].astype('category')
-    dfte['label'] = dfte['label'].astype('category')
+    #dftr['label'] = dftr['label'].astype('category')
+    #dfte['label'] = dfte['label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -593,6 +593,9 @@ def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
 
     dftr = pd.read_csv(ptrain, encoding = encoding).drop(['tweet_id','user_id'],axis= 1)
     dfte = pd.read_csv(ptest,encoding = encoding).drop(['tweet_id','user_id'],axis =1)
+    #dftr['label'] = dftr['label'].astype('category')
+    #dfte['label'] = dfte['label'].astype('category')
+   
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -663,8 +666,8 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     dfte['word'] = wptest
     dfte[target] = lptest
     
-    dftr[target] = dftr[target].astype('category')
-    dfte[target] = dfte[target].astype('category')
+    #dftr[target] = dftr[target].astype('category')
+    #dfte[target] = dfte[target].astype('category')
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -716,11 +719,11 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     dfte = pd.read_csv(ptest,encoding = encoding)
     
     dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
-    dfall['labels'] = dfall['labels'].astype('category')
-    dfte['labels'] = dfte['labels'].astype('category')
+    #dfall['labels'] = dfall['labels'].astype('category')
+    #dfte['labels'] = dfte['labels'].astype('category')
     
     dftr = pd.concat([dftr1,dfde],axis=0).reset_index(drop= True)
-    dftr['labels'] = dftr['labels'].astype('category')
+    #dftr['labels'] = dftr['labels'].astype('category')
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -763,7 +766,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
     
     dfall = pd.read_csv(pall,encoding= 'utf-8')
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
-    dfall['account_type'] = dfall['account_type'].astype('category')
+    #dfall['account_type'] = dfall['account_type'].astype('category')
     dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
     dftr = dfall.iloc[0:29950].reset_index()
     dfte = dfall.iloc[29950:].reset_index(drop = True)
@@ -806,7 +809,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
         else:
             print("Incorrect params")  
 
-def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = "question_well_written"):
+def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = "question_asker_intent_understanding"):
    
     import pandas as pd 
     import os 
@@ -818,10 +821,10 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
     dftr = pd.read_csv(ptrain,encoding= 'utf-8')
     dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
     dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
-    dftr['category'] = dftr['category'].astype('category')
+    #dftr['category'] = dftr['category'].astype('category')
     dftr =dftr.drop(['qa_id'],axis=1)
     dfte = pd.merge(left=dfte1,right=dfte2, left_on='qa_id', right_on='qa_id').drop(['qa_id'],axis=1)
-    dfte['category'] = dfte['category'].astype('category')
+    #dfte['category'] = dfte['category'].astype('category')
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop=True)
     
   
@@ -874,10 +877,9 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
     dfte = pd.read_csv(test)
     dfde1 = pd.read_csv(dev)
     dftr = pd.concat([dftr1,dfde1],axis = 0).reset_index(drop = True)
+    #dftr['Label'] = dftr['Label'].astype('category')
+    #dfte['Label'] = dfte['Label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis = 0).reset_index(drop = True)
-    dfall['Label'] = dfall['Label'].astype('category')
-    dftr['Label'] = dftr['Label'].astype('category')
-    dfte['Label'] = dfte['Label'].astype('category')
     
     if in_x_y == False:
             if samples == 1:
@@ -932,7 +934,6 @@ def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encod
     dftr = dftr.set_axis( ['id','experience','job_description','job_desig','job_type','key_skills','location','salary','company_name_encoded'],axis = 1).drop(['id'],axis=1)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
  
-    #experience,job_description,job_desig,job_type,key_skills,location,salary,company_name_encoded
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -1043,6 +1044,9 @@ def load_stroke(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'ut
     pall = os.path.join(path,'healthcare-dataset-stroke-data.csv')
 
     dfall = pd.read_csv(pall,encoding=encoding).drop(['id'],axis=1)
+    #category = ['gender','ever_married','work_type','Residence_type','smoking_status']
+    #for cat in category:
+       # dfall[cat]= dfall[cat].astype('category')
     dtr1 = dfall.iloc[:199]
     dfte = dfall.iloc[199:1221].reset_index(drop=True)
     dtr2 = dfall.iloc[1221:]
@@ -1095,6 +1099,8 @@ def load_wines(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
     dfall = pd.read_csv(pall,encoding=encoding)
     dfall['body'] = dfall['body'].astype('Int64') 
     dfall['acidity'] = dfall['acidity'].astype('Int64')
+    #dfall['year'] =  pd.to_datetime(dfall['year'],infer_datetime_format=True)
+    
     dftr = dfall.iloc[:6000]
     dfte = dfall.iloc[6000:].reset_index(drop= True)
    
@@ -1145,7 +1151,7 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
     dfall = pd.read_csv(all, encoding= encoding)
     dfall = dfall.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
 
-    dfall['Class Name'] = dfall['Class Name'].astype('category')
+    #dfall['Class Name'] = dfall['Class Name'].astype('category')
     dftr = dfall.iloc[:16440]
     dfte = dfall.iloc[16440:].reset_index(drop=True)
     #dfte = dfte.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)

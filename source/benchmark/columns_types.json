@@ -1,0 +1,232 @@
+{
+    "paws-x-en": {
+        "sentence1": "text",
+        "sentence2": "text",
+        "label": "int"
+    },
+    "paws-x-es": {
+        "sentence1": "text",
+        "sentence2": "text",
+        "label": "int"
+    },
+    "wnli-es": {
+        "sentence1": "text",
+        "sentence2": "text",
+        "label": "int"
+    },
+    "wikiann-es": {
+        "tokens": "Seqtokens",
+        "tags": "Seqtags"
+    },
+    "wikicat-es": {
+        "text": "text",
+        "label": "text"
+    },
+    "sst-en": {
+        "label": "int",
+        "text": "text"
+    },
+    "stroke-prediction": {
+        "gender": "text",
+        "age": "float",
+        "hypertension": "int",
+        "heart_disease": "int",
+        "ever_married": "text",
+        "work_type": "text",
+        "Residence_type": "text",
+        "avg_glucose_level": "float",
+        "bmi": "float",
+        "smoking_status": "text",
+        "stroke": "int"
+    },
+    "women-clothing": {
+        "Age": "int",
+        "Title": "text",
+        "Review Text": "text",
+        "Rating": "int",
+        "Recommended IND": "int",
+        "Positive Feedback Count": "int",
+        "Division Name": "text",
+        "Department Name": "text",
+        "Class Name": "text"
+    },
+    "fraudulent-jobs": {
+        "title": "text",
+        "location": "text",
+        "department": "text",
+        "salary_range": "text",
+        "company_profile": "text",
+        "description": "text",
+        "requirements": "text",
+        "benefits": "text",
+        "telecommuting": "int",
+        "has_company_logo": "int",
+        "has_questions": "int",
+        "employment_type": "text",
+        "required_experience": "text",
+        "required_education": "text",
+        "industry": "text",
+        "function": "text",
+        "fraudulent": "int"
+    },
+    "spanish-wine": {
+        "winery": "text",
+        "wine": "text",
+        "year": "text",
+        "rating": "float",
+        "num_reviews": "int",
+        "country": "text",
+        "region": "text",
+        "price": "float",
+        "type": "text",
+        "body": "Int64",
+        "acidity": "Int64"
+    },
+    "project-kickstarter": {
+        "name": "text",
+        "desc": "text",
+        "goal": "float",
+        "keywords": "text",
+        "disable_communication": "bool",
+        "country": "text",
+        "currency": "text",
+        "deadline": "int",
+        "state_changed_at": "int",
+        "created_at": "int",
+        "launched_at": "int",
+        "final_status": "int"
+    },
+    "price-book": {
+        "Title": "text",
+        "Author": "text",
+        "Edition": "text",
+        "Reviews": "text",
+        "Ratings": "text",
+        "Synopsis": "text",
+        "Genre": "text",
+        "BookCategory": "text",
+        "Price": "float"
+    },
+    "inferes": {
+        "Premise": "text",
+        "Hypothesis": "text",
+        "Label": "text",
+        "Topic": "int",
+        "Anno": "int",
+        "Anno_Type": "text"
+    },
+    "predict-salary": {
+        "experience": "text",
+        "job_description": "text",
+        "job_desig": "text",
+        "job_type": "text",
+        "key_skills": "text",
+        "location": "text",
+        "salary": "text",
+        "company_name_encoded": "int"
+    },
+    "stsb-en": {
+        "sentence1": "text",
+        "sentence2": "text",
+        "score": "float"
+    },
+    "stsb-es": {
+        "sentence1": "text",
+        "sentence2": "text",
+        "score": "float"
+    },
+    "haha": {
+        "text": "text",
+        "is_humor": "int"
+    },
+    "meddocan": {
+        "tokens": "Seqtokens",
+        "tags": "Seqtags"
+    },
+    "vaccine-es": {
+        "text": "text",
+        "label": "text"
+    },
+    "vaccine-en": {
+        "text": "text",
+        "label": "text"
+    },
+    "sentiment-lexicons-es": {
+        "word": "text",
+        "label": "text"
+    },
+    "wikineural-en": {
+        "tokens": "Seqtokens",
+        "tags": "Seqtags"
+    },
+    "wikineural-es": {
+        "tokens": "Seqtokens",
+        "tags": "Seqtags"
+    },
+    "language-identification": {
+        "labels": "text",
+        "text": "text"
+    },
+    "twitter-human-bots": {
+        "created_at": "datetime64[ns]",
+        "default_profile": "bool",
+        "default_profile_image": "bool",
+        "description": "text",
+        "favourites_count": "int",
+        "followers_count": "int",
+        "friends_count": "int",
+        "geo_enabled": "bool",
+        "lang": "text",
+        "location": "text",
+        "profile_background_image_url": "text",
+        "profile_image_url": "text",
+        "screen_name": "text",
+        "statuses_count": "int",
+        "verified": "bool",
+        "average_tweets_per_day": "float",
+        "account_age_days": "int",
+        "account_type": "text"
+    },
+    "google-guest": {
+        "question_title": "text",
+        "question_body": "text",
+        "question_user_name": "text",
+        "question_user_page": "text",
+        "answer": "text",
+        "answer_user_name": "text",
+        "answer_user_page": "text",
+        "url": "text",
+        "category": "text",
+        "host": "text",
+        "question_asker_intent_understanding": "float",
+        "question_body_critical": "float",
+        "question_conversational": "float",
+        "question_expect_short_answer": "float",
+        "question_fact_seeking": "float",
+        "question_has_commonly_accepted_answer": "float",
+        "question_interestingness_others": "float",
+        "question_interestingness_self": "float",
+        "question_multi_intent": "float",
+        "question_not_really_a_question": "float",
+        "question_opinion_seeking": "float",
+        "question_type_choice": "float",
+        "question_type_compare": "float",
+        "question_type_consequence": "float",
+        "question_type_definition": "float",
+        "question_type_entity": "float",
+        "question_type_instructions": "float",
+        "question_type_procedure": "float",
+        "question_type_reason_explanation": "float",
+        "question_type_spelling": "float",
+        "question_well_written": "float",
+        "answer_helpful": "float",
+        "answer_level_of_information": "float",
+        "answer_plausible": "float",
+        "answer_relevance": "float",
+        "answer_satisfaction": "float",
+        "answer_type_instructions": "float",
+        "answer_type_procedure": "float",
+        "answer_type_reason_explanation": "float",
+        "answer_well_written": "float"
+    }
+}

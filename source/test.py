@@ -1,85 +1,65 @@
+from numpy import dtype
 from benchmark import AutoMLBench
 # from autogluon.multimodal import MultiModalPredictor
 # from autogluon.text import TextPredictor
 import pandas as pd 
+import json
 AutoMLBench.init()
-
+dict_ = {}
 names  =AutoMLBench.names
-print(names)
-for dataset in names:
-    if dataset == "wikiann-es" or dataset =='meddocan' or dataset =='wikineural-es' or dataset =='wikineural-en':
-        continue
-    #all = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
-    #print(all)
-    train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
-    print(test)
-#     try:
+#print(names)
+print(AutoMLBench.filter(task ='binary' ,expresion=('n_columns',3,4)))
+all_types = {}
+# for dataset in names:
+#     print('#####################################################')
+#     print(dataset)
+#     types = {}
+#     if dataset == "wikiann-es" or dataset =='meddocan' or dataset =='wikineural-es' or dataset =='wikineural-en':
+#         all_types[dataset] = {'tokens':'Seqtokens','tags':'Seqtags'}
+#         continue
+#     target = AutoMLBench.info[dataset]['properties']['targets'][0]
+#     all = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
+#     print(all.loc[1])
+#     for column in all.columns:
+#         t = all[column].dtype.name
+#         if t== 'int64':
+#             types[column] = 'int'
+#         elif t== 'float64':
+#             types[column] = 'float'  
+#         elif t== 'object':
+#             types[column] = 'text' 
+#         else:
+#             types[column] = t       
+#         #print(type(all[column].dtype.name))
+#         #['sentence1','sentence2','text','Title','Review Text','location','company_profile','description','requirements','benefits','country','']
+#     all_types[dataset] = types
+# with open('columns_types.json', 'w') as fp:
+#     json.dump(all_types, fp,indent= 4)     
+
+# def create_prperties():
+#     dict_ ={}
+#     for dataset in names:
 #         print(dataset)
-#         #train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
-#         print(len(train.axes[0]))
-#         print(len(test.axes[0]))
-#         #print(train['label'].values_count())
-        
-#         #print(all.isnull().sum())
-#         #print(all['label'].unique())
-#         #print(all['label'].unique())
-        
-# #         #print(all)
-        
-# #         #print(train)
-#     except:
-#         if dataset =='women-clothing': 
-#             #print(all['Class Name'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
+#         if dataset == "wikiann-es" or dataset =='meddocan' or dataset =='wikineural-es' or dataset =='wikineural-en':
 #             continue
-#         if dataset =='stroke-prediction': 
-#             #print(all['stroke'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='fraudulent-jobs': 
-#            # print(all['fraudulent'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='spanish-wine': 
-#             #print(all['price'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='project-kickstarter': 
-#             #print(all['final_status'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='inferes': 
-#             #print(all['Label'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='predict-salary': 
-#             #print(all['salary'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='twitter-human-bots': 
-#             #print(all['account_type'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='google-guest': 
-#             #print(all['question_well_written'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-#         if dataset =='language-identification': 
-#             #print(all['labels'].unique())
-#             print(len(train.axis[0]))
-#             print(len(test.axis[0]))
-#             continue
-            
-#         print(f'Error{dataset}')
+#         else:
+#             train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
+#             columns = len(train.columns)
+#             intances = [len(train.axes[0]),len(test.axes[0])]
+#             count_null = int(all.isnull().sum().sum())
+#             if AutoMLBench.info[dataset]['classes'] == None:
+#                 number_class = None
+#                 balance = None
+#             else:    
+#                 number_class = len(all[target].unique())
+#                 number_clases_train = train[target].value_counts()
+#                 min = number_clases_train.min()
+#                 max = number_clases_train.max()
+#                 balance = min/max 
+#             dict_[dataset] = {'n_columns':columns,'n_instances':intances,'null_values':count_null,'classes': number_class, 'balance':balance}
+    
+#     with open('datos_a.json', 'w') as fp:
+#         json.dump(dict_, fp,indent= 4)  
 
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-en",format='list',in_xy=True,samples=2)
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-es",in_xy=True,samples=2)
