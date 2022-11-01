@@ -8,7 +8,7 @@ AutoMLBench.init()
 dict_ = {}
 names  =AutoMLBench.names
 #print(names)
-print(AutoMLBench.filter(task ='binary' ,expresion=('n_columns',3,4)))
+print(AutoMLBench.filter(task ='binary',expresion=None))
 all_types = {}
 # for dataset in names:
 #     print('#####################################################')
