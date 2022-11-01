@@ -211,7 +211,7 @@ class AutoMLBench():
         if task == None and expresion == None:
             return cls.names
         elif expresion == None:
-            return [ key  for (key,value) in cls.info.items() if value['task']== task]
+            return [ key  for (key,value) in cls.info.items() if value['properties']['task']== task]
         else:
             list_ = []
             for (key,dicts) in cls.info.items():
