@@ -1,8 +1,5 @@
-from cmath import inf
-from distutils.log import info
-from black import err
-from numpy import average
-    
+
+  
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
 from sklearn.metrics  import make_scorer
 from benchmark import dataset
@@ -21,65 +18,65 @@ class AutoMLBench():
     intances = {}
     inst = {}
     info = []
-    datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
-                     "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
-                     "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
-                     "stsb-es","haha", "meddocan","vaccine-es","vaccine-en","sentiment-lexicons-es",
-                      "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
+    # datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
+    #                  "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
+    #                  "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
+    #                  "stsb-es","haha", "meddocan","vaccine-es","vaccine-en","sentiment-lexicons-es",
+    #                   "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
     
-    urls = ["https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/wikicat-es/wikicat-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/sst-en/sst-en.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/stroke-prediction/stroke-prediction.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/women-clothing/women-clothing.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/fraudulent-jobs/fraudulent-jobs.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/spanish-wine/spanish-wine.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/project-kickstarter/project-kickstarter.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/price-book/price-book.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/inferes/inferes.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/predict-salary/predict-salary.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-en.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
-                "wikineural-en",
-                "wikineural-es",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
-                "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
+    # urls = ["https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/wikicat-es/wikicat-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/sst-en/sst-en.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/stroke-prediction/stroke-prediction.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/women-clothing/women-clothing.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/fraudulent-jobs/fraudulent-jobs.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/spanish-wine/spanish-wine.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/project-kickstarter/project-kickstarter.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/price-book/price-book.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/inferes/inferes.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/predict-salary/predict-salary.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-en.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
+    #             "wikineural-en",
+    #             "wikineural-es",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
+    #             "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
     
-    columns = {"paws-x-en": {'sentence1':'text','sentence2':'text', 'label':'categorical'},
-                    "paws-x-es":{'sentence1':'text','sentence2':'text', 'label':'categorical'},
-                    "wnli-es":{'sentence1':'text','sentence2':'text', 'label':'categorical'},
-                    "wikiann-es":{'tokens':'Seqtokens','tags':'Seqtags'}, 
-                    "wikicat-es":['text','categorical'],
-                    "sst-en": ['categorical','text'],
-                    "stroke-prediction": ['categorical','int','categorical','categorical','categorical','categorical','categorical','float','float','categorical','categorical'],
-                    "women-clothing": ['int','text','text','category','category','category','category','category','category'],
-                    "fraudulent-jobs":['text','string','string','string','text','text','text','text','category','category','category','string','string','string','string','category'],
-                    "spanish-wine":['string','string','int','float','int','string','string','float','category','category','category'], 
-                    "project-kickstarter":[],
-                    "price-book":[],
-                    "inferes":['sentence','sentence','category','int','int','category'],
-                    "predict-salary":[],
-                    "stsb-en":['sentence','sentence','float'], 
-                    "stsb-es":['sentence','sentence','float'],
-                    "haha":['sentence','category'], 
-                    "meddocan":{'tokens':'Seqtokens','tags':'Seqtags'},
-                    "vaccine-es":['text','categorical'],
-                    "vaccine-en":['text','categorical'],
-                    "sentiment-lexicons-es":['text','categorical'],
-                    "wikineural-en":{'tokens':'Seqtokens','tags':'Seqtags'},
-                    "wikineural-es":{'tokens':'Seqtokens','tags':'Seqtags'},
-                    "language-identification":['text','categorical'],
-                    'twitter-human-bots': { 'created_at': 'datetime' ,'default_profile': 'boolean' ,'default_profile_image': 'boolean','description': 'text','favourites_count':'int','followers_count':'int','friends_count':'int','geo_enabled':'boolean','lang':'string','location':'string','profile_background_image_url':'image_url','profile_image_url':'image_url','screen_name':'text','statuses_count':'int','verified':'boolean' ,'average_tweets_per_day':'float' ,'account_age_days':'int' ,'account_type':'category'}, 
-                    'google-guest': ['text','text','text','text','text','text','text','text','categorical','text','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float']}
+    # columns = {"paws-x-en": {'sentence1':'text','sentence2':'text', 'label':'categorical'},
+    #                 "paws-x-es":{'sentence1':'text','sentence2':'text', 'label':'categorical'},
+    #                 "wnli-es":{'sentence1':'text','sentence2':'text', 'label':'categorical'},
+    #                 "wikiann-es":{'tokens':'Seqtokens','tags':'Seqtags'}, 
+    #                 "wikicat-es":['text','categorical'],
+    #                 "sst-en": ['categorical','text'],
+    #                 "stroke-prediction": ['categorical','int','categorical','categorical','categorical','categorical','categorical','float','float','categorical','categorical'],
+    #                 "women-clothing": ['int','text','text','category','category','category','category','category','category'],
+    #                 "fraudulent-jobs":['text','string','string','string','text','text','text','text','category','category','category','string','string','string','string','category'],
+    #                 "spanish-wine":['string','string','int','float','int','string','string','float','category','category','category'], 
+    #                 "project-kickstarter":[],
+    #                 "price-book":[],
+    #                 "inferes":['sentence','sentence','category','int','int','category'],
+    #                 "predict-salary":[],
+    #                 "stsb-en":['sentence','sentence','float'], 
+    #                 "stsb-es":['sentence','sentence','float'],
+    #                 "haha":['sentence','category'], 
+    #                 "meddocan":{'tokens':'Seqtokens','tags':'Seqtags'},
+    #                 "vaccine-es":['text','categorical'],
+    #                 "vaccine-en":['text','categorical'],
+    #                 "sentiment-lexicons-es":['text','categorical'],
+    #                 "wikineural-en":{'tokens':'Seqtokens','tags':'Seqtags'},
+    #                 "wikineural-es":{'tokens':'Seqtokens','tags':'Seqtags'},
+    #                 "language-identification":['text','categorical'],
+    #                 'twitter-human-bots': { 'created_at': 'datetime' ,'default_profile': 'boolean' ,'default_profile_image': 'boolean','description': 'text','favourites_count':'int','followers_count':'int','friends_count':'int','geo_enabled':'boolean','lang':'string','location':'string','profile_background_image_url':'image_url','profile_image_url':'image_url','screen_name':'text','statuses_count':'int','verified':'boolean' ,'average_tweets_per_day':'float' ,'account_age_days':'int' ,'account_type':'category'}, 
+    #                 'google-guest': ['text','text','text','text','text','text','text','text','categorical','text','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float','float']}
     
     # info = { "paws-x-en":{ 'n_columns': 3, 'n_instances': [49401,4000],'targets': ['label'] ,'null_values': False, 'classes': 2, 'class imbalance': 0.23},
     #         "paws-x-es":{ 'n_columns': 3 ,'n_instances': [49401,4000],'targets': ['label'] ,'null_values': True, 'classes': 2, 'class imbalance': 0.23},
@@ -116,17 +113,17 @@ class AutoMLBench():
     #         }
            
     
-    func = ["load_paws","load_paws","load_wnli","load_wikiann","load_wikicat",
-                 "load_sst_en","load_stroke", "load_women_clothing" , "load_jobs","load_wines","load_project_kickstarter",
-                 "load_price_book","load_inferes", "load_predict_salary","load_stsb","load_stsb","load_haha","load_meddocan",
-                 "load_vaccine","load_vaccine","load_sentiment","load_wikineural","load_wikineural","load_language",
-                 "load_twitter_human","load_google_guest"]
+    # func = ["load_paws","load_paws","load_wnli","load_wikiann","load_wikicat",
+    #              "load_sst_en","load_stroke", "load_women_clothing" , "load_jobs","load_wines","load_project_kickstarter",
+    #              "load_price_book","load_inferes", "load_predict_salary","load_stsb","load_stsb","load_haha","load_meddocan",
+    #              "load_vaccine","load_vaccine","load_sentiment","load_wikineural","load_wikineural","load_language",
+    #              "load_twitter_human","load_google_guest"]
     
     @classmethod
     def init(cls):
         local_path = os.path.dirname(os.path.realpath(__file__))
         info_path = os.path.join(local_path,'info.json')
-        cls._write_info(local_path,info_path)
+        #cls._write_info(local_path,info_path)
         with open(info_path, 'r') as fp:
             cls.info = json.load(fp)
         cls.names = list(cls.info.keys())
@@ -188,8 +185,8 @@ class AutoMLBench():
             try:
                 return dataset.loader_func(cls.inst[name],format , in_xy , samples, encoding)
             except Exception as error :
-                print(error)
-                return None
+               print(error)
+               return None
     
     @classmethod
     def load_info(cls,name):
@@ -211,7 +208,7 @@ class AutoMLBench():
         if task == None and expresion == None:
             return cls.names
         elif expresion == None:
-            return [ key  for (key,value) in cls.info.items() if value['properties ']['task']== task]
+            return [ key  for (key,value) in cls.info.items() if value['properties']['task']== task]
         else:
             list_ = []
             for (key,dicts) in cls.info.items():

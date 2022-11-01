@@ -78,8 +78,8 @@
         "properties": {
             "n_columns": 2,
             "n_instances": [
-                0,
-                0
+                30000,
+                10000
             ],
             "targets": null,
             "null_values": 0,
@@ -454,8 +454,8 @@
         "properties": {
             "n_columns": 2,
             "n_instances": [
-                0,
-                0
+                25622,
+                8432
             ],
             "targets": null,
             "null_values": 0,

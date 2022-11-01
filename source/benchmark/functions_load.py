@@ -109,7 +109,7 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
         else:
             print("Incorrect params")
     
-def load_wikiann(self, format = "pandas", samples =3):#falta
+def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='utf-8',target = "ner_tags"):
     '''
     Return :
      dict:   {
@@ -151,12 +151,12 @@ def load_wikiann(self, format = "pandas", samples =3):#falta
         Xtr.append(item['tokens'])
         ytr.append(item['ner_tags'])
     for item in generate_examples(dev):
-        Xde.append(item['tokens'])
-        yde.append(item['ner_tags'])
+        Xtr.append(item['tokens'])
+        ytr.append(item['ner_tags'])
     for item in generate_examples(test):
         Xte.append(item['tokens'])
         yte.append(item['ner_tags'])       
-    return Xtr,ytr, Xde, yde, Xte,yte  
+    return Xtr,ytr, Xte,yte  
 
 def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
     import pandas as pd
