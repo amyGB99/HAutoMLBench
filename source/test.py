@@ -1,5 +1,6 @@
 
 from benchmark import AutoMLBench
+from benchmark.functions_load import f
 # from autogluon.multimodal import MultiModalPredictor
 # from autogluon.text import TextPredictor
 import pandas as pd 
@@ -7,10 +8,17 @@ import json
 AutoMLBench.init()
 dict_ = {}
 names  =AutoMLBench.names
+print(names)
 #print(names)
-print(AutoMLBench.filter(task ='regression'))
-all_types = {}
+#print(AutoMLBench.filter(task ='regression'))
 
+#AutoMLBench.new_dataset('holi','aqui estoy',f,permanent=True)
+#names  =AutoMLBench.names
+#print(names)
+#print(AutoMLBench.info['holi'])
+#AutoMLBench.remove_dataset('holi',permanent=True)
+#names  =AutoMLBench.names
+#print(names)
 
 # X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("wikiann-es",format='list',in_xy=True,samples=2)
 # print(len(X_train))

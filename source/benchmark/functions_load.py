@@ -9,14 +9,12 @@ def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "u
 
     train = os.path.join(path,'train.txt')
     test =  os.path.join(path,'test.txt')
-    all = os.path.join(path,'all.txt')
     
     dftr = pd.read_csv(train,sep="\t",encoding=encoding)
     dfte = pd.read_csv(test,sep="\t",encoding=encoding)
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
-    #dfall = pd.read_csv(all,sep="\t",encoding=encoding)
     if in_x_y == False:
         if samples == 1:
             return dfall.drop(['id'],axis=1)
@@ -60,7 +58,6 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
     import os 
     path = self.download()
     
-    #path = os.path.dirname(os.path.realpath(__file__))
     ptrain = os.path.join(path,'wnli-train-es.tsv')
     ptest =  os.path.join(path,'wnli-dev-es.tsv') 
     
@@ -122,7 +119,7 @@ def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='ut
     import pandas as pd 
     import os 
     import json
-    
+
     path = self.download()
     train = os.path.join(path,'train.json')
     dev =  os.path.join(path,'dev.json')
@@ -211,15 +208,12 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
     path = self.download()
     ptrain = os.path.join(path,'train.tsv')
     ptest =  os.path.join(path,'test.tsv')
-    # ptrain = os.path.join(path,'train.txt')
-    # pdev = os.path.join(path,'dev.txt')
-    # ptest = os.path.join(path,'test.txt')
     
     dftr = pd.read_csv(ptrain,sep="\t", encoding = encoding)
     dfte = pd.read_csv(ptest,sep="\t",encoding = encoding)
     
-    #dftr['label'] = dftr['label'].astype('category')
-    #dfte['label'] = dfte['label'].astype('category')
+    dftr['label'] = dftr['label'].astype('category')
+    dfte['label'] = dfte['label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -267,8 +261,7 @@ def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
     dftr = pd.concat([dftr1,dftr2],axis=0).reset_index(drop = True)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
-    # dfte = dfte[dfte["label"].notna()]
-    # dfte["label"] = dfte["label"].astype("int")
+
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -719,11 +712,11 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     dfte = pd.read_csv(ptest,encoding = encoding)
     
     dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
-    #dfall['labels'] = dfall['labels'].astype('category')
-    #dfte['labels'] = dfte['labels'].astype('category')
+    dfall['labels'] = dfall['labels'].astype('category')
+    dfte['labels'] = dfte['labels'].astype('category')
     
     dftr = pd.concat([dftr1,dfde],axis=0).reset_index(drop= True)
-    #dftr['labels'] = dftr['labels'].astype('category')
+    dftr['labels'] = dftr['labels'].astype('category')
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -766,7 +759,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
     
     dfall = pd.read_csv(pall,encoding= 'utf-8')
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
-    #dfall['account_type'] = dfall['account_type'].astype('category')
+    dfall['account_type'] = dfall['account_type'].astype('category')
     dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
     dftr = dfall.iloc[0:29950].reset_index()
     dfte = dfall.iloc[29950:].reset_index(drop = True)
@@ -877,8 +870,8 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
     dfte = pd.read_csv(test)
     dfde1 = pd.read_csv(dev)
     dftr = pd.concat([dftr1,dfde1],axis = 0).reset_index(drop = True)
-    #dftr['Label'] = dftr['Label'].astype('category')
-    #dfte['Label'] = dfte['Label'].astype('category')
+    dftr['Label'] = dftr['Label'].astype('category')
+    dfte['Label'] = dfte['Label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis = 0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -1151,10 +1144,9 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
     dfall = pd.read_csv(all, encoding= encoding)
     dfall = dfall.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
 
-    #dfall['Class Name'] = dfall['Class Name'].astype('category')
+    dfall['Class Name'] = dfall['Class Name'].astype('category')
     dftr = dfall.iloc[:16440]
     dfte = dfall.iloc[16440:].reset_index(drop=True)
-    #dfte = dfte.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
     
     
     if in_x_y == False:

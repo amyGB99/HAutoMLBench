@@ -10,7 +10,7 @@ from .utils import *
 
 @yaml_info(yaml_tag_ns="automl.benchmark")
 class Dataset(YamlAble):
-    def __init__(self, name: str, url: str,info = None, loader_func=None):
+    def __init__(self, name: str, url: str, info, loader_func):
         #self.name, self.url, self.loader_func = name, url, loader_func
         self.name, self.url, self.info, self.loader_func = name, url, info,loader_func
 
@@ -61,11 +61,3 @@ class Dataset(YamlAble):
             shutil.unpack_archive(zip, save_path)   
         return file    
      
-# info = { 'columns_name': ['hola','hello'], 'columns_type':['int','string'], 'targets': ['label']}
-# #info = 9
-# def f(url):
-#     print(url)
-# a  = Dataset('h','jsjsj',info,f)
-# save_dataset_definition(a)
-# m = load_dataset_definition('h')
-# print(m.info)

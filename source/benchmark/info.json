@@ -2,7 +2,7 @@
     "paws-x-en": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
         "func": "load_paws",
-        "features": {
+        "columns_type": {
             "sentence1": "text",
             "sentence2": "text",
             "label": "int"
@@ -25,7 +25,7 @@
     "paws-x-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
         "func": "load_paws",
-        "features": {
+        "columns_type": {
             "sentence1": "text",
             "sentence2": "text",
             "label": "int"
@@ -48,7 +48,7 @@
     "wnli-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip",
         "func": "load_wnli",
-        "features": {
+        "columns_type": {
             "sentence1": "text",
             "sentence2": "text",
             "label": "int"
@@ -71,15 +71,15 @@
     "wikiann-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip",
         "func": "load_wikiann",
-        "features": {
+        "columns_type": {
             "tokens": "Seqtokens",
             "tags": "Seqtags"
         },
         "properties": {
             "n_columns": 2,
             "n_instances": [
-                30000,
-                10000
+                0,
+                0
             ],
             "targets": null,
             "null_values": 0,
@@ -91,7 +91,7 @@
     "wikicat-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/wikicat-es/wikicat-es.zip",
         "func": "load_wikicat",
-        "features": {
+        "columns_type": {
             "text": "text",
             "label": "text"
         },
@@ -113,7 +113,7 @@
     "sst-en": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/sst-en/sst-en.zip",
         "func": "load_sst_en",
-        "features": {
+        "columns_type": {
             "label": "int",
             "text": "text"
         },
@@ -135,7 +135,7 @@
     "stroke-prediction": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/stroke-prediction/stroke-prediction.zip",
         "func": "load_stroke",
-        "features": {
+        "columns_type": {
             "gender": "text",
             "age": "float",
             "hypertension": "int",
@@ -166,7 +166,7 @@
     "women-clothing": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/women-clothing/women-clothing.zip",
         "func": "load_women_clothing",
-        "features": {
+        "columns_type": {
             "Age": "int",
             "Title": "text",
             "Review Text": "text",
@@ -195,7 +195,7 @@
     "fraudulent-jobs": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/fraudulent-jobs/fraudulent-jobs.zip",
         "func": "load_jobs",
-        "features": {
+        "columns_type": {
             "title": "text",
             "location": "text",
             "department": "text",
@@ -232,7 +232,7 @@
     "spanish-wine": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/spanish-wine/spanish-wine.zip",
         "func": "load_wines",
-        "features": {
+        "columns_type": {
             "winery": "text",
             "wine": "text",
             "year": "text",
@@ -263,7 +263,7 @@
     "project-kickstarter": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/project-kickstarter/project-kickstarter.zip",
         "func": "load_project_kickstarter",
-        "features": {
+        "columns_type": {
             "name": "text",
             "desc": "text",
             "goal": "float",
@@ -295,7 +295,7 @@
     "price-book": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/price-book/price-book.zip",
         "func": "load_price_book",
-        "features": {
+        "columns_type": {
             "Title": "text",
             "Author": "text",
             "Edition": "text",
@@ -324,7 +324,7 @@
     "inferes": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/inferes/inferes.zip",
         "func": "load_inferes",
-        "features": {
+        "columns_type": {
             "Premise": "text",
             "Hypothesis": "text",
             "Label": "text",
@@ -350,7 +350,7 @@
     "predict-salary": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/predict-salary/predict-salary.zip",
         "func": "load_predict_salary",
-        "features": {
+        "columns_type": {
             "experience": "text",
             "job_description": "text",
             "job_desig": "text",
@@ -378,7 +378,7 @@
     "stsb-en": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-en.zip",
         "func": "load_stsb",
-        "features": {
+        "columns_type": {
             "sentence1": "text",
             "sentence2": "text",
             "score": "float"
@@ -401,7 +401,7 @@
     "stsb-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip",
         "func": "load_stsb",
-        "features": {
+        "columns_type": {
             "sentence1": "text",
             "sentence2": "text",
             "score": "float"
@@ -424,7 +424,7 @@
     "haha": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip",
         "func": "load_haha",
-        "features": {
+        "columns_type": {
             "text": "text",
             "is_humor": "int"
         },
@@ -447,15 +447,15 @@
     "meddocan": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip",
         "func": "load_meddocan",
-        "features": {
+        "columns_type": {
             "tokens": "Seqtokens",
             "tags": "Seqtags"
         },
         "properties": {
             "n_columns": 2,
             "n_instances": [
-                25622,
-                8432
+                0,
+                0
             ],
             "targets": null,
             "null_values": 0,
@@ -467,7 +467,7 @@
     "vaccine-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
         "func": "load_vaccine",
-        "features": {
+        "columns_type": {
             "text": "text",
             "label": "text"
         },
@@ -489,7 +489,7 @@
     "vaccine-en": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
         "func": "load_vaccine",
-        "features": {
+        "columns_type": {
             "text": "text",
             "label": "text"
         },
@@ -511,7 +511,7 @@
     "sentiment-lexicons-es": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
         "func": "load_sentiment",
-        "features": {
+        "columns_type": {
             "word": "text",
             "label": "text"
         },
@@ -533,7 +533,7 @@
     "wikineural-en": {
         "url": "wikineural-en",
         "func": "load_wikineural",
-        "features": {
+        "columns_type": {
             "tokens": "Seqtokens",
             "tags": "Seqtags"
         },
@@ -553,7 +553,7 @@
     "wikineural-es": {
         "url": "wikineural-es",
         "func": "load_wikineural",
-        "features": {
+        "columns_type": {
             "tokens": "Seqtokens",
             "tags": "Seqtags"
         },
@@ -573,7 +573,7 @@
     "language-identification": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
         "func": "load_language",
-        "features": {
+        "columns_type": {
             "labels": "text",
             "text": "text"
         },
@@ -595,7 +595,7 @@
     "twitter-human-bots": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
         "func": "load_twitter_human",
-        "features": {
+        "columns_type": {
             "created_at": "datetime64[ns]",
             "default_profile": "bool",
             "default_profile_image": "bool",
@@ -633,7 +633,7 @@
     "google-guest": {
         "url": "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip",
         "func": "load_google_guest",
-        "features": {
+        "columns_type": {
             "question_title": "text",
             "question_body": "text",
             "question_user_name": "text",
