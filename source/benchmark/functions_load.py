@@ -659,8 +659,8 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     dfte['word'] = wptest
     dfte[target] = lptest
     
-    #dftr[target] = dftr[target].astype('category')
-    #dfte[target] = dfte[target].astype('category')
+    dftr[target] = dftr[target].astype('category')
+    dfte[target] = dfte[target].astype('category')
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     

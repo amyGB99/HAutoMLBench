@@ -1,26 +1,41 @@
 
+from numpy import average
 from benchmark import AutoMLBench
-from benchmark.functions_load import f
+from benchmark import Metric
+from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
+
 # from autogluon.multimodal import MultiModalPredictor
 # from autogluon.text import TextPredictor
 import pandas as pd 
 import json
-AutoMLBench.init()
-dict_ = {}
-names  =AutoMLBench.names
-print(names)
+AutoMLBench.create_datasets()
+# dict_ = {}
+# names  =AutoMLBench.names
+# print(names)
 #print(names)
-#print(AutoMLBench.filter(task ='regression'))
+#print(AutoMLBench.filter(task ='binary', expresion=('n_columns',3,None)))
+#info = {"n_instances": [80000, 300], "n_columns": 2, "columns_type": {"labels": "text", "text": "text"}, "targets": ["labels"], "null_values": 0, "task": "multiclass", "classes": 20, "class balance": 1.0}
+#AutoMLBench.new_dataset('wikineural-en','llaala','f',info = info)
+#AutoMLBench.remove_dataset('wikineural-en')
 
-#AutoMLBench.new_dataset('holi','aqui estoy',f,permanent=True)
+#AutoMLBench.new_dataset('holi','aqui estoy','f')
+#AutoMLBench.new_dataset('holi','aqui','f',info = info)
+y_pred = ["positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "negative", "positive", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative"]
 #names  =AutoMLBench.names
 #print(names)
 #print(AutoMLBench.info['holi'])
 #AutoMLBench.remove_dataset('holi',permanent=True)
 #names  =AutoMLBench.names
 #print(names)
-
-# X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("wikiann-es",format='list',in_xy=True,samples=2)
+#print(AutoMLBench.filter())
+#print(AutoMLBench.names)
+#X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("sentiment-lexicons-es",format='pandas',in_xy=True,samples=2)
+#y = y_test['label'].tolist()
+##label = ['negative','positive']
+#f1_ = Metric.f1()
+#print(f1)
+#print(f1_(y_true= y,y_pred))
+#X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("wikiann-es",format='list',in_xy=True,samples=2)
 # print(len(X_train))
 # print(len(X_test))
 
