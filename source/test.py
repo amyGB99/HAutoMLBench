@@ -1,7 +1,6 @@
 
-from numpy import average
+
 from benchmark import AutoMLBench
-from benchmark import Metric
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
 
 # from autogluon.multimodal import MultiModalPredictor
@@ -13,14 +12,13 @@ AutoMLBench.create_datasets()
 # names  =AutoMLBench.names
 # print(names)
 #print(names)
-#print(AutoMLBench.filter(task ='binary', expresion=('n_columns',3,None)))
 #info = {"n_instances": [80000, 300], "n_columns": 2, "columns_type": {"labels": "text", "text": "text"}, "targets": ["labels"], "null_values": 0, "task": "multiclass", "classes": 20, "class balance": 1.0}
 #AutoMLBench.new_dataset('wikineural-en','llaala','f',info = info)
 #AutoMLBench.remove_dataset('wikineural-en')
 
 #AutoMLBench.new_dataset('holi','aqui estoy','f')
 #AutoMLBench.new_dataset('holi','aqui','f',info = info)
-y_pred = ["positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "negative", "positive", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative"]
+#y_pred = ["positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "negative", "positive", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative"]
 #names  =AutoMLBench.names
 #print(names)
 #print(AutoMLBench.info['holi'])
@@ -31,7 +29,9 @@ y_pred = ["positive", "positive", "positive", "positive", "positive", "positive"
 #print(AutoMLBench.names)
 #X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("sentiment-lexicons-es",format='pandas',in_xy=True,samples=2)
 #y = y_test['label'].tolist()
-##label = ['negative','positive']
+#label = ['negative','positive']
+#print(y)
+#print(AutoMLBench.scoring['f1_score_w'][0](y_true = y,y_pred = y_pred, labels =label,average =AutoMLBench.scoring['f1_score_w'][1] ))
 #f1_ = Metric.f1()
 #print(f1)
 #print(f1_(y_true= y,y_pred))
@@ -41,6 +41,7 @@ y_pred = ["positive", "positive", "positive", "positive", "positive", "positive"
 
 
 def create_columns_type(names):
+    all_types = {}
     for dataset in names:
         print('#####################################################')
         print(dataset)
@@ -67,6 +68,9 @@ def create_columns_type(names):
     with open('columns_types.json', 'w') as fp:
         json.dump(all_types, fp,indent= 4)     
 
+
+
+
 def create_prperties(names):
     dict_ ={}
     for dataset in names:
@@ -75,6 +79,8 @@ def create_prperties(names):
             continue
         else:
             train,test = AutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
+            post = None
+            
             columns = len(train.columns)
             intances = [len(train.axes[0]),len(test.axes[0])]
             count_null = int(all.isnull().sum().sum())
@@ -87,10 +93,11 @@ def create_prperties(names):
                 min = number_clases_train.min()
                 max = number_clases_train.max()
                 balance = min/max 
-            dict_[dataset] = {'n_columns':columns,'n_instances':intances,'null_values':count_null,'classes': number_class, 'balance':balance}
+            dict_[dataset] = {'n_columns':columns,'n_instances':intances,'null_values':count_null,'post_label': post,'classes': number_class,'balance':balance}
     
-    with open('datos_a.json', 'w') as fp:
+    with open('datos.json', 'w') as fp:
         json.dump(dict_, fp,indent= 4)  
+names = AutoMLBench.filter(task ='binary', expresion=('n_columns',3,None))
 
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-en",format='list',in_xy=True,samples=2)
 #train,y_train, test ,y_test= AutoMLBench.load_dataset("stsb-es",in_xy=True,samples=2)

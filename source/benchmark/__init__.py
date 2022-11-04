@@ -16,7 +16,7 @@ import jsonlines
 
 class AutoMLBench():
     
-    scoring = { 'accuracy' : make_scorer(accuracy_score), 
+    scoring_mak = { 'accuracy' : make_scorer(accuracy_score), 
                 'balanced_accuracy' : make_scorer(balanced_accuracy_score),
                 'precision' : make_scorer(precision_score),
                 'precision_macro' : make_scorer(precision_score, average = 'macro'),
@@ -36,6 +36,28 @@ class AutoMLBench():
                 'MSE' : make_scorer(mean_squared_error),
                 'RMSE' : make_scorer(mean_squared_error,squared=False),
                 }
+    
+    scoring = { 'accuracy' : (accuracy_score , None), 
+                'balanced_accuracy' : (balanced_accuracy_score,None),
+                'precision' : (precision_score,None),
+                'precision_macro' : (precision_score,'macro'),
+                'precision_w' : (precision_score, 'weighted'),
+                
+                'recall' : (recall_score , None), 
+                'recall_macro' :(recall_score,'macro'), 
+                'recall_w' : (recall_score, 'weighted'),
+                
+                'f1_score' : (f1_score , None) ,
+                'f1_score_macro' : (f1_score,'macro'),
+                'f1_score_w' : (f1_score, 'weighted'),
+                
+                'roc_auc' : (roc_auc_score,None),
+                
+                'MAE' : (mean_absolute_error,None),
+                'MSE' : (mean_squared_error,None),
+                'RMSE' : (mean_squared_error,False),
+                }
+ 
     
     @classmethod
     def create_datasets(cls):
@@ -86,7 +108,9 @@ class AutoMLBench():
                             dict_.append({ name: {'n_instances': [0,0], 
                                     'n_columns': 2, 
                                     'columns_type': columns_type[name],
-                                    'targets': None ,'null_values': 0,'task': 'entity' ,
+                                    'targets': None ,'null_values': 0,
+                                    'task': 'entity' ,
+                                    'pos_label': None,
                                     'classes': None, 
                                     'class balance':None}})
                                 
@@ -94,16 +118,26 @@ class AutoMLBench():
                             clases = properties[name]['classes']
                             if clases == 2:
                                 task = 'binary'
+                                if name =='sentiment-lexicons-es':
+                                    pos = 'positive'
+                                elif name == 'twitter-human-bots':
+                                    pos = 'bot'
+                                else:
+                                    pos = 1    
                             elif clases == None:
                                 task ='regression'
+                                pos = None
                             else:
-                                task = 'multiclass'            
+                                task = 'multiclass'
+                                pos = None           
                             dict_.append({ name: {'n_instances': properties[name]['n_instances'],
                                     'n_columns': properties[name]['n_columns'],
                                     'columns_type': columns_type[name],
                                     'targets': labels[i] ,
                                     'null_values': properties[name]['null_values'], 
-                                    'task': task,'classes': clases , 
+                                    'task': task,
+                                    'pos_label': pos,
+                                    'classes': clases , 
                                     'class balance': properties[name]['balance']} })
                          
             with jsonlines.open(info_path, 'w') as fp:
@@ -292,7 +326,9 @@ class AutoMLBench():
                 'columns_type': {'name' : type},
                 'targets': list[str] ,
                 'null_values': int,
-                'task': str ,'classes': int, 
+                'task': str 
+                'pos_label': Any,
+                'classes': int, 
                 'class balance':float}
         '''
         correct = False
@@ -320,6 +356,7 @@ class AutoMLBench():
                     'columns_type': None,
                     'targets': None ,'null_values': None,
                     'task': None,
+                    'pos_label': None,
                     'classes': None, 
                     'class balance':None}
                 }
