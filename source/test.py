@@ -7,7 +7,8 @@ from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
 # from autogluon.text import TextPredictor
 import pandas as pd 
 import json
-AutoMLBench.create_datasets()
+import os
+#AutoMLBench.create_datasets()
 # dict_ = {}
 # names  =AutoMLBench.names
 # print(names)
@@ -18,7 +19,6 @@ AutoMLBench.create_datasets()
 
 #AutoMLBench.new_dataset('holi','aqui estoy','f')
 #AutoMLBench.new_dataset('holi','aqui','f',info = info)
-#y_pred = ["positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "negative", "positive", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative"]
 #names  =AutoMLBench.names
 #print(names)
 #print(AutoMLBench.info['holi'])
@@ -27,9 +27,20 @@ AutoMLBench.create_datasets()
 #print(names)
 #print(AutoMLBench.filter())
 #print(AutoMLBench.names)
+local_path = os.path.dirname(os.path.realpath(__file__))
+result_path = os.path.join(local_path,'y_gpu.json')
+with open(result_path,'r') as fp:
+    results = json.load(fp)
+y_pred = results['stsb-en']    
+#y_pred = ["positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "positive", "negative", "positive", "negative", "negative", "positive", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "positive", "negative", "negative", "positive", "positive", "negative", "positive", "positive", "positive", "positive", "positive", "negative", "negative", "positive", "negative", "negative", "positive", "positive", "positive", "negative", "positive", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "negative", "positive", "negative", "negative", "negative", "negative", "negative"]
 #X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("sentiment-lexicons-es",format='pandas',in_xy=True,samples=2)
-#y = y_test['label'].tolist()
+X_train, y_train, X_test, y_test = AutoMLBench.load_dataset("stsb-en",format='pandas',in_xy=True,samples=2)
+
+y = y_test['score'].tolist()
 #label = ['negative','positive']
+#AutoMLBench.evaluate('sentiment-lexicons-es',y,y_pred,'binary','positive',label)
+AutoMLBench.evaluate('stsb-en',y,y_pred,'regression')
+
 #print(y)
 #print(AutoMLBench.scoring['f1_score_w'][0](y_true = y,y_pred = y_pred, labels =label,average =AutoMLBench.scoring['f1_score_w'][1] ))
 #f1_ = Metric.f1()

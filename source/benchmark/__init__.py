@@ -37,26 +37,19 @@ class AutoMLBench():
                 'RMSE' : make_scorer(mean_squared_error,squared=False),
                 }
     
-    scoring = { 'accuracy' : (accuracy_score , None), 
-                'balanced_accuracy' : (balanced_accuracy_score,None),
-                'precision' : (precision_score,None),
-                'precision_macro' : (precision_score,'macro'),
-                'precision_w' : (precision_score, 'weighted'),
+    scoring = { 
+                'accuracy' : accuracy_score, 
+                'balanced_accuracy' : balanced_accuracy_score,
                 
-                'recall' : (recall_score , None), 
-                'recall_macro' :(recall_score,'macro'), 
-                'recall_w' : (recall_score, 'weighted'),
+                'precision' : precision_score,
+                'recall' : recall_score , 
+                'f1_score': f1_score  ,
+                'roc_auc' : roc_auc_score,
                 
-                'f1_score' : (f1_score , None) ,
-                'f1_score_macro' : (f1_score,'macro'),
-                'f1_score_w' : (f1_score, 'weighted'),
-                
-                'roc_auc' : (roc_auc_score,None),
-                
-                'MAE' : (mean_absolute_error,None),
-                'MSE' : (mean_squared_error,None),
-                'RMSE' : (mean_squared_error,False),
-                }
+                'MAE' : mean_absolute_error,
+                'MSE' : mean_squared_error,
+                'RMSE' : mean_squared_error,
+              }
  
     
     @classmethod
@@ -154,7 +147,6 @@ class AutoMLBench():
             if not remove:
                 infos[index] = info    
             if remove:
-                print('kkdkdd')
                 infos.pop(index) 
         elif not remove: 
             infos.append(info) 
@@ -382,30 +374,67 @@ class AutoMLBench():
             print(index)
             cls.__update_info(info_path,remove= True,index= index)
         except:
-            print('kakaka')
             cls.__change_names(local_path,reset = True)
             cls.__write_info(local_path,info_path,reset=True)
 
-# class Metric():
-#     @classmethod    
-#     def auroc(cls,**kwargs):
-#         auroc = make_scorer(name= 'roc_auc',
-#         score_func=roc_auc_score,
-#         optimum= 1,
-#         greater_is_better=True,**kwargs)
-#         return auroc
-#     @classmethod
-#     def f1(cls):
-#         f1 = make_scorer(f1_score, average='weighted')
-#         return f1
-#     @classmethod
-#     def accuracy(cls,**kwargs):
-#         accuracy = make_scorer(name= 'accuracy',
-#         score_func= accuracy_score,
-#         optimum= 1,
-#         greater_is_better=True,**kwargs) 
-#         return accuracy   
- 
+    @classmethod
+    def evaluate(cls,name,y_true,y_pred, task, pos=None ,labels = None,save_path = None, name_archive ='results'):
+        metric_class = [cls.scoring['accuracy'],cls.scoring['precision'],cls.scoring['recall'], 
+                cls.scoring['f1_score'],cls.scoring['balanced_accuracy']] 
         
+        metric_regr = [cls.scoring['MSE'],cls.scoring['MAE']]
+        try:
+            result_path = os.path.join(save_path,'.'.join([name_archive,'json']))
+        except:    
+            local_path = os.path.dirname(os.path.realpath(__file__))
+            result_path = os.path.join(local_path,'.'.join([name_archive,'json']))
             
+        dict_ = {}
+        try:
+            with open(result_path,'r') as fp:
+                results = json.load(fp)
+        except:
+           with open(result_path,'w') as fp:
+            json.dump(dict_,fp)         
+        
+        if task == 'binary' or task == 'multiclass' :
+            metrics =metric_class
+            
+        elif task == 'regression':
+            metrics =metric_regr
+        
+        for metric in metrics:
+            metric_name =metric.__name__
+            try:
+                if  metric_name == 'accuracy_score' or metric_name == 'balanced_accuracy_score':
+                        score = metric(y_true, y_pred)      
+                else:
+                    if task == 'binary':
+                        score1 = metric(y_true,y_pred,average = 'micro')  
+                        score2 = metric(y_true,y_pred,pos_label= pos)  
+                        score = {'micro': score1, 'normal': score2}
+                    elif task == 'multiclass':
+                        score1 = metric(y_true,y_pred,labels =labels,average = 'macro')  
+                        score2 = metric(y_true,y_pred ,labels =labels,average ='weighted')    
+                        score = {'macro': score1, 'weighted': score2}
+                    elif task =='regression':
+                        if metric_name == 'mean_squared_error': 
+                            score1 = metric(y_true,y_pred,squared = False)
+                            score2 = metric(y_true,y_pred)
+                            score = {'RMSE': score1, 'MSE': score2}
+
+                        else:
+                            score = metric(y_true,y_pred)             
+                dict_[metric_name]= score
+            except Exception as error:
+                print(error)
+                    
+        results[name] = dict_
+        try:
+            with open(result_path,'w') as fp:
+                json.dump(results,fp,indent=4)
+        except Exception as error:
+            print(error)
+                    
+        print(results)
         
