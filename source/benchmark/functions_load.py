@@ -761,7 +761,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
     dfall['account_type'] = dfall['account_type'].astype('category')
     dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
-    dftr = dfall.iloc[0:29950].reset_index()
+    dftr = dfall.iloc[0:29950].reset_index(drop = True)
     dfte = dfall.iloc[29950:].reset_index(drop = True)
 
     if in_x_y == False:

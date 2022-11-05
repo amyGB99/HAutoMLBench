@@ -29,6 +29,16 @@
         "classes": 2,
         "balance": 0.9659442724458205
     },
+    "wikiann-es": {
+        "n_columns": 2,
+        "n_instances": [
+            30000,
+            10000
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
     "wikicat-es": {
         "n_columns": 2,
         "n_instances": [
@@ -158,6 +168,16 @@
         "null_values": 0,
         "classes": 2,
         "balance": 0.6274496507764291
+    },
+    "meddocan": {
+        "n_columns": 2,
+        "n_instances": [
+            25622,
+            8432
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
     },
     "vaccine-es": {
         "n_columns": 2,

@@ -97,11 +97,12 @@ class AutoMLBench():
                 with open(columns_type_path, 'r') as ff:
                     columns_type = json.load(ff)
                     for name,i in zip(names,range(len(names))):
-                        if name == "wikiann-es" or name =='meddocan' or name =='wikineural-es' or name =='wikineural-en': 
+                        if name =='wikineural-es' or name =='wikineural-en': 
                             dict_.append({ name: {'n_instances': [0,0], 
                                     'n_columns': 2, 
                                     'columns_type': columns_type[name],
-                                    'targets': None ,'null_values': 0,
+                                    'targets': None ,
+                                    'null_values': 0,
                                     'task': 'entity' ,
                                     'pos_label': None,
                                     'classes': None, 
@@ -118,7 +119,10 @@ class AutoMLBench():
                                 else:
                                     pos = 1    
                             elif clases == None:
-                                task ='regression'
+                                if name == 'meddocan' or name =='wikiann-es':
+                                    task = 'entity'
+                                else:
+                                    task ='regression'
                                 pos = None
                             else:
                                 task = 'multiclass'
@@ -364,14 +368,12 @@ class AutoMLBench():
                     
     @classmethod
     def remove_dataset(cls, name: str):
-        #names,_,_,infos= cls.init(True) 
         
         local_path = os.path.dirname(os.path.realpath(__file__))
         info_path = os.path.join(local_path,'info.jsonl')
         row  ={'name': name}
         try:
             index,_ = cls.__change_names(local_path, dataset= row,insert= False,reset =False)
-            print(index)
             cls.__update_info(info_path,remove= True,index= index)
         except:
             cls.__change_names(local_path,reset = True)
@@ -388,7 +390,7 @@ class AutoMLBench():
         except:    
             local_path = os.path.dirname(os.path.realpath(__file__))
             result_path = os.path.join(local_path,'.'.join([name_archive,'json']))
-            
+        results = {}   
         dict_ = {}
         try:
             with open(result_path,'r') as fp:
