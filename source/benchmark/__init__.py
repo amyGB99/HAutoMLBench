@@ -14,7 +14,7 @@ import json
 import io
 import jsonlines
 
-class AutoMLBench():
+class HAutoMLBench():
     
     scoring_mak = { 'accuracy' : make_scorer(accuracy_score), 
                 'balanced_accuracy' : make_scorer(balanced_accuracy_score),
@@ -56,9 +56,12 @@ class AutoMLBench():
     def create_datasets(cls):
         local_path = os.path.dirname(os.path.realpath(__file__))
         info_path = os.path.join(local_path,'info.jsonl')
-        _, df = cls.__change_names(local_path, reset= True)
-        
-        infos = cls.__write_info(local_path,info_path,reset=True)
+        try:
+            _, df = cls.__change_names(local_path, reset= True)
+            infos = cls.__write_info(local_path,info_path,reset=True)
+        except:
+            print('Error creating benchmark datasets make sure the files: columns_type and properties , are created correctly.') 
+            return   
         names = df['name'].to_list()
         urls = df['url'].to_list()
         funcs = df['func'].to_list()
@@ -86,56 +89,46 @@ class AutoMLBench():
         
     @classmethod
     def __write_info(cls,local_path,info_path,reset = False):
-        labels  = [['label'], ['label'], ['label'], ['label'], ['label'],['label'],['stroke'],['Class Name'],['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],['is_humor','average'],['label'],['label'],['label'],['label'],['label'],['label'],['labels'],['account_type'],['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
+        labels  = [['label'], ['label'], ['label'], ['ner_tags'], ['label'],['label'],['stroke'],['Class Name'],
+                   ['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],
+                   ['is_humor','average'],['ner_tags'],['label'],['label'],['label'],['label'],['ner_tags'],['labels'],['account_type'],
+                   ['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
         dict_ = []
         properties_path = os.path.join(local_path,'properties.json')
         columns_type_path = os.path.join(local_path,'columns_types.json')
-        names,_,_,_= cls.init(False)
         if reset == True:
             with open(properties_path, 'r') as fp:
                 properties = json.load(fp)
                 with open(columns_type_path, 'r') as ff:
                     columns_type = json.load(ff)
-                    for name,i in zip(names,range(len(names))):
-                        if name =='wikineural-es' or name =='wikineural-en': 
-                            dict_.append({ name: {'n_instances': [0,0], 
-                                    'n_columns': 2, 
-                                    'columns_type': columns_type[name],
-                                    'targets': None ,
-                                    'null_values': 0,
-                                    'task': 'entity' ,
-                                    'pos_label': None,
-                                    'classes': None, 
-                                    'class balance':None}})
-                                
-                        else: 
-                            clases = properties[name]['classes']
-                            if clases == 2:
-                                task = 'binary'
-                                if name =='sentiment-lexicons-es':
-                                    pos = 'positive'
-                                elif name == 'twitter-human-bots':
-                                    pos = 'bot'
-                                else:
-                                    pos = 1    
-                            elif clases == None:
-                                if name == 'meddocan' or name =='wikiann-es':
-                                    task = 'entity'
-                                else:
-                                    task ='regression'
-                                pos = None
+                    for name,i in zip(properties.keys(),range(len(properties.keys()))):
+                        clases = properties[name]['classes']
+                        if clases == 2:
+                            task = 'binary'
+                            if name =='sentiment-lexicons-es':
+                                pos = 'positive'
+                            elif name == 'twitter-human-bots':
+                                pos = 'bot'
                             else:
-                                task = 'multiclass'
-                                pos = None           
-                            dict_.append({ name: {'n_instances': properties[name]['n_instances'],
-                                    'n_columns': properties[name]['n_columns'],
-                                    'columns_type': columns_type[name],
-                                    'targets': labels[i] ,
-                                    'null_values': properties[name]['null_values'], 
-                                    'task': task,
-                                    'pos_label': pos,
-                                    'classes': clases , 
-                                    'class balance': properties[name]['balance']} })
+                                pos = 1    
+                        elif clases == None:
+                            if name == 'meddocan' or name =='wikiann-es' or name =='wikineural-es' or name =='wikineural-en':
+                                task = 'entity'
+                            else:
+                                task ='regression'
+                            pos = None
+                        else:
+                            task = 'multiclass'
+                            pos = None           
+                        dict_.append({ name: {'n_instances': properties[name]['n_instances'],
+                                'n_columns': properties[name]['n_columns'],
+                                'columns_type': columns_type[name],
+                                'targets': labels[i] ,
+                                'null_values': properties[name]['null_values'], 
+                                'task': task,
+                                'pos_label': pos,
+                                'classes': clases , 
+                                'class balance': properties[name]['balance']} })
                          
             with jsonlines.open(info_path, 'w') as fp:
                 fp.write_all(dict_)
@@ -167,7 +160,6 @@ class AutoMLBench():
     def __change_names(cls,local_path, dataset = None, insert = False, reset =False):
          
         archive_path = os.path.join(local_path,'bechmark_info.tsv')
-        #archive_path = os.path.join(local_path,'bechmark_info.jsonl')
         
         datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
                     "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
@@ -195,8 +187,8 @@ class AutoMLBench():
             "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
             "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
             "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
-            "wikineural-en",
-            "wikineural-es",
+            "https://github.com/amyGB99/automl_benchmark/releases/download/wikineural/wikineural-en.zip",
+            "https://github.com/amyGB99/automl_benchmark/releases/download/wikineural/wikineural-es.zip",
             "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
             "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
             "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
@@ -246,13 +238,16 @@ class AutoMLBench():
         function(*args)
     
     @classmethod
-    def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8'):
+    def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8',target = None):
         dataset = utils.load_dataset_definition(name)
         if dataset is not None:
             try:
-                return dataset.loader_func(dataset,format , in_xy , samples, encoding)
+                if target!= None:
+                    return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding,target = target)
+                else:
+                    return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding)   
             except Exception as error :
-               print(error)
+               print(f"Error loading the dataset {name} make sure that the parameters were entered correctly and that the dataset belongs to the benchmark")
         return None
     
     @classmethod
@@ -260,7 +255,7 @@ class AutoMLBench():
         try:
             return utils.load_dataset_definition(name).info
         except:
-            print("There is no registered dataset with that name")
+            print(f"Error: There is no registered dataset with the name : {name}")
             return None
     
     @classmethod
@@ -291,7 +286,7 @@ class AutoMLBench():
                         property,min,max = expresion
                         value_property = value[property]
                         if min == None and max == None:
-                            print('Both ranges cannot be none')
+                            print('Error : Both ranges cannot be none')
                             break
                         try:
 
@@ -307,7 +302,7 @@ class AutoMLBench():
                                 if value_property >= min:
                                     list_.append(name)           
                         except:
-                            print('The feature is incorrect')
+                            print('Error: The feature is incorrect')
                             break            
                 except Exception as error:
                     print(error)
@@ -315,7 +310,7 @@ class AutoMLBench():
             return list_        
                                          
     @classmethod
-    def new_dataset(cls,name: str, url: str, function: str , info = None ):
+    def new_dataset(cls,name: str, url: str, function, info = None ):
         '''
         info = {'n_instances': [int,int],
                 'n_columns': int , 
@@ -328,7 +323,6 @@ class AutoMLBench():
                 'class balance':float}
         '''
         correct = False
-        #names,_,_,_= cls.init(True) 
 
         try:
             inst = dataset.Dataset(name,url,info,cls.return_func('.functions_load',function))
@@ -338,7 +332,7 @@ class AutoMLBench():
                 inst = dataset.Dataset(name,url,info,function) 
                 correct = True
             except Exception as error:
-                print(error) 
+                print("Error: The load function was not entered correctly, make sure it is in the functions_load file")
         if correct:    
             local_path = os.path.dirname(os.path.realpath(__file__))
             info_path = os.path.join(local_path,'info.jsonl')
@@ -350,7 +344,8 @@ class AutoMLBench():
                 info = { name:{'n_instances': None, 
                     'n_columns': None, 
                     'columns_type': None,
-                    'targets': None ,'null_values': None,
+                    'targets': None ,
+                    'null_values': None,
                     'task': None,
                     'pos_label': None,
                     'classes': None, 
@@ -363,9 +358,11 @@ class AutoMLBench():
                 cls.__update_info(info_path, info = info,remove = False, index = index)   
                 utils.save_dataset_definition(inst)
             except Exception as error:
-                print(error)
-                
-                    
+                print('Error in removing the new dataset, the benchmark information was corrupted')
+                print('Resetting to Benchmark Default Data.....')
+                cls.__change_names(local_path,reset = True)
+                cls.__write_info(local_path,info_path,reset=True)
+                          
     @classmethod
     def remove_dataset(cls, name: str):
         
@@ -375,7 +372,9 @@ class AutoMLBench():
         try:
             index,_ = cls.__change_names(local_path, dataset= row,insert= False,reset =False)
             cls.__update_info(info_path,remove= True,index= index)
-        except:
+        except Exception as error:
+            print('Error in removing the new dataset, the benchmark information was corrupted')
+            print('Resetting to Benchmark Default Data.....')
             cls.__change_names(local_path,reset = True)
             cls.__write_info(local_path,info_path,reset=True)
 
@@ -438,5 +437,4 @@ class AutoMLBench():
         except Exception as error:
             print(error)
                     
-        print(results)
-        
+        return results        

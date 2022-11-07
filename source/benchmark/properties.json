@@ -209,6 +209,26 @@
         "classes": 2,
         "balance": 0.5553435114503816
     },
+    "wikineural-en": {
+        "n_columns": 2,
+        "n_instances": [
+            92720,
+            23187
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
+    "wikineural-es": {
+        "n_columns": 2,
+        "n_instances": [
+            76320,
+            19158
+        ],
+        "null_values": 0,
+        "classes": null,
+        "balance": null
+    },
     "language-identification": {
         "n_columns": 2,
         "n_instances": [
@@ -220,7 +240,7 @@
         "balance": 1.0
     },
     "twitter-human-bots": {
-        "n_columns": 19,
+        "n_columns": 18,
         "n_instances": [
             29950,
             7488

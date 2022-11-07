@@ -12,7 +12,7 @@ from .utils import *
 class Dataset(YamlAble):
     def __init__(self, name: str, url: str, info, loader_func):
         #self.name, self.url, self.loader_func = name, url, loader_func
-        self.name, self.url, self.info, self.loader_func = name, url, info,loader_func
+        self.name, self.url, self.info,self.loader_func = name, url, info, loader_func
 
         if self.loader_func is not None:
             self.loader_func_name = self.loader_func.__name__
@@ -34,7 +34,7 @@ class Dataset(YamlAble):
     def __from_yaml_dict__(cls, dct, yaml_tag):
         # Accept a default value for b
         loader = import_loader(dct["name"], dct["loader_func_name"],)
-        return cls(dct["name"], dct["url"], dct['info'] ,loader)
+        return cls(dct["name"], dct["url"], dct['info'] , loader)
     
     def download(self):
         '''

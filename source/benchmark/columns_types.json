@@ -1,18 +1,18 @@
 {
     "paws-x-en": {
-        "sentence1": "text",
-        "sentence2": "text",
-        "label": "int"
+        "sentence1": "sentence",
+        "sentence2": "sentence",
+        "label": "category"
     },
     "paws-x-es": {
-        "sentence1": "text",
-        "sentence2": "text",
-        "label": "int"
+        "sentence1": "sentence",
+        "sentence2": "sentence",
+        "label": "category"
     },
     "wnli-es": {
-        "sentence1": "text",
-        "sentence2": "text",
-        "label": "int"
+        "sentence1": "sentence",
+        "sentence2": "sentence",
+        "label": "category"
     },
     "wikiann-es": {
         "tokens": "Seqtokens",
@@ -20,119 +20,119 @@
     },
     "wikicat-es": {
         "text": "text",
-        "label": "text"
+        "label": "category"
     },
     "sst-en": {
         "label": "int",
-        "text": "text"
+        "text": "category"
     },
     "stroke-prediction": {
-        "gender": "text",
+        "gender": "category",
         "age": "float",
-        "hypertension": "int",
-        "heart_disease": "int",
-        "ever_married": "text",
-        "work_type": "text",
-        "Residence_type": "text",
+        "hypertension": "category",
+        "heart_disease": "category",
+        "ever_married": "category",
+        "work_type": "category",
+        "Residence_type": "category",
         "avg_glucose_level": "float",
         "bmi": "float",
-        "smoking_status": "text",
-        "stroke": "int"
+        "smoking_status": "category",
+        "stroke": "category"
     },
     "women-clothing": {
         "Age": "int",
-        "Title": "text",
+        "Title": "sentence",
         "Review Text": "text",
         "Rating": "int",
         "Recommended IND": "int",
         "Positive Feedback Count": "int",
-        "Division Name": "text",
-        "Department Name": "text",
-        "Class Name": "text"
+        "Division Name": "syntagma",
+        "Department Name": "syntagma",
+        "Class Name": "category"
     },
     "fraudulent-jobs": {
-        "title": "text",
-        "location": "text",
-        "department": "text",
+        "title": "sentence",
+        "location": "syntagma",
+        "department": "syntagma",
         "salary_range": "text",
         "company_profile": "text",
         "description": "text",
         "requirements": "text",
         "benefits": "text",
-        "telecommuting": "int",
-        "has_company_logo": "int",
-        "has_questions": "int",
-        "employment_type": "text",
-        "required_experience": "text",
-        "required_education": "text",
-        "industry": "text",
-        "function": "text",
-        "fraudulent": "int"
+        "telecommuting": "category",
+        "has_company_logo": "category",
+        "has_questions": "category",
+        "employment_type": "category",
+        "required_experience": "syntagma",
+        "required_education": "syntagma",
+        "industry": "syntagma",
+        "function": "syntagma",
+        "fraudulent": "category"
     },
     "spanish-wine": {
-        "winery": "text",
-        "wine": "text",
+        "winery": "syntagma",
+        "wine": "syntagma",
         "year": "text",
         "rating": "float",
         "num_reviews": "int",
-        "country": "text",
-        "region": "text",
+        "country": "syntagma",
+        "region": "syntagma",
         "price": "float",
-        "type": "text",
-        "body": "Int64",
-        "acidity": "Int64"
+        "type": "category",
+        "body": "int",
+        "acidity": "int"
     },
     "project-kickstarter": {
-        "name": "text",
+        "name": "sentence",
         "desc": "text",
         "goal": "float",
-        "keywords": "text",
+        "keywords": "syntagma",
         "disable_communication": "bool",
-        "country": "text",
-        "currency": "text",
-        "deadline": "int",
-        "state_changed_at": "int",
-        "created_at": "int",
-        "launched_at": "int",
-        "final_status": "int"
+        "country": "syntagma",
+        "currency": "syntagma",
+        "deadline": "datetime",
+        "state_changed_at": "datetime",
+        "created_at": "datetime",
+        "launched_at": "datetime",
+        "final_status": "category"
     },
     "price-book": {
-        "Title": "text",
-        "Author": "text",
-        "Edition": "text",
-        "Reviews": "text",
-        "Ratings": "text",
+        "Title": "Sentence",
+        "Author": "syntagma",
+        "Edition": "syntagma",
+        "Reviews": "float",
+        "Ratings": "float",
         "Synopsis": "text",
-        "Genre": "text",
-        "BookCategory": "text",
+        "Genre": "syntagma",
+        "BookCategory": "category",
         "Price": "float"
     },
     "inferes": {
-        "Premise": "text",
-        "Hypothesis": "text",
-        "Label": "text",
+        "Premise": "sentence",
+        "Hypothesis": "sentence",
+        "Label": "category",
         "Topic": "int",
         "Anno": "int",
-        "Anno_Type": "text"
+        "Anno_Type": "category"
     },
     "predict-salary": {
         "experience": "text",
         "job_description": "text",
         "job_desig": "text",
-        "job_type": "text",
+        "job_type": "category",
         "key_skills": "text",
-        "location": "text",
-        "salary": "text",
+        "location": "syntagma",
+        "salary": "category",
         "company_name_encoded": "int"
     },
     "stsb-en": {
-        "sentence1": "text",
-        "sentence2": "text",
+        "sentence1": "sentence",
+        "sentence2": "sentence",
         "score": "float"
     },
     "stsb-es": {
-        "sentence1": "text",
-        "sentence2": "text",
+        "sentence1": "sentence",
+        "sentence2": "sentence",
         "score": "float"
     },
     "haha": {
@@ -153,7 +153,7 @@
     },
     "sentiment-lexicons-es": {
         "word": "text",
-        "label": "text"
+        "label": "category"
     },
     "wikineural-en": {
         "tokens": "Seqtokens",
@@ -164,11 +164,11 @@
         "tags": "Seqtags"
     },
     "language-identification": {
-        "labels": "text",
+        "labels": "category",
         "text": "text"
     },
     "twitter-human-bots": {
-        "created_at": "datetime64[ns]",
+        "created_at": "datetime64",
         "default_profile": "bool",
         "default_profile_image": "bool",
         "description": "text",
@@ -176,28 +176,28 @@
         "followers_count": "int",
         "friends_count": "int",
         "geo_enabled": "bool",
-        "lang": "text",
-        "location": "text",
-        "profile_background_image_url": "text",
-        "profile_image_url": "text",
-        "screen_name": "text",
+        "lang": "syntagma",
+        "location": "syntagma",
+        "profile_background_image_url": "image_path",
+        "profile_image_url": "image_path",
+        "screen_name": "syntagma",
         "statuses_count": "int",
         "verified": "bool",
         "average_tweets_per_day": "float",
         "account_age_days": "int",
-        "account_type": "text"
+        "account_type": "category"
     },
     "google-guest": {
-        "question_title": "text",
+        "question_title": "sentence",
         "question_body": "text",
-        "question_user_name": "text",
-        "question_user_page": "text",
+        "question_user_name": "syntagma",
+        "question_user_page": "url",
         "answer": "text",
-        "answer_user_name": "text",
-        "answer_user_page": "text",
-        "url": "text",
-        "category": "text",
-        "host": "text",
+        "answer_user_name": "syntagma",
+        "answer_user_page": "url",
+        "url": "url",
+        "category": "category",
+        "host": "syntagma",
         "question_asker_intent_understanding": "float",
         "question_body_critical": "float",
         "question_conversational": "float",

@@ -1,7 +1,6 @@
 
 ######################## Text #################################
 
-
 def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8",target = "label"):
     import pandas as pd 
     import os 
@@ -146,13 +145,13 @@ def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='ut
     
     for item in generate_examples(train):
         Xtr.append(item['tokens'])
-        ytr.append(item['ner_tags'])
+        ytr.append(item[target])
     for item in generate_examples(dev):
         Xtr.append(item['tokens'])
-        ytr.append(item['ner_tags'])
+        ytr.append(item[target])
     for item in generate_examples(test):
         Xte.append(item['tokens'])
-        yte.append(item['ner_tags'])       
+        yte.append(item[target])       
     return Xtr,ytr, Xte,yte  
 
 def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
@@ -343,7 +342,7 @@ def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
         else:
             print("Incorrect params")
 
-def load_meddocan(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8'):
+def load_meddocan(self,  format = "list", in_x_y= True, samples= 2, encoding= 'utf-8',target= "ner_tags"):
     
     
     def parse_text_and_tags(file_name=None):
@@ -586,8 +585,8 @@ def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
 
     dftr = pd.read_csv(ptrain, encoding = encoding).drop(['tweet_id','user_id'],axis= 1)
     dfte = pd.read_csv(ptest,encoding = encoding).drop(['tweet_id','user_id'],axis =1)
-    #dftr['label'] = dftr['label'].astype('category')
-    #dfte['label'] = dfte['label'].astype('category')
+    dftr['label'] = dftr['label'].astype('category')
+    dfte['label'] = dfte['label'].astype('category')
    
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -694,9 +693,33 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
         else:
             print("Incorrect params")
 
-def load_wikineural():
-    pass 
+def load_wikineural(self , format = "list", in_x_y= True, samples= 2, encoding= 'utf-8',target = "ner_tags"):
+    import os 
+    import pyarrow.parquet as pq 
+    path = self.download()
+    ptrain = os.path.join(path,'train.parquet')
+    pdev =  os.path.join(path,'val.parquet')
+    ptest =  os.path.join(path,'test.parquet')
+    dftrain = pq.read_table(ptrain)
+    dfdev = pq.read_table(pdev)
+    dftest = pq.read_table(ptest)
+    
+    X_train = []
+    X_test = []
+    y_train = []
+    y_test = []
 
+    X_train = dftrain['tokens'].to_pylist()
+    tokens_de = dfdev['tokens'].to_pylist()
+    tokens_te = dftest['tokens'].to_pylist()
+    
+    y_train = dftrain["ner_tags"].to_pylist()
+    tags_de = dfdev["ner_tags"].to_pylist()
+    tags_te = dftest["ner_tags"].to_pylist()
+    X_test = tokens_de + tokens_te 
+    y_test = tags_de + tags_te
+    return X_train, y_train, X_test, y_test
+    
 def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "labels"):
    
     import pandas as pd 
@@ -757,7 +780,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
     pall  = os.path.join(path,'twitter_human_bots_dataset.csv')
   
     
-    dfall = pd.read_csv(pall,encoding= 'utf-8')
+    dfall = pd.read_csv(pall,encoding= encoding  )
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
     dfall['account_type'] = dfall['account_type'].astype('category')
     dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
@@ -811,9 +834,9 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
     ptest = os.path.join(path,'test.csv')
     pplabel = os.path.join(path,'sample_submission.csv')
     
-    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
-    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
-    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
+    dftr = pd.read_csv(ptrain,encoding= encoding)
+    dfte1 = pd.read_csv(ptest,encoding= encoding)
+    dfte2 = pd.read_csv(pplabel,encoding= encoding)
     #dftr['category'] = dftr['category'].astype('category')
     dftr =dftr.drop(['qa_id'],axis=1)
     dfte = pd.merge(left=dfte1,right=dfte2, left_on='qa_id', right_on='qa_id').drop(['qa_id'],axis=1)
@@ -866,9 +889,9 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
     train = os.path.join(path,'train_.csv')
     dev =  os.path.join(path,'dev.csv')
     test =  os.path.join(path,'test.csv')
-    dftr1 = pd.read_csv(train)
-    dfte = pd.read_csv(test)
-    dfde1 = pd.read_csv(dev)
+    dftr1 = pd.read_csv(train,encoding=encoding)
+    dfte = pd.read_csv(test,encoding=encoding)
+    dfde1 = pd.read_csv(dev,encoding=encoding)
     dftr = pd.concat([dftr1,dfde1],axis = 0).reset_index(drop = True)
     dftr['Label'] = dftr['Label'].astype('category')
     dfte['Label'] = dfte['Label'].astype('category')
@@ -1197,12 +1220,13 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2,
 
     
     # Read the values of the file in the datafrae
-    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
-    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
-    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
+    dftr = pd.read_csv(ptrain,encoding= encoding)
+    dfte1 = pd.read_csv(ptest,encoding= encoding)
+    dfte2 = pd.read_csv(pplabel,encoding= encoding)
 
     dfte = pd.concat([dfte1,dfte2],axis=1).drop(['project_id'],axis=1)
     dftr = dftr.drop(['project_id','backers_count'],axis=1)
+    
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -1293,24 +1317,3 @@ def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
         else:
             print("Incorrect params") 
    
-###################################### Image  #######################################
-def load_fashion(self):
-    import pandas as pd 
-    import os 
-    path = self.download()
-    ptrain = os.path.join(path,'train.csv')
-    ptest =  os.path.join(path,'dev.csv')
-    pdev = os.path.join(path,'test.csv')
-    
-    df_tr = pd.read_csv(ptrain)
-    df_de = pd.read_csv(pdev)
-    df_te = pd.read_csv(ptest)
-    
-    y_tr = df_tr['label'].to_numpy().tolist()
-    y_de = df_de['label'].to_numpy().tolist()
-    y_te = df_te['label'].to_numpy().tolist()
-    
-    del df_tr['label']
-    del df_de['label']
-    del df_te['label']
-    return df_tr, y_tr, df_de,y_de ,df_te,y_te 
