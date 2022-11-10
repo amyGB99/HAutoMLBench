@@ -284,7 +284,15 @@ class HAutoMLBench():
                         if task != None and task != value['task']:
                             continue
                         property,min,max = expresion
+                        if property not in ['n_instances','n_columns', 'null_values','classes','class balance']
+                            print('Error: The feature is incorrect')
+                            break
+                       
                         value_property = value[property]
+                        
+                        if property == 'n_instances' and value_property != None :
+                            value_property = value[property][0] + value[property][1]
+                        
                         if min == None and max == None:
                             print('Error : Both ranges cannot be none')
                             break
@@ -437,4 +445,4 @@ class HAutoMLBench():
         except Exception as error:
             print(error)
                     
-        return results        
+        return results[name]        
