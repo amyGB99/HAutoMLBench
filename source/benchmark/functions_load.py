@@ -211,8 +211,8 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
     dftr = pd.read_csv(ptrain,sep="\t", encoding = encoding)
     dfte = pd.read_csv(ptest,sep="\t",encoding = encoding)
     
-    dftr['label'] = dftr['label'].astype('category')
-    dfte['label'] = dfte['label'].astype('category')
+    #dftr['label'] = dftr['label'].astype('category')
+    #dfte['label'] = dfte['label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -585,8 +585,8 @@ def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
 
     dftr = pd.read_csv(ptrain, encoding = encoding).drop(['tweet_id','user_id'],axis= 1)
     dfte = pd.read_csv(ptest,encoding = encoding).drop(['tweet_id','user_id'],axis =1)
-    dftr['label'] = dftr['label'].astype('category')
-    dfte['label'] = dfte['label'].astype('category')
+    #dftr['label'] = dftr['label'].astype('category')
+    #dfte['label'] = dfte['label'].astype('category')
    
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -658,8 +658,8 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     dfte['word'] = wptest
     dfte[target] = lptest
     
-    dftr[target] = dftr[target].astype('category')
-    dfte[target] = dfte[target].astype('category')
+    #dftr[target] = dftr[target].astype('category')
+    #dfte[target] = dfte[target].astype('category')
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -735,11 +735,11 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
     dfte = pd.read_csv(ptest,encoding = encoding)
     
     dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
-    dfall['labels'] = dfall['labels'].astype('category')
-    dfte['labels'] = dfte['labels'].astype('category')
+    #dfall['labels'] = dfall['labels'].astype('category')
+    #dfte['labels'] = dfte['labels'].astype('category')
     
     dftr = pd.concat([dftr1,dfde],axis=0).reset_index(drop= True)
-    dftr['labels'] = dftr['labels'].astype('category')
+    #dftr['labels'] = dftr['labels'].astype('category')
     if in_x_y == False:
         if samples == 1:
             return dfall
@@ -782,8 +782,8 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
     
     dfall = pd.read_csv(pall,encoding= encoding  )
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
-    dfall['account_type'] = dfall['account_type'].astype('category')
-    dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
+    #dfall['account_type'] = dfall['account_type'].astype('category')
+    #dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
     dftr = dfall.iloc[0:29950].reset_index(drop = True)
     dfte = dfall.iloc[29950:].reset_index(drop = True)
 
@@ -893,8 +893,8 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
     dfte = pd.read_csv(test,encoding=encoding)
     dfde1 = pd.read_csv(dev,encoding=encoding)
     dftr = pd.concat([dftr1,dfde1],axis = 0).reset_index(drop = True)
-    dftr['Label'] = dftr['Label'].astype('category')
-    dfte['Label'] = dfte['Label'].astype('category')
+    #dftr['Label'] = dftr['Label'].astype('category')
+    #dfte['Label'] = dfte['Label'].astype('category')
     dfall = pd.concat([dftr,dfte],axis = 0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -999,11 +999,7 @@ def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding=
     ptrain = os.path.join(path,'Data_Train.xlsx')
     ptest = os.path.join(path,'Data_Test.xlsx')
     plabel_test =  os.path.join(path,'Sample_Submission.xlsx')
-    # df_te["Class Name"] = df_te["Class Name"].astype("category")
-    # print(df_te['Class Name'])
-    # df_te = df_te[df_te["Class Name"].notna()]
-    # print(df_te.isnull().sum())
-    
+
     train = pd.read_excel(ptrain,engine='openpyxl')
     test = pd.read_excel(ptest,engine='openpyxl')
     label_test = pd.read_excel(plabel_test,engine='openpyxl')
@@ -1167,7 +1163,7 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
     dfall = pd.read_csv(all, encoding= encoding)
     dfall = dfall.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
 
-    dfall['Class Name'] = dfall['Class Name'].astype('category')
+    #dfall['Class Name'] = dfall['Class Name'].astype('category')
     dftr = dfall.iloc[:16440]
     dfte = dfall.iloc[16440:].reset_index(drop=True)
     

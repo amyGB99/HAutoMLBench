@@ -55,7 +55,7 @@ class HAutoMLBench():
     @classmethod
     def create_datasets(cls):
         local_path = os.path.dirname(os.path.realpath(__file__))
-        info_path = os.path.join(local_path,'info.jsonl')
+        info_path = os.path.join(local_path,'infos.jsonl')
         try:
             _, df = cls.__change_names(local_path, reset= True)
             infos = cls.__write_info(local_path,info_path,reset=True)
@@ -77,8 +77,8 @@ class HAutoMLBench():
     @classmethod
     def init(cls,ret_info = False):
         local_path = os.path.dirname(os.path.realpath(__file__))
-        info_path = os.path.join(local_path,'info.jsonl')
-        names ,urls, funcs = cls.__read_info_bench(local_path)
+        info_path = os.path.join(local_path,'infos.jsonl')
+        names ,urls, funcs = cls.__read_variables_bench(local_path)
         infos = None
         if ret_info :
             infos  =jsonlines.Reader(info_path)
@@ -151,15 +151,15 @@ class HAutoMLBench():
             fp.write_all(infos)
           
     @classmethod
-    def __read_info_bench(cls,local_path):
-        names_path = os.path.join(local_path,'bechmark_info.tsv')
+    def __read_variables_bench(cls,local_path):
+        names_path = os.path.join(local_path,'variables.tsv')
         df = pd.read_table(names_path)
         return list(df['name']),list(df['url']),list(df['func'])
    
     @classmethod
     def __change_names(cls,local_path, dataset = None, insert = False, reset =False):
          
-        archive_path = os.path.join(local_path,'bechmark_info.tsv')
+        archive_path = os.path.join(local_path,'variables.tsv')
         
         datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
                     "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
@@ -284,7 +284,7 @@ class HAutoMLBench():
                         if task != None and task != value['task']:
                             continue
                         property,min,max = expresion
-                        if property not in ['n_instances','n_columns', 'null_values','classes','class balance']
+                        if property not in ['n_instances','n_columns', 'null_values','classes','class balance']:
                             print('Error: The feature is incorrect')
                             break
                        
