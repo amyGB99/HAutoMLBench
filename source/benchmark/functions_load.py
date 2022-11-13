@@ -835,30 +835,42 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
     dftr =dftr.drop(['qa_id'],axis=1)
     dfte = pd.merge(left=dfte1,right=dfte2, left_on='qa_id', right_on='qa_id').drop(['qa_id'],axis=1)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop=True)
-    
-  
+    def convert(target):
+        string ='('
+        for item, i in zip(target,range(len(target))):
+            if i == len(target)-1:
+                string+= item + ')'
+            else:
+                string+= item + '|'
+        return string 
+    if isinstance(target,str):
+        string = target
+        target = [target] 
+    else:
+        string = convert(target)
+        target = target
     if in_x_y == False:
         if samples == 1:
             return dfall
-        elif samples ==2:
+        elif samples == 2:
             return dftr,dfte
         else:
             print("Incorrect params") 
     else:
-        y_tr = dftr.filter(regex=target)
-        dummy_tr = dftr.drop([target],axis=1)
+        y_tr = dftr.filter(regex=string)
+        dummy_tr = dftr.drop(target,axis=1)
 
-        y_te = dfte.filter(regex=target) 
-        dummy_te = dfte.drop([target],axis=1) 
+        y_te = dfte.filter(regex=string) 
+        dummy_te = dfte.drop(target,axis=1) 
         if samples== 1:
-            y = dfall.filter(regex=target)
-            dummy_all = dfall.drop([target],axis=1) 
+            y = dfall.filter(regex=string)
+            dummy_all = dfall.drop(target,axis=1) 
         
             if format == "pandas":
                 return dummy_all,y
             else:
                 X = dummy_all.to_numpy().tolist()
-                return X,list(y[target]) 
+                return X, y.to_numpy().tolist()
         elif samples ==2:
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
@@ -871,7 +883,7 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
                 #for i in range(len(dummy_te.axes[0])):
                  #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
-                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
+                return X_tr, y_tr.to_numpy().tolist(),X_te, y_te.to_numpy().tolist() 
         else:
             print("Incorrect params") 
      

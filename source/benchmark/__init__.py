@@ -60,8 +60,8 @@ class HAutoMLBench():
             _, df = cls.__change_names(local_path, reset= True)
             infos = cls.__write_info(local_path,info_path,reset=True)
         except:
-            print('Error creating benchmark datasets make sure the files: columns_type and properties , are created correctly.') 
-            return   
+           print('Error creating benchmark datasets make sure the files: columns_type and properties , are created correctly.') 
+           return   
         names = df['name'].to_list()
         urls = df['url'].to_list()
         funcs = df['func'].to_list()
@@ -89,10 +89,6 @@ class HAutoMLBench():
         
     @classmethod
     def __write_info(cls,local_path,info_path,reset = False):
-        labels  = [['label'], ['label'], ['label'], ['ner_tags'], ['label'],['label'],['stroke'],['Class Name'],
-                   ['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],
-                   ['is_humor','average'],['ner_tags'],['label'],['label'],['label'],['label'],['ner_tags'],['labels'],['account_type'],
-                   ['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
         dict_ = []
         properties_path = os.path.join(local_path,'properties.json')
         columns_type_path = os.path.join(local_path,'columns_types.json')
@@ -102,34 +98,9 @@ class HAutoMLBench():
                 with open(columns_type_path, 'r') as ff:
                     columns_type = json.load(ff)
                     for name,i in zip(properties.keys(),range(len(properties.keys()))):
-                        clases = properties[name]['classes']
-                        if clases == 2:
-                            task = 'binary'
-                            if name =='sentiment-lexicons-es':
-                                pos = 'positive'
-                            elif name == 'twitter-human-bots':
-                                pos = 'bot'
-                            else:
-                                pos = 1    
-                        elif clases == None:
-                            if name == 'meddocan' or name =='wikiann-es' or name =='wikineural-es' or name =='wikineural-en':
-                                task = 'entity'
-                            else:
-                                task ='regression'
-                            pos = None
-                        else:
-                            task = 'multiclass'
-                            pos = None           
-                        dict_.append({ name: {'n_instances': properties[name]['n_instances'],
-                                'n_columns': properties[name]['n_columns'],
-                                'columns_type': columns_type[name],
-                                'targets': labels[i] ,
-                                'null_values': properties[name]['null_values'], 
-                                'task': task,
-                                'labels': properties[name]['labels'],
-                                'pos_label': pos,
-                                'classes': clases , 
-                                'class balance': properties[name]['balance']} })
+                        
+                        properties[name]['columns_type'] = columns_type[name]
+                        dict_.append({name:properties[name]})
                          
             with jsonlines.open(info_path, 'w') as fp:
                 fp.write_all(dict_)
@@ -244,6 +215,9 @@ class HAutoMLBench():
         if dataset is not None:
             try:
                 if target!= None:
+                    if name != "google-guest":
+                        if not isinstance(target,str):
+                            print(f'Error: The target for {name} dataset most be only one')
                     return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding,target = target)
                 else:
                     return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding)   
@@ -324,7 +298,7 @@ class HAutoMLBench():
         info = {'n_instances': [int,int],
                 'n_columns': int , 
                 'columns_type': {'name' : type},
-                'targets': list[str] ,
+                'targets': list[str] or str,
                 'null_values': int,
                 'task': str 
                 'pos_label': Any,

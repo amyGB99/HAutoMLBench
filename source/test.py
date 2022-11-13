@@ -9,15 +9,15 @@ import pandas as pd
 import json
 import os
 
-HAutoMLBench.create_datasets()
+#HAutoMLBench.create_datasets()
 
 # print('Benchmark datasets:')
 # names = HAutoMLBench.filter()
 # print(names)
 
 # print('Binary Classification Datasets')
-# bin = HAutoMLBench.filter(task ='binary')
-# print(bin)
+#bin = HAutoMLBench.filter(task ='binary')
+#print(bin)
 
 # print('Multiclass Classification Datasets')
 # mult = HAutoMLBench.filter(task ='multiclass')
@@ -34,7 +34,10 @@ HAutoMLBench.create_datasets()
 # print('Filter datasets by property columns >=3')
 # filter = HAutoMLBench.filter(expresion=('n_columns',3,None))
 # print(filter)
-
+# info = HAutoMLBench.load_info('google-guest')
+# print(len( info['targets']))
+# train,y_tr,test, y_te  = HAutoMLBench.load_dataset('google-guest',format='list',in_xy= True,samples=2,target = info['targets'])
+# print(y_tr)
 # print('Filter datasets by property task = binary and  columns >=3')
 # filter = HAutoMLBench.filter(task = 'binary',expresion=('n_columns',3,None))
 # print(filter)
@@ -100,7 +103,7 @@ def create_columns_type():
         json.dump(all_types, fp,indent= 4) 
         
 def create_prperties():
-    labels  = [['label'], ['label'], ['label'], ['label'], ['label'],['label'],['stroke'],['Class Name'],['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],['is_humor','average'],['label'],['label'],['label'],['label'],['label'],['label'],['labels'],['account_type'],['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
+    labels  = [['label'], ['label'], ['label'], ['label'], ['label'],['label'],['stroke'],['Class Name'],['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],['is_humor'],['label'],['label'],['label'],['label'],['label'],['label'],['labels'],['account_type'],['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
     regres =['spanish-wine', 'price-book', 'stsb-en', 'stsb-es', 'google-guest']
     names = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
                     "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
@@ -108,6 +111,7 @@ def create_prperties():
                     "stsb-es","haha", "meddocan","vaccine-es","vaccine-en","sentiment-lexicons-es",
                     "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
     dict_ ={}
+    
     for dataset,i in zip(names,range(len(names))):
         print(dataset)
         if dataset == "wikiann-es" or dataset =='meddocan' or dataset =='wikineural-es' or dataset =='wikineural-en':
@@ -118,12 +122,16 @@ def create_prperties():
           number_class = None
           balance = None
           labels_d = None
+          task = 'entity'
+          pos = None
           
         else:
             train,test = HAutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
             all = HAutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
-
-            target = labels[i]
+            if dataset != "google-guest":
+              target = labels[i][0]
+            else:
+              target = labels[i]
 
             columns = len(train.columns)
             instances = [len(train.axes[0]),len(test.axes[0])]
@@ -131,26 +139,37 @@ def create_prperties():
             if dataset in regres:
               number_class = None
               balance = None
-              if isinstance(target,str): 
-                count_null_class = all[target].isnull().sum()
-              else:  
-                count_null_class = all[target[0]].isnull().sum()
+              pos = None
+              task = 'regression'
+              labels_d = None
             else:
-              if isinstance(target,str):    
                 number_class = len(all[target].unique())
                 number_clases_train = train[target].value_counts()
-                count_null_class = all[target].isnull().sum()
                 labels_d = all[target].dropna().unique().tolist()
-              else: 
-                number_class = len(all[target[0]].unique())
-                number_clases_train = train[target[0]].value_counts() 
-                count_null_class = all[target[0]].isnull().sum()
-                labels_d = all[target[0]].dropna().unique().tolist()
-              
-              min = number_clases_train.min()
-              max = number_clases_train.max()
-              balance = min/max 
-        dict_[dataset] = {'n_columns':columns,'n_instances':instances,'null_values':count_null,'labels': labels_d,'classes': number_class,'balance':balance}
+                if number_class == 2:
+                    task = 'binary'
+                    if dataset =='sentiment-lexicons-es':
+                      pos = 'positive'
+                    elif dataset == 'twitter-human-bots':
+                      pos = 'bot'
+                    else:
+                      pos = 1  
+                else:
+                    task = 'multiclass'
+                    pos = None
+                     
+                min = number_clases_train.min()
+                max = number_clases_train.max()
+                balance = min/max 
+        dict_[dataset] = {'n_columns':columns,
+                          'n_instances':instances,
+                          'null_values':count_null,
+                          'targets':target,
+                          'labels': labels_d,
+                          'pos_label': pos,
+                          'classes': number_class,
+                          'task': task,
+                          'balance':balance}
     
     with open('/media/amanda/DATA1/School/Thesis/implementation/benchmark actual/automl_benchmark/source/benchmark/properties.json', 'w') as fp:
         json.dump(dict_, fp,indent= 4,ensure_ascii= False)    

@@ -97,7 +97,7 @@
         "final_status": "category"
     },
     "price-book": {
-        "Title": "Sentence",
+        "Title": "sentence",
         "Author": "syntagma",
         "Edition": "syntagma",
         "Reviews": "float",
@@ -145,11 +145,11 @@
     },
     "vaccine-es": {
         "text": "text",
-        "label": "text"
+        "label": "category"
     },
     "vaccine-en": {
         "text": "text",
-        "label": "text"
+        "label": "category"
     },
     "sentiment-lexicons-es": {
         "word": "text",
@@ -168,7 +168,7 @@
         "text": "text"
     },
     "twitter-human-bots": {
-        "created_at": "datetime64",
+        "created_at": "datetime",
         "default_profile": "bool",
         "default_profile_image": "bool",
         "description": "text",
