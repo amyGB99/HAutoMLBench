@@ -126,6 +126,7 @@ class HAutoMLBench():
                                 'targets': labels[i] ,
                                 'null_values': properties[name]['null_values'], 
                                 'task': task,
+                                'labels': properties[name]['labels'],
                                 'pos_label': pos,
                                 'classes': clases , 
                                 'class balance': properties[name]['balance']} })

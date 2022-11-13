@@ -9,7 +9,7 @@ import pandas as pd
 import json
 import os
 
-# HAutoMLBench.create_datasets()
+HAutoMLBench.create_datasets()
 
 # print('Benchmark datasets:')
 # names = HAutoMLBench.filter()
@@ -117,6 +117,7 @@ def create_prperties():
           count_null = 0
           number_class = None
           balance = None
+          labels_d = None
           
         else:
             train,test = HAutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=2)
@@ -128,29 +129,30 @@ def create_prperties():
             instances = [len(train.axes[0]),len(test.axes[0])]
             count_null = int(all.isnull().sum().sum())
             if dataset in regres:
-              print('kaka')
               number_class = None
               balance = None
               if isinstance(target,str): 
                 count_null_class = all[target].isnull().sum()
               else:  
                 count_null_class = all[target[0]].isnull().sum()
-              print(count_null_class)
             else:
               if isinstance(target,str):    
                 number_class = len(all[target].unique())
                 number_clases_train = train[target].value_counts()
                 count_null_class = all[target].isnull().sum()
+                labels_d = all[target].dropna().unique().tolist()
               else: 
                 number_class = len(all[target[0]].unique())
                 number_clases_train = train[target[0]].value_counts() 
                 count_null_class = all[target[0]].isnull().sum()
-              print(count_null_class)
+                labels_d = all[target[0]].dropna().unique().tolist()
+              
               min = number_clases_train.min()
               max = number_clases_train.max()
               balance = min/max 
-        dict_[dataset] = {'n_columns':columns,'n_instances':instances,'null_values':count_null,'classes': number_class,'balance':balance}
+        dict_[dataset] = {'n_columns':columns,'n_instances':instances,'null_values':count_null,'labels': labels_d,'classes': number_class,'balance':balance}
     
     with open('/media/amanda/DATA1/School/Thesis/implementation/benchmark actual/automl_benchmark/source/benchmark/properties.json', 'w') as fp:
-        json.dump(dict_, fp,indent= 4)    
+        json.dump(dict_, fp,indent= 4,ensure_ascii= False)    
 
+#create_prperties()

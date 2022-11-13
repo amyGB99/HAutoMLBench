@@ -6,6 +6,10 @@
             4000
         ],
         "null_values": 0,
+        "labels": [
+            0,
+            1
+        ],
         "classes": 2,
         "balance": 0.7917089801247642
     },
@@ -16,6 +20,10 @@
             4000
         ],
         "null_values": 544,
+        "labels": [
+            0,
+            1
+        ],
         "classes": 2,
         "balance": 0.7917089801247642
     },
@@ -26,6 +34,10 @@
             70
         ],
         "null_values": 0,
+        "labels": [
+            1,
+            0
+        ],
         "classes": 2,
         "balance": 0.9659442724458205
     },
@@ -36,6 +48,7 @@
             10000
         ],
         "null_values": 0,
+        "labels": null,
         "classes": null,
         "balance": null
     },
@@ -46,6 +59,27 @@
             3402
         ],
         "null_values": 0,
+        "labels": [
+            "Negocios",
+            "Economía",
+            "Ingeniería_por_tipo",
+            "Entretenimiento",
+            "Gobierno",
+            "Salud",
+            "Historia",
+            "Humanidades",
+            "Derecho",
+            "Matemáticas",
+            "Guerra",
+            "Música",
+            "Naturaleza",
+            "Filosofía",
+            "Política",
+            "Religión",
+            "Ciencia",
+            "Deporte",
+            "Tecnología"
+        ],
         "classes": 19,
         "balance": 0.03602484472049689
     },
@@ -56,6 +90,13 @@
             2210
         ],
         "null_values": 0,
+        "labels": [
+            4,
+            5,
+            3,
+            2,
+            1
+        ],
         "classes": 5,
         "balance": 0.4702842377260982
     },
@@ -66,6 +107,10 @@
             1022
         ],
         "null_values": 201,
+        "labels": [
+            1,
+            0
+        ],
         "classes": 2,
         "balance": 0.051169966572383645
     },
@@ -76,6 +121,28 @@
             7046
         ],
         "null_values": 4697,
+        "labels": [
+            "Intimates",
+            "Dresses",
+            "Pants",
+            "Blouses",
+            "Knits",
+            "Outerwear",
+            "Lounge",
+            "Sweaters",
+            "Skirts",
+            "Fine gauge",
+            "Sleep",
+            "Jackets",
+            "Swim",
+            "Trend",
+            "Jeans",
+            "Legwear",
+            "Shorts",
+            "Layering",
+            "Casual bottoms",
+            "Chemises"
+        ],
         "classes": 21,
         "balance": 0.0002247696111485727
     },
@@ -86,6 +153,10 @@
             5364
         ],
         "null_values": 70103,
+        "labels": [
+            0,
+            1
+        ],
         "classes": 2,
         "balance": 0.042305129913391075
     },
@@ -96,6 +167,10 @@
             1500
         ],
         "null_values": 2885,
+        "labels": [
+            0,
+            1
+        ],
         "classes": null,
         "balance": null
     },
@@ -106,6 +181,10 @@
             63465
         ],
         "null_values": 16,
+        "labels": [
+            1,
+            0
+        ],
         "classes": 2,
         "balance": 0.4697830578512397
     },
@@ -116,6 +195,10 @@
             1560
         ],
         "null_values": 0,
+        "labels": [
+            1,
+            0
+        ],
         "classes": null,
         "balance": null
     },
@@ -126,6 +209,11 @@
             1612
         ],
         "null_values": 0,
+        "labels": [
+            "cnt",
+            "neutral",
+            "ent"
+        ],
         "classes": 3,
         "balance": 0.8072390572390572
     },
@@ -136,6 +224,14 @@
             6601
         ],
         "null_values": 25910,
+        "labels": [
+            "6to10",
+            "10to15",
+            "15to25",
+            "3to6",
+            "25to50",
+            "0to3"
+        ],
         "classes": 6,
         "balance": 0.35
     },
@@ -146,6 +242,14 @@
             1379
         ],
         "null_values": 0,
+        "labels": [
+            "6to10",
+            "10to15",
+            "15to25",
+            "3to6",
+            "25to50",
+            "0to3"
+        ],
         "classes": null,
         "balance": null
     },
@@ -156,6 +260,14 @@
             1379
         ],
         "null_values": 0,
+        "labels": [
+            "6to10",
+            "10to15",
+            "15to25",
+            "3to6",
+            "25to50",
+            "0to3"
+        ],
         "classes": null,
         "balance": null
     },
@@ -166,6 +278,10 @@
             6000
         ],
         "null_values": 0,
+        "labels": [
+            1,
+            0
+        ],
         "classes": 2,
         "balance": 0.6274496507764291
     },
@@ -176,6 +292,7 @@
             8432
         ],
         "null_values": 0,
+        "labels": null,
         "classes": null,
         "balance": null
     },
@@ -186,6 +303,11 @@
             694
         ],
         "null_values": 0,
+        "labels": [
+            "FAVOR",
+            "NONE",
+            "AGAINST"
+        ],
         "classes": 3,
         "balance": 0.5069370330843116
     },
@@ -196,6 +318,11 @@
             312
         ],
         "null_values": 0,
+        "labels": [
+            "FAVOR",
+            "AGAINST",
+            "NONE"
+        ],
         "classes": 3,
         "balance": 0.4179389312977099
     },
@@ -206,6 +333,10 @@
             200
         ],
         "null_values": 0,
+        "labels": [
+            "positive",
+            "negative"
+        ],
         "classes": 2,
         "balance": 0.5553435114503816
     },
@@ -216,6 +347,7 @@
             23187
         ],
         "null_values": 0,
+        "labels": null,
         "classes": null,
         "balance": null
     },
@@ -226,6 +358,7 @@
             19158
         ],
         "null_values": 0,
+        "labels": null,
         "classes": null,
         "balance": null
     },
@@ -236,6 +369,28 @@
             10000
         ],
         "null_values": 0,
+        "labels": [
+            "pt",
+            "bg",
+            "zh",
+            "th",
+            "ru",
+            "pl",
+            "ur",
+            "sw",
+            "tr",
+            "es",
+            "ar",
+            "it",
+            "hi",
+            "de",
+            "el",
+            "nl",
+            "fr",
+            "vi",
+            "en",
+            "ja"
+        ],
         "classes": 20,
         "balance": 1.0
     },
@@ -246,6 +401,10 @@
             7488
         ],
         "null_values": 19716,
+        "labels": [
+            "bot",
+            "human"
+        ],
         "classes": 2,
         "balance": 0.5019306955518781
     },
@@ -256,6 +415,10 @@
             476
         ],
         "null_values": 0,
+        "labels": [
+            "bot",
+            "human"
+        ],
         "classes": null,
         "balance": null
     }
