@@ -217,7 +217,8 @@ class HAutoMLBench():
                 if target!= None:
                     if name != "google-guest":
                         if not isinstance(target,str):
-                            print(f'Error: The target for {name} dataset most be only one')
+                            print(f'Error: The target for {name} dataset must be only one')
+                            return None
                     return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding,target = target)
                 else:
                     return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding)   
@@ -362,7 +363,10 @@ class HAutoMLBench():
             cls.__write_info(local_path,info_path,reset=True)
 
     @classmethod
-    def evaluate(cls,name,y_true,y_pred, task, pos=None ,labels = None,save_path = None, name_archive ='results'):
+    def evaluate(cls,name,y_true,y_pred, task ,is_multilabel = False,pos=None ,labels = None,save_path = None, name_archive ='results'):
+        if len(y_true)!= len(y_pred):
+            print("Error: The predictions and the true target must have the same shape and length")
+            return None
         metric_class = [cls.scoring['accuracy'],cls.scoring['precision'],cls.scoring['recall'], 
                 cls.scoring['f1_score'],cls.scoring['balanced_accuracy']] 
         
