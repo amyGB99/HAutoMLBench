@@ -23,8 +23,8 @@
         "label": "category"
     },
     "sst-en": {
-        "label": "int",
-        "text": "category"
+        "label": "category",
+        "text": "text"
     },
     "stroke-prediction": {
         "gender": "category",
