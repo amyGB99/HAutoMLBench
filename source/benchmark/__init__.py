@@ -99,7 +99,7 @@ class HAutoMLBench():
                     columns_type = json.load(ff)
                     for name,i in zip(properties.keys(),range(len(properties.keys()))):
                         
-                        properties[name]['columns_type'] = columns_type[name]
+                        properties[name]['columns_types'] = columns_type[name]
                         dict_.append({name:properties[name]})
                          
             with jsonlines.open(info_path, 'w') as fp:
@@ -298,7 +298,7 @@ class HAutoMLBench():
         '''
         info = {'n_instances': [int,int],
                 'n_columns': int , 
-                'columns_type': {'name' : type},
+                'columns_types': {'name' : type},
                 'targets': list[str] or str,
                 'null_values': int,
                 'task': str 
@@ -327,7 +327,7 @@ class HAutoMLBench():
             if info is None:
                 info = { name:{'n_instances': None, 
                     'n_columns': None, 
-                    'columns_type': None,
+                    'columns_types': None,
                     'targets': None ,
                     'null_values': None,
                     'task': None,
@@ -410,7 +410,6 @@ class HAutoMLBench():
                             score1 = metric(y_true,y_pred,squared = False)
                             score2 = metric(y_true,y_pred)
                             score = {'RMSE': score1, 'MSE': score2}
-
                         else:
                             score = metric(y_true,y_pred)             
                 dict_[metric_name]= score

@@ -137,7 +137,7 @@
     },
     "haha": {
         "text": "text",
-        "is_humor": "int"
+        "is_humor": "category"
     },
     "meddocan": {
         "tokens": "Seqtokens",
