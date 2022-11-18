@@ -1,78 +1,78 @@
 {
     "paws-x-en": {
-        "n_columns": 3,
         "n_instances": [
             49401,
             4000
         ],
-        "null_values": 0,
+        "n_columns": 3,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             0,
             1
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.7917089801247642
+        "class_balance": 0.7917089801247642
     },
     "paws-x-es": {
-        "n_columns": 3,
         "n_instances": [
             49401,
             4000
         ],
-        "null_values": 544,
+        "n_columns": 3,
         "targets": "label",
-        "labels": [
+        "null_values": 544,
+        "class_labels": [
             0,
             1
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.7917089801247642
+        "class_balance": 0.7917089801247642
     },
     "wnli-es": {
-        "n_columns": 3,
         "n_instances": [
             635,
             70
         ],
-        "null_values": 0,
+        "n_columns": 3,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             1,
             0
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.9659442724458205
+        "class_balance": 0.9659442724458205
     },
     "wikiann-es": {
-        "n_columns": 2,
         "n_instances": [
             30000,
             10000
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "entity",
-        "balance": null
+        "class_balance": null
     },
     "wikicat-es": {
-        "n_columns": 2,
         "n_instances": [
             7909,
             3402
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             "Negocios",
             "Economía",
             "Ingeniería_por_tipo",
@@ -93,57 +93,57 @@
             "Deporte",
             "Tecnología"
         ],
-        "pos_label": null,
-        "classes": 19,
+        "positive_class": null,
+        "n_classes": 19,
         "task": "multiclass",
-        "balance": 0.03602484472049689
+        "class_balance": 0.03602484472049689
     },
     "sst-en": {
-        "n_columns": 2,
         "n_instances": [
             8544,
             2210
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             4,
             5,
             3,
             2,
             1
         ],
-        "pos_label": null,
-        "classes": 5,
+        "positive_class": null,
+        "n_classes": 5,
         "task": "multiclass",
-        "balance": 0.4702842377260982
+        "class_balance": 0.4702842377260982
     },
     "stroke-prediction": {
-        "n_columns": 11,
         "n_instances": [
             4088,
             1022
         ],
-        "null_values": 201,
+        "n_columns": 11,
         "targets": "stroke",
-        "labels": [
+        "null_values": 201,
+        "class_labels": [
             1,
             0
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.051169966572383645
+        "class_balance": 0.051169966572383645
     },
     "women-clothing": {
-        "n_columns": 9,
         "n_instances": [
             16440,
             7046
         ],
-        "null_values": 4697,
+        "n_columns": 9,
         "targets": "Class Name",
-        "labels": [
+        "null_values": 4697,
+        "class_labels": [
             "Intimates",
             "Dresses",
             "Pants",
@@ -165,100 +165,100 @@
             "Casual bottoms",
             "Chemises"
         ],
-        "pos_label": null,
-        "classes": 21,
+        "positive_class": null,
+        "n_classes": 20,
         "task": "multiclass",
-        "balance": 0.0002247696111485727
+        "class_balance": 0.0002247696111485727
     },
     "fraudulent-jobs": {
-        "n_columns": 17,
         "n_instances": [
             12516,
             5364
         ],
-        "null_values": 70103,
+        "n_columns": 17,
         "targets": "fraudulent",
-        "labels": [
+        "null_values": 70103,
+        "class_labels": [
             0,
             1
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.042305129913391075
+        "class_balance": 0.042305129913391075
     },
     "spanish-wine": {
-        "n_columns": 11,
         "n_instances": [
             6000,
             1500
         ],
-        "null_values": 2885,
+        "n_columns": 11,
         "targets": "price",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 2885,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "regression",
-        "balance": null
+        "class_balance": null
     },
     "project-kickstarter": {
-        "n_columns": 12,
         "n_instances": [
             108129,
             63465
         ],
-        "null_values": 16,
+        "n_columns": 12,
         "targets": "final_status",
-        "labels": [
+        "null_values": 16,
+        "class_labels": [
             1,
             0
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.4697830578512397
+        "class_balance": 0.4697830578512397
     },
     "price-book": {
-        "n_columns": 9,
         "n_instances": [
             6237,
             1560
         ],
-        "null_values": 0,
+        "n_columns": 9,
         "targets": "Price",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "regression",
-        "balance": null
+        "class_balance": null
     },
     "inferes": {
-        "n_columns": 6,
         "n_instances": [
             6444,
             1612
         ],
-        "null_values": 0,
+        "n_columns": 6,
         "targets": "Label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             "cnt",
             "neutral",
             "ent"
         ],
-        "pos_label": null,
-        "classes": 3,
+        "positive_class": null,
+        "n_classes": 3,
         "task": "multiclass",
-        "balance": 0.8072390572390572
+        "class_balance": 0.8072390572390572
     },
     "predict-salary": {
-        "n_columns": 8,
         "n_instances": [
             19802,
             6601
         ],
-        "null_values": 25910,
+        "n_columns": 8,
         "targets": "salary",
-        "labels": [
+        "null_values": 25910,
+        "class_labels": [
             "6to10",
             "10to15",
             "15to25",
@@ -266,160 +266,161 @@
             "25to50",
             "0to3"
         ],
-        "pos_label": null,
-        "classes": 6,
+        "positive_class": null,
+        "n_classes": 6,
         "task": "multiclass",
-        "balance": 0.35
+        "class_balance": 0.35
     },
     "stsb-en": {
-        "n_columns": 3,
         "n_instances": [
             7249,
             1379
         ],
-        "null_values": 0,
+        "n_columns": 3,
         "targets": "score",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "regression",
-        "balance": null
+        "class_balance": null
     },
     "stsb-es": {
-        "n_columns": 3,
         "n_instances": [
             7249,
             1379
         ],
-        "null_values": 0,
+        "n_columns": 3,
         "targets": "score",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "regression",
-        "balance": null
+        "class_balance": null
     },
     "haha": {
-        "n_columns": 2,
         "n_instances": [
             24000,
             6000
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "is_humor",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             1,
             0
         ],
-        "pos_label": 1,
-        "classes": 2,
+        "positive_class": 1,
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.6274496507764291
+        "class_balance": 0.6274496507764291
     },
     "meddocan": {
-        "n_columns": 2,
         "n_instances": [
             25622,
             8432
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "is_humor",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "entity",
-        "balance": null
+        "class_balance": null
     },
     "vaccine-es": {
-        "n_columns": 2,
         "n_instances": [
             2003,
             694
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             "FAVOR",
             "NONE",
             "AGAINST"
         ],
-        "pos_label": null,
-        "classes": 3,
+        "positive_class": null,
+        "n_classes": 3,
         "task": "multiclass",
-        "balance": 0.5069370330843116
+        "class_balance": 0.5069370330843116
     },
-    "vaccine-en": {
-        "n_columns": 2,
+    "pub-health": {
         "n_instances": [
-            1070,
-            312
+            9831,
+            1235
         ],
-        "null_values": 0,
+        "n_columns": 8,
         "targets": "label",
-        "labels": [
-            "FAVOR",
-            "AGAINST",
-            "NONE"
+        "null_values": 2302,
+        "class_labels": [
+            "false",
+            "mixture",
+            "true",
+            "unproven"
         ],
-        "pos_label": null,
-        "classes": 3,
+        "positive_class": null,
+        "n_classes": 4,
         "task": "multiclass",
-        "balance": 0.4179389312977099
+        "class_balance": 0.05730602599448602
     },
     "sentiment-lexicons-es": {
-        "n_columns": 2,
         "n_instances": [
             4075,
             200
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             "positive",
             "negative"
         ],
-        "pos_label": "positive",
-        "classes": 2,
+        "positive_class": "positive",
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.5553435114503816
+        "class_balance": 0.5553435114503816
     },
     "wikineural-en": {
-        "n_columns": 2,
         "n_instances": [
             92720,
             23187
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "entity",
-        "balance": null
+        "class_balance": null
     },
     "wikineural-es": {
-        "n_columns": 2,
         "n_instances": [
             76320,
             19158
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "label",
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "entity",
-        "balance": null
+        "class_balance": null
     },
     "language-identification": {
-        "n_columns": 2,
         "n_instances": [
             80000,
             10000
         ],
-        "null_values": 0,
+        "n_columns": 2,
         "targets": "labels",
-        "labels": [
+        "null_values": 0,
+        "class_labels": [
             "pt",
             "bg",
             "zh",
@@ -441,35 +442,34 @@
             "en",
             "ja"
         ],
-        "pos_label": null,
-        "classes": 20,
+        "positive_class": null,
+        "n_classes": 20,
         "task": "multiclass",
-        "balance": 1.0
+        "class_balance": 1.0
     },
     "twitter-human-bots": {
-        "n_columns": 18,
         "n_instances": [
             29950,
             7488
         ],
-        "null_values": 19716,
+        "n_columns": 18,
         "targets": "account_type",
-        "labels": [
+        "null_values": 19716,
+        "class_labels": [
             "bot",
             "human"
         ],
-        "pos_label": "bot",
-        "classes": 2,
+        "positive_class": "bot",
+        "n_classes": 2,
         "task": "binary",
-        "balance": 0.5019306955518781
+        "class_balance": 0.5019306955518781
     },
     "google-guest": {
-        "n_columns": 40,
         "n_instances": [
             6079,
             476
         ],
-        "null_values": 0,
+        "n_columns": 40,
         "targets": [
             "question_asker_intent_understanding",
             "question_body_critical",
@@ -502,10 +502,11 @@
             "answer_type_reason_explanation",
             "answer_well_written"
         ],
-        "labels": null,
-        "pos_label": null,
-        "classes": null,
+        "null_values": 0,
+        "class_labels": null,
+        "positive_class": null,
+        "n_classes": null,
         "task": "regression",
-        "balance": null
+        "class_balance": null
     }
 }

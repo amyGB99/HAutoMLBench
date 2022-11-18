@@ -52,12 +52,12 @@ class Dataset(YamlAble):
         save_path = os.path.join(datasets_path, f'{self.name}')
         zip = os.path.join(save_path,f'{self.name}.zip')
         file = os.path.join(save_path,f'{self.name}')
-        if not os.path.exists(zip) and not os.path.isfile(file) :
+        if not os.path.exists(zip) and not os.path.exists(file) :
             try:
                 wget.download(self.url, save_path) 
             except:
                 print("Download failed please try again")        
-        if os.path.exists(zip) and not os.path.isfile(file):
+        if os.path.exists(zip) and not os.path.exists(file):
             shutil.unpack_archive(zip, save_path)   
         return file    
      

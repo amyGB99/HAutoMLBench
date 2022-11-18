@@ -1,16 +1,24 @@
 
 ######################## Text #################################
 
-def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8",target = "label"):
+def load_paws(self,format = "pandas", in_x_y = False ,samples =  2):
     import pandas as pd 
     import os 
     path = self.download()
-
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    
+    target = "label"
     train = os.path.join(path,'train.txt')
     test =  os.path.join(path,'test.txt')
     
-    dftr = pd.read_csv(train,sep="\t",encoding=encoding)
-    dfte = pd.read_csv(test,sep="\t",encoding=encoding)
+    dftr = pd.read_csv(train,sep="\t",encoding= "utf-8")
+    dfte = pd.read_csv(test,sep="\t",encoding="utf-8")
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -52,16 +60,24 @@ def load_paws(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "u
         else:
             print("Incorrect params")    
     
-def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8',target = "label"):
+def load_wnli(self,format = "pandas", in_x_y = False ,samples =  2 ):
     import pandas as pd 
     import os 
     path = self.download()
-    
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+        
+    target = "label"
     ptrain = os.path.join(path,'wnli-train-es.tsv')
     ptest =  os.path.join(path,'wnli-dev-es.tsv') 
     
-    dftr = pd.read_csv(ptrain,sep='\t',encoding= encoding)  
-    dfte = pd.read_csv(ptest,sep='\t',encoding= encoding)  
+    dftr = pd.read_csv(ptrain,sep='\t',encoding= "utf-8")  
+    dfte = pd.read_csv(ptest,sep='\t',encoding= "utf-8")  
     
     dfte = dfte[dfte[target].notna()]
     dfte[target] = dfte[target].astype("int")
@@ -105,7 +121,7 @@ def load_wnli(self,format = "pandas",in_x_y = True ,samples =  2,encoding='utf-8
         else:
             print("Incorrect params")
     
-def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='utf-8',target = "ner_tags"):
+def load_wikiann(self, format = "list", in_x_y = True ,samples =  2):
     '''
     Return :
      dict:   {
@@ -115,11 +131,21 @@ def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='ut
         'spans': ["PER: rick", "PER: morty"]
         }
     '''
+    
+    target = "ner_tags"
     import pandas as pd 
     import os 
     import json
 
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    
     train = os.path.join(path,'train.json')
     dev =  os.path.join(path,'dev.json')
     test =  os.path.join(path,'test.json')
@@ -154,17 +180,26 @@ def load_wikiann(self, format = "list", in_x_y = True ,samples =  2,encoding='ut
         yte.append(item[target])       
     return Xtr,ytr, Xte,yte  
 
-def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
+def load_sst_en(self,  format = "pandas", in_x_y= False, samples= 2):
     import pandas as pd
     import os 
+    target = "label"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    
     ptrain = os.path.join(path,'sst_train.txt')
     ptest = os.path.join(path,'sst_test.txt')
     
-    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=[target,'text'],encoding=encoding)
+    dftr = pd.read_csv(ptrain,sep="\t",header=None,names=[target,'text'],encoding="utf-8")
     dftr['label'] = dftr[target].str.replace("__label__","").astype('int')
     
-    dfte = pd.read_csv(ptest,sep="\t",header=None,names=[target,'text'],encoding=encoding)
+    dfte = pd.read_csv(ptest,sep="\t",header=None,names=[target,'text'],encoding="utf-8")
     dfte['label'] = dfte[target].str.replace("__label__","").astype('int')
     
     all_ = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
@@ -200,16 +235,24 @@ def load_sst_en(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'u
         else:
              print("Incorrect params") 
 
-def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = 'utf-8',target = "label"):
+def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2):
     import pandas as pd 
     import os 
-    import numpy as np
+    
+    target = "label"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train.tsv')
     ptest =  os.path.join(path,'test.tsv')
     
-    dftr = pd.read_csv(ptrain,sep="\t", encoding = encoding)
-    dfte = pd.read_csv(ptest,sep="\t",encoding = encoding)
+    dftr = pd.read_csv(ptrain,sep="\t", encoding = "utf-8")
+    dfte = pd.read_csv(ptest,sep="\t",encoding = "utf-8")
 
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -243,18 +286,25 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2,encoding = '
         else:
             print("Incorrect params")
 
-def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = 'score'):
+def load_stsb(self,  format = "pandas", in_x_y= False, samples= 2):
     import pandas as pd
     import os 
     path = self.download()
-    
+    target = 'score'
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     train = os.path.join(path,'train.csv')
     dev =  os.path.join(path,'dev.csv')
     test =  os.path.join(path,'test.csv')
     
-    dftr1 = pd.read_csv(train, names=['sentence1','sentence2',target],encoding= encoding)
-    dftr2 = pd.read_csv(dev, names=['sentence1','sentence2',target],encoding= encoding)
-    dfte = pd.read_csv(test ,names=['sentence1','sentence2',target],encoding= encoding)
+    dftr1 = pd.read_csv(train, names=['sentence1','sentence2',target],encoding= "utf-8")
+    dftr2 = pd.read_csv(dev, names=['sentence1','sentence2',target],encoding= "utf-8")
+    dfte = pd.read_csv(test ,names=['sentence1','sentence2',target],encoding= "utf-8")
     dftr = pd.concat([dftr1,dftr2],axis=0).reset_index(drop = True)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -285,29 +335,32 @@ def load_stsb(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")
     
-def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target= 'is_humor'):
+def load_haha(self,  format = "pandas", in_x_y= False, samples= 2):
     
     import pandas as pd 
     import os 
-    import numpy as np
+
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    target= 'is_humor'
     ptrain = os.path.join(path,'haha_2019_train.csv')
     ptest =  os.path.join(path,'haha_2019_test_gold.csv')
 
-    dftr = pd.read_csv(ptrain, encoding = encoding)
-    dfte = pd.read_csv(ptest,encoding = encoding)
+    dftr = pd.read_csv(ptrain, encoding = 'utf-8')
+    dfte = pd.read_csv(ptest,encoding = 'utf-8')
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
     if in_x_y == False:
@@ -340,7 +393,7 @@ def load_haha(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf
         else:
             print("Incorrect params")
 
-def load_meddocan(self,  format = "list", in_x_y= True, samples= 2, encoding= 'utf-8',target= "ner_tags"):
+def load_meddocan(self,  format = "list", in_x_y= True, samples= 2):
     
     
     def parse_text_and_tags(file_name=None):
@@ -523,6 +576,13 @@ def load_meddocan(self,  format = "list", in_x_y= True, samples= 2, encoding= 'u
     import os 
     import numpy as np
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train')
     pdev =  os.path.join(path,'dev')
     ptest =  os.path.join(path,'test')
@@ -573,16 +633,24 @@ def load_meddocan(self,  format = "list", in_x_y= True, samples= 2, encoding= 'u
 
     return X_train, y_train, X_test, y_test
 
-def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
+def load_vaccine(self,  format = "pandas", in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
-    import numpy as np
+
+    target = "label"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train.csv')
     ptest =  os.path.join(path,'test.csv')
 
-    dftr = pd.read_csv(ptrain, encoding = encoding).drop(['tweet_id','user_id'],axis= 1)
-    dfte = pd.read_csv(ptest,encoding = encoding).drop(['tweet_id','user_id'],axis =1)
+    dftr = pd.read_csv(ptrain, encoding = 'utf-8').drop(['tweet_id','user_id'],axis= 1)
+    dfte = pd.read_csv(ptest,encoding = 'utf-8').drop(['tweet_id','user_id'],axis =1)
  
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -616,10 +684,19 @@ def load_vaccine(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
         else:
             print("Incorrect params")
 
-def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "label"):
+def load_sentiment(self,  format = "pandas", in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
+    
     path = self.download()
+    target = "label"
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     plabel1 = os.path.join(path,'positive_words_es.txt')
     plabel2 =  os.path.join(path,'negative_words_es.txt') 
     positive = []
@@ -649,13 +726,12 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
     wptest.extend(wntest)
     lptrain.extend(lntrain)
     lptest.extend(lntest)
+    
     dftr['word'] = wptrain
     dftr[target] = lptrain
     dfte['word'] = wptest
     dfte[target] = lptest
     
-    #dftr[target] = dftr[target].astype('category')
-    #dfte[target] = dfte[target].astype('category')
     
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
     
@@ -689,13 +765,22 @@ def load_sentiment(self,  format = "pandas", in_x_y= True, samples= 2, encoding=
         else:
             print("Incorrect params")
 
-def load_wikineural(self , format = "list", in_x_y= True, samples= 2, encoding= 'utf-8',target = "ner_tags"):
+def load_wikineural(self , format = "list", in_x_y= False, samples= 2):
     import os 
     import pyarrow.parquet as pq 
     path = self.download()
+    target = "ner_tags"
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train.parquet')
     pdev =  os.path.join(path,'val.parquet')
     ptest =  os.path.join(path,'test.parquet')
+    
     dftrain = pq.read_table(ptrain)
     dfdev = pq.read_table(pdev)
     dftest = pq.read_table(ptest)
@@ -709,26 +794,36 @@ def load_wikineural(self , format = "list", in_x_y= True, samples= 2, encoding= 
     tokens_de = dfdev['tokens'].to_pylist()
     tokens_te = dftest['tokens'].to_pylist()
     
-    y_train = dftrain["ner_tags"].to_pylist()
-    tags_de = dfdev["ner_tags"].to_pylist()
-    tags_te = dftest["ner_tags"].to_pylist()
+    y_train = dftrain[target].to_pylist()
+    tags_de = dfdev[target].to_pylist()
+    tags_te = dftest[target].to_pylist()
     X_test = tokens_de + tokens_te 
     y_test = tags_de + tags_te
+    
     return X_train, y_train, X_test, y_test
     
-def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "labels"):
+def load_language(self,  format = "pandas", in_x_y= False, samples= 2):
    
     import pandas as pd 
     import os 
     import numpy as np
+    
+    target = "labels"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train.csv')
     pdev =  os.path.join(path,'valid.csv')
     ptest =  os.path.join(path,'test.csv')
 
-    dftr1 = pd.read_csv(ptrain, encoding = encoding)
-    dfde = pd.read_csv(pdev,encoding = encoding)
-    dfte = pd.read_csv(ptest,encoding = encoding)
+    dftr1 = pd.read_csv(ptrain, encoding = 'utf-8')
+    dfde = pd.read_csv(pdev,encoding = 'utf-8')
+    dfte = pd.read_csv(ptest,encoding = 'utf-8')
     
     dfall = pd.concat([dftr1,dfde,dfte],axis=0).reset_index(drop= True)
    
@@ -768,17 +863,86 @@ def load_language(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 
 
 ################## Multimodales  ###########################
 
-def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = 'account_type'):
+
+def load_pub_health(self,  format = "pandas", in_x_y= False, samples= 2):
+       
     import pandas as pd 
     import os 
+    import numpy as np
+    
+    target = "label"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    ptrain = os.path.join(path,'train.tsv')
+    ptest =  os.path.join(path,'test.tsv')
+
+    dftr = pd.read_csv(ptrain, sep='\t', encoding = 'utf-8')
+    dfte = pd.read_csv(ptest,  sep='\t', encoding = 'utf-8')
+    
+    
+    dftr = dftr.drop([6655],axis=0).reset_index(drop= True)
+    dftr = dftr.drop(['claim_id'],axis=1).reset_index(drop= True)
+    dfte = dfte.drop(['claim_id','Unnamed: 0'],axis=1).reset_index(drop= True)
+    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop= True)
+    #regex = '(claim|date_published|explanation|fact_checkers|main_text|sources|subjects)'
+    
+    if in_x_y == False:
+        if samples == 1:
+            return dfall
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        y_tr = dftr.filter(regex=target)
+        dummy_tr = dftr.drop([target],axis=1)
+
+        y_te = dfte.filter(regex=target) 
+        dummy_te = dfte.drop([target],axis=1) 
+        if samples== 1:
+            y = dfall.filter(regex=target)
+            dummy_all = dfall.drop([target],axis=1) 
+        
+            if format == "pandas":
+                return dummy_all,y
+            else:
+                X = dummy_all.to_numpy().tolist()
+                return X,list(y[target]) 
+        elif samples ==2:
+            if format == "pandas":
+                return dummy_tr,y_tr,dummy_te,y_te 
+            else:
+                
+                X_tr = dummy_tr.to_numpy().tolist()
+                X_te = dummy_te.to_numpy().tolist()
+                return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
+        else:
+            print("Incorrect params")  
+
+def load_twitter_human(self,  format = "pandas", in_x_y= False, samples= 2):
+    import pandas as pd 
+    import os 
+    target = 'account_type'
+    path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     pall  = os.path.join(path,'twitter_human_bots_dataset.csv')
   
     
-    dfall = pd.read_csv(pall,encoding= encoding  )
+    dfall = pd.read_csv(pall, encoding= 'utf-8')
     dfall = dfall.drop(['id','Unnamed: 0'],axis=1)
-    #dfall['account_type'] = dfall['account_type'].astype('category')
-    #dfall['created_at'] =  pd.to_datetime(dfall['created_at'],infer_datetime_format=True)
+    
     dftr = dfall.iloc[0:29950].reset_index(drop = True)
     dfte = dfall.iloc[29950:].reset_index(drop = True)
 
@@ -808,30 +972,37 @@ def load_twitter_human(self,  format = "pandas", in_x_y= True, samples= 2, encod
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")  
 
-def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8', target = "question_asker_intent_understanding"):
+def load_google_guest(self,  format = "pandas", in_x_y= False, samples= 2, target = None):
    
     import pandas as pd 
     import os 
+    
+    if target ==None:
+        target = "question_asker_intent_understanding"
+    
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+        
     ptrain = os.path.join(path,'train.csv')
     ptest = os.path.join(path,'test.csv')
     pplabel = os.path.join(path,'sample_submission.csv')
     
-    dftr = pd.read_csv(ptrain,encoding= encoding)
-    dfte1 = pd.read_csv(ptest,encoding= encoding)
-    dfte2 = pd.read_csv(pplabel,encoding= encoding)
+    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
+    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
+    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
     dftr =dftr.drop(['qa_id'],axis=1)
     dfte = pd.merge(left=dfte1,right=dfte2, left_on='qa_id', right_on='qa_id').drop(['qa_id'],axis=1)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop=True)
@@ -875,28 +1046,32 @@ def load_google_guest(self,  format = "pandas", in_x_y= True, samples= 2, encodi
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, y_tr.to_numpy().tolist(),X_te, y_te.to_numpy().tolist() 
         else:
             print("Incorrect params") 
      
-def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= 'utf-8',target = "Label"):
+def load_inferes(self,  format = "pandas", in_x_y= False, samples= 2):
     import pandas as pd
     import os 
+    target = "Label"
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     train = os.path.join(path,'train_.csv')
     dev =  os.path.join(path,'dev.csv')
     test =  os.path.join(path,'test.csv')
-    dftr1 = pd.read_csv(train,encoding=encoding)
-    dfte = pd.read_csv(test,encoding=encoding)
-    dfde1 = pd.read_csv(dev,encoding=encoding)
+    
+    dftr1 = pd.read_csv(train,encoding= 'utf-8')
+    dfte = pd.read_csv(test,encoding='utf-8')
+    dfde1 = pd.read_csv(dev,encoding='utf-8')
     dftr = pd.concat([dftr1,dfde1],axis = 0).reset_index(drop = True)
     
     dfall = pd.concat([dftr,dfte],axis = 0).reset_index(drop = True)
@@ -927,28 +1102,32 @@ def load_inferes(self,  format = "pandas", in_x_y= True, samples= 2, encoding= '
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+             
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'salary'):
+def load_predict_salary(self,format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd
     import os 
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+        
+    target = 'salary'
     ptrain = os.path.join(path,'Final_Train_Dataset.csv')
     ptest =  os.path.join(path,'Final_Test_Dataset.csv')
     plabel_test =  os.path.join(path,'sample_submission.xlsx')
     
-    dftr = pd.read_csv(ptrain, encoding = encoding)
-    Xtest = pd.read_csv(ptest, encoding = encoding)
+    dftr = pd.read_csv(ptrain, encoding = 'utf-8')
+    Xtest = pd.read_csv(ptest, encoding = 'utf-8')
     ytest = pd.read_excel(plabel_test)
     dfte = pd.concat([ Xtest, ytest],axis=1)
     dftr = dftr.set_axis( ['id','experience','job_description','job_desig','job_type','key_skills','location','salary','company_name_encoded'],axis = 1).drop(['id'],axis=1)
@@ -980,26 +1159,28 @@ def load_predict_salary(self,format = "pandas" , in_x_y= True, samples= 2, encod
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+        
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params")    
 
-def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'Price'):   
+def load_price_book(self,format = "pandas" , in_x_y= False, samples= 2):   
    
      
     import pandas as pd 
     import os 
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     # Load the xlsx file
-
+    target = 'Price'
     ptrain = os.path.join(path,'Data_Train.xlsx')
     ptest = os.path.join(path,'Data_Test.xlsx')
     plabel_test =  os.path.join(path,'Sample_Submission.xlsx')
@@ -1041,25 +1222,29 @@ def load_price_book(self,format = "pandas" , in_x_y= True, samples= 2, encoding=
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
     
-def load_stroke(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target= 'stroke'):
+def load_stroke(self,format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd 
-    import os 
+    import os
+    
+    target= 'stroke' 
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     pall = os.path.join(path,'healthcare-dataset-stroke-data.csv')
 
-    dfall = pd.read_csv(pall,encoding=encoding).drop(['id'],axis=1)
+    dfall = pd.read_csv(pall,encoding='utf-8').drop(['id'],axis=1)
    
     dtr1 = dfall.iloc[:199]
     dfte = dfall.iloc[199:1221].reset_index(drop=True)
@@ -1092,25 +1277,29 @@ def load_stroke(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'ut
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                    #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_wines(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'price'):
+def load_wines(self,format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
+    
+    target = 'price'
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     pall = os.path.join(path,'wines_SPA.csv')
     
-    dfall = pd.read_csv(pall,encoding=encoding)
+    dfall = pd.read_csv(pall,encoding='utf-8')
     dfall['body'] = dfall['body'].astype('Int64') 
     dfall['acidity'] = dfall['acidity'].astype('Int64')
     
@@ -1143,25 +1332,29 @@ def load_wines(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
+                
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'Class Name'):
+def load_women_clothing(self,format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    target = 'Class Name'
     all = os.path.join(path,'womens_clothing.csv')
 
-    dfall = pd.read_csv(all, encoding= encoding)
+    dfall = pd.read_csv(all, encoding= 'utf-8')
     dfall = dfall.filter(regex='(Age|Title|Review Text|Rating|Recommended IND|Positive Feedback Count|Division Name|Department Name|Class Name)',axis =1)
 
     dftr = dfall.iloc[:16440]
@@ -1194,31 +1387,34 @@ def load_women_clothing(self,format = "pandas" , in_x_y= True, samples= 2, encod
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
     
-def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'final_status'):
+def load_project_kickstarter(self, format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
+    target = 'final_status'
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     ptrain = os.path.join(path,'train.csv')
     ptest = os.path.join(path,'test.csv')
     pplabel = os.path.join(path,'samplesubmission.csv')
 
     
     # Read the values of the file in the datafrae
-    dftr = pd.read_csv(ptrain,encoding= encoding)
-    dfte1 = pd.read_csv(ptest,encoding= encoding)
-    dfte2 = pd.read_csv(pplabel,encoding= encoding)
+    dftr = pd.read_csv(ptrain,encoding= 'utf-8')
+    dfte1 = pd.read_csv(ptest,encoding= 'utf-8')
+    dfte2 = pd.read_csv(pplabel,encoding= 'utf-8')
 
     dfte = pd.concat([dfte1,dfte2],axis=1).drop(['project_id'],axis=1)
     dftr = dftr.drop(['project_id','backers_count'],axis=1)
@@ -1251,26 +1447,29 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= True, samples= 2,
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
             print("Incorrect params") 
 
-def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf-8',target = 'fraudulent'):
+def load_jobs(self, format = "pandas" , in_x_y= False, samples= 2):
     import pandas as pd 
     import os 
-    import numpy as np
+
+    target = 'fraudulent'
     path = self.download()
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
     pall = os.path.join(path,'fake_job_postings.csv')
     
-    dfall = pd.read_csv(pall,encoding=encoding).drop(['job_id'],axis =1)
+    dfall = pd.read_csv(pall,encoding='utf-8').drop(['job_id'],axis =1)
         
     dftr = dfall.iloc[:12516]
     dfte = dfall.iloc[12516:].reset_index(drop= True)
@@ -1301,13 +1500,7 @@ def load_jobs(self, format = "pandas" , in_x_y= True, samples= 2, encoding= 'utf
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:

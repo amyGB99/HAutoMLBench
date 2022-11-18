@@ -147,10 +147,6 @@
         "text": "text",
         "label": "category"
     },
-    "vaccine-en": {
-        "text": "text",
-        "label": "category"
-    },
     "sentiment-lexicons-es": {
         "word": "text",
         "label": "category"
@@ -228,5 +224,15 @@
         "answer_type_procedure": "float",
         "answer_type_reason_explanation": "float",
         "answer_well_written": "float"
+    },
+    "pub-health": {
+        "claim": "sentence",
+        "date_published": "datetime",
+        "explanation": "text",
+        "fact_checkers": "syntagma",
+        "main_text": "text",
+        "sources": "text",
+        "label": "category",
+        "subjects": "syntagma"
     }
 }

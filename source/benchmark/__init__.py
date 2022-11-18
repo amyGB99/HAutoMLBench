@@ -8,7 +8,6 @@ from benchmark import dataset
 from benchmark import utils
 from benchmark import functions_load
 import os
-import importlib   
 import pandas as pd
 import json
 import io
@@ -49,191 +48,37 @@ class HAutoMLBench():
                 'MAE' : mean_absolute_error,
                 'MSE' : mean_squared_error,
                 'RMSE' : mean_squared_error,
+                'f1_beta': utils.F1_beta,
+                'entity_precision': utils.precision,
+                'entity_recall':utils.recall
+                
               }
  
     
     @classmethod
-    def create_datasets(cls):
-        local_path = os.path.dirname(os.path.realpath(__file__))
-        info_path = os.path.join(local_path,'infos.jsonl')
+    def init(cls):
         try:
-            _, df = cls.__change_names(local_path, reset= True)
-            infos = cls.__write_info(local_path,info_path,reset=True)
+            variables = utils.init_variables_file()
+            informations = utils.init_information_file()
         except:
-           print('Error creating benchmark datasets make sure the files: columns_type and properties , are created correctly.') 
+           print('Error creating benchmark datasets make sure the files: columns_type and properties, are created correctly.') 
            return   
-        names = df['name'].to_list()
-        urls = df['url'].to_list()
-        funcs = df['func'].to_list()
-        for i in range(len(names)):
+        datasets_names = variables['name'].to_list()
+        datasets_urls = variables['url'].to_list()
+        datasets_funcs = variables['func'].to_list()
+        for i in range(len(datasets_names)):
             try:
-                name = names[i]
-                info = infos[i][name]
-                inst = dataset.Dataset(name,urls[i],info,cls.return_func('.functions_load',funcs[i]))  
-                utils.save_dataset_definition(inst)
+                dataset_name = datasets_names[i]
+                dataset_metadata = informations[i][dataset_name]
+                dataset_instance = dataset.Dataset(dataset_name, datasets_urls[i], dataset_metadata, utils.return_func('.functions_load',datasets_funcs[i]))  
+                utils.save_dataset_definition(dataset_instance)
             except Exception as error:
                 print(error)
             
     @classmethod
-    def init(cls,ret_info = False):
-        local_path = os.path.dirname(os.path.realpath(__file__))
-        info_path = os.path.join(local_path,'infos.jsonl')
-        names ,urls, funcs = cls.__read_variables_bench(local_path)
-        infos = None
-        if ret_info :
-            infos  =jsonlines.Reader(info_path)
-            with open(info_path, "r", encoding="utf-8") as file:
-                infos = [line for line in jsonlines.Reader(file)]
-            
-        return names,urls,funcs,infos
-        
-    @classmethod
-    def __write_info(cls,local_path,info_path,reset = False):
-        dict_ = []
-        properties_path = os.path.join(local_path,'properties.json')
-        columns_type_path = os.path.join(local_path,'columns_types.json')
-        if reset == True:
-            with open(properties_path, 'r') as fp:
-                properties = json.load(fp)
-                with open(columns_type_path, 'r') as ff:
-                    columns_type = json.load(ff)
-                    for name,i in zip(properties.keys(),range(len(properties.keys()))):
-                        
-                        properties[name]['columns_types'] = columns_type[name]
-                        dict_.append({name:properties[name]})
-                         
-            with jsonlines.open(info_path, 'w') as fp:
-                fp.write_all(dict_)
-            return dict_    
-    
-    @classmethod
-    def __update_info(cls,info_path,info = None,remove= False, index= None):
-        
-        with open(info_path, "r", encoding="utf-8") as file:
-            infos = [line for line in jsonlines.Reader(file)]
-        
-        if  index!= None:
-            if not remove:
-                infos[index] = info    
-            if remove:
-                infos.pop(index) 
-        elif not remove: 
-            infos.append(info) 
-        with jsonlines.open(info_path, 'w') as fp:
-            fp.write_all(infos)
-          
-    @classmethod
-    def __read_variables_bench(cls,local_path):
-        names_path = os.path.join(local_path,'variables.tsv')
-        df = pd.read_table(names_path)
-        return list(df['name']),list(df['url']),list(df['func'])
+    def get_dataset(cls, name):
+        return utils.load_dataset_definition(name)
    
-    @classmethod
-    def __change_names(cls,local_path, dataset = None, insert = False, reset =False):
-         
-        archive_path = os.path.join(local_path,'variables.tsv')
-        
-        datasets = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
-                    "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
-                    "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
-                    "stsb-es","haha", "meddocan","vaccine-es","vaccine-en","sentiment-lexicons-es",
-                    "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
-        urls = ["https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/wikiann-es/wikiann-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/wikicat-es/wikicat-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/sst-en/sst-en.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/stroke-prediction/stroke-prediction.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/women-clothing/women-clothing.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/fraudulent-jobs/fraudulent-jobs.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/spanish-wine/spanish-wine.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/project-kickstarter/project-kickstarter.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/price-book/price-book.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/inferes/inferes.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/predict-salary/predict-salary.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-en.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/stsb/stsb-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/haha/haha.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/meddocan/meddocan.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/vaccine/vaccine-en.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/sentiment-lexicons/sentiment-lexicons-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/wikineural/wikineural-en.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/wikineural/wikineural-es.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
-            "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
-    
-        func = ["load_paws","load_paws","load_wnli","load_wikiann","load_wikicat",
-                 "load_sst_en","load_stroke", "load_women_clothing" , "load_jobs","load_wines","load_project_kickstarter",
-                 "load_price_book","load_inferes", "load_predict_salary","load_stsb","load_stsb","load_haha","load_meddocan",
-                 "load_vaccine","load_vaccine","load_sentiment","load_wikineural","load_wikineural","load_language",
-                 "load_twitter_human","load_google_guest"]
-        if reset:
-            df = pd.DataFrame()
-            df['name'] = datasets
-            df['url'] = urls
-            df['func'] = func
-        else:
-            df = pd.read_table(archive_path)
-               
-        names = df['name'].tolist()
-        try:
-            index = names.index(dataset['name'])   
-        except:
-            index = None
-        if dataset is not None:
-            if index != None:
-                if insert:
-                    df.iloc[index,:] = dataset
-                else:
-                    df = df.drop([index],axis=0).reset_index(drop=True)         
-            else:    
-                if insert:
-                    df = df.append(dataset,ignore_index = True)
-        elif not reset:
-            index = None
-            print(f"Error the dataset")
-        df.to_csv(archive_path,sep='\t',index=False) 
-        return index,df 
-    
-    @classmethod
-    def return_func(cls,mod, func):
-        module = importlib.import_module(mod,package="benchmark")
-        function = getattr(module, func)
-        return function
-    
-    @classmethod
-    def caller_func(cls,mod, func:str, *args):
-        function = cls.return_func(mod,func)
-        function(*args)
-    
-    @classmethod
-    def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8',target = None):
-        dataset = utils.load_dataset_definition(name)
-        if dataset is not None:
-            try:
-                if target!= None:
-                    if name != "google-guest":
-                        if not isinstance(target,str):
-                            print(f'Error: The target for {name} dataset must be only one')
-                            return None
-                    return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding,target = target)
-                else:
-                    return dataset.loader_func(dataset,format = format , in_x_y = in_xy , samples = samples, encoding = encoding)   
-            except Exception as error :
-               print(f"Error loading the dataset {name} make sure that the parameters were entered correctly and that the dataset belongs to the benchmark")
-        return None
-    
-    @classmethod
-    def load_info(cls,name):
-        try:
-            return utils.load_dataset_definition(name).info
-        except:
-            print(f"Error: There is no registered dataset with the name : {name}")
-            return None
-    
     @classmethod
     def filter(cls, task = None,expresion = None):
         '''
@@ -242,59 +87,56 @@ class HAutoMLBench():
         
         return : list[str]
         '''  
-        names,_,_,infos = cls.init(True)
+        datasets_names,_,_,datasets_infos = utils.get_properties(True)
         if task == None and expresion == None:
-            return names
+            return datasets_names
         else:
-            list_ = []
-            for info,name in zip(infos,names):
-                value = info[name]
-                if value is None:
+            datasets = []
+            for dataset_info,i in zip(datasets_infos,range(len(datasets_names))):
+                dataset_name = datasets_names[i]
+                metadata = dataset_info[dataset_name]
+                if metadata is None:
                     continue
                 try:
-                    if task != None and expresion == None:
-                        if task == value['task']:
-                            list_.append(name) 
+                    if expresion == None:
+                        if task == metadata['task']:
+                            datasets.append(dataset_name) 
                         continue
-                    elif expresion != None:
-                        if task != None and task != value['task']:
+                    else:
+                        if task != None and task != metadata['task']:
                             continue
                         property,min,max = expresion
                         if property not in ['n_instances','n_columns', 'null_values','classes','class balance']:
-                            print('Error: The feature is incorrect')
+                            print(f'Error: The entered property {property} is incorrect')
                             break
-                       
-                        value_property = value[property]
-                        
-                        if property == 'n_instances' and value_property != None :
-                            value_property = value[property][0] + value[property][1]
-                        
-                        if min == None and max == None:
-                            print('Error : Both ranges cannot be none')
+                        if not isinstance(min,(int,float)) and not isinstance(max,(int,float)):
+                            print('Error : Both ranges in the expression cannot be None')
                             break
-                        try:
-
-                            if value_property ==None :
-                                continue
-                            if min != None and max != None:
-                                if value_property >= min and value_property < max:
-                                    list_.append(name)
-                            elif min == None:
-                                if value_property < max:
-                                    list_.append(name)
-                            elif max == None:
-                                if value_property >= min:
-                                    list_.append(name)           
-                        except:
-                            print('Error: The feature is incorrect')
-                            break            
+                        value_property = metadata[property]
+                        
+                        if value_property is None:
+                            continue
+                        if property == 'n_instances':
+                            if isinstance(value_property,list):
+                                value_property = 0  
+                                for value in  metadata[property]:
+                                    value_property += value   
+                        if min is not None and max is not None :
+                            if value_property >= min and value_property < max:
+                                datasets.append(dataset_name)
+                        elif min is None:
+                            if value_property < max:
+                                datasets.append(dataset_name)
+                        else:
+                            if value_property >= min:
+                                datasets.append(dataset_name)                    
                 except Exception as error:
                     print(error)
                     break
-            return list_        
+            return datasets        
                                          
     @classmethod
-    def new_dataset(cls,name: str, url: str, function, info = None ):
+    def add_dataset(cls, name: str, url: str, function, metadata = None ):
         '''
         info = {'n_instances': [int,int],
                 'n_columns': int , 
@@ -302,68 +144,60 @@ class HAutoMLBench():
                 'targets': list[str] or str,
                 'null_values': int,
                 'task': str 
-                'pos_label': Any,
-                'classes': int, 
-                'class balance':float}
+                'positive_class': Any,
+                'class_labels': [Any] 
+                'n_classes': int, 
+                'class_balance':float}
         '''
-        correct = False
-
+        print('cacasd')
         try:
-            inst = dataset.Dataset(name,url,info,cls.return_func('.functions_load',function))
-            correct = True
-        except:
-            try:
-                inst = dataset.Dataset(name,url,info,function) 
-                correct = True
-            except Exception as error:
-                print("Error: The load function was not entered correctly, make sure it is in the functions_load file")
-        if correct:    
-            local_path = os.path.dirname(os.path.realpath(__file__))
-            info_path = os.path.join(local_path,'info.jsonl')
-            try:
-                new_fila = {'name':name, 'url': url,'func': inst.loader_func_name}
-            except:    
-                new_fila =  {'name': name, 'url': url,'func': None}
-            if info is None:
-                info = { name:{'n_instances': None, 
+            dataset_instance = dataset.Dataset(name, url, metadata, function) 
+            new_row = {'name': name, 'url': url,'func': dataset_instance.loader_func_name}
+            if metadata is None:
+                metadata = { name:{'n_instances': None, 
                     'n_columns': None, 
                     'columns_types': None,
                     'targets': None ,
                     'null_values': None,
                     'task': None,
-                    'pos_label': None,
-                    'classes': None, 
-                    'class balance':None}
+                    'positive_class': None,
+                    'class_labels': None,
+                    'n_classes': None, 
+                    'class_balance':None}
                 }
-            else: 
-                info = { name: info}   
-            try:          
-                index,_ = cls.__change_names(local_path, dataset = new_fila,insert = True)
-                cls.__update_info(info_path, info = info,remove = False, index = index)   
-                utils.save_dataset_definition(inst)
-            except Exception as error:
-                print('Error in removing the new dataset, the benchmark information was corrupted')
+            else:
+                
+                if not utils.verify(metadata):
+                    print("The metadata of the new set was entered incorrectly")
+                    return
+                metadata = { name : metadata}   
+            try:
+                index = utils.update_variables_file(dataset = new_row, operation= 'insert')
+                utils.update_information_file(metadata = metadata, operation= 'insert', index = index)   
+                utils.save_dataset_definition(dataset_instance)
+            except:
+                print('Error in adding the new dataset, the benchmark information was corrupted')
                 print('Resetting to Benchmark Default Data.....')
-                cls.__change_names(local_path,reset = True)
-                cls.__write_info(local_path,info_path,reset=True)
-                          
+                utils.init_variables_file()
+                utils.init_information_file()
+                                              
+        except:
+            print("Error: The function parameter was entered incorrectly, make sure it is a python function")
+
     @classmethod
     def remove_dataset(cls, name: str):
-        
-        local_path = os.path.dirname(os.path.realpath(__file__))
-        info_path = os.path.join(local_path,'info.jsonl')
         row  ={'name': name}
         try:
-            index,_ = cls.__change_names(local_path, dataset= row,insert= False,reset =False)
-            cls.__update_info(info_path,remove= True,index= index)
+            index = utils.update_variables_file(dataset= row, operation= 'remove')
+            utils.update_information_file(operation= 'remove',index= index)
         except Exception as error:
             print('Error in removing the new dataset, the benchmark information was corrupted')
             print('Resetting to Benchmark Default Data.....')
-            cls.__change_names(local_path,reset = True)
-            cls.__write_info(local_path,info_path,reset=True)
+            utils.init_variables_file()
+            utils.init_information_file()
 
     @classmethod
-    def evaluate(cls,name,y_true,y_pred, task ,is_multilabel = False,pos=None ,labels = None,save_path = None, name_archive ='results'):
+    def evaluate(cls,name,y_true,y_pred, is_multilabel = False,task =None, positive_class = None , class_labels = None, save_path = None, name_archive ='results'):
         if len(y_true)!= len(y_pred):
             print("Error: The predictions and the true target must have the same shape and length")
             return None
@@ -371,6 +205,9 @@ class HAutoMLBench():
                 cls.scoring['f1_score'],cls.scoring['balanced_accuracy']] 
         
         metric_regr = [cls.scoring['MSE'],cls.scoring['MAE']]
+        
+        metric_entity = [cls.scoring['f1_beta'], cls.scoring['entity_precision'],cls.scoring['entity_recall']]
+        
         try:
             result_path = os.path.join(save_path,'.'.join([name_archive,'json']))
         except:    
@@ -378,6 +215,22 @@ class HAutoMLBench():
             result_path = os.path.join(local_path,'.'.join([name_archive,'json']))
         results = {}   
         dict_ = {}
+        metadata = None
+        try:
+            instance = cls.get_dataset(name)
+        except:
+            instance = None    
+        is_multilabel = is_multilabel if name == 'google-guest' and is_multilabel is not None else False
+        if instance is not None:
+            metadata = instance.info
+
+        if metadata is not None and task is None:
+            task = metadata['task']
+        if metadata is not None and positive_class is None:
+            positive_class = metadata['positive_class']
+        if metadata is not None and class_labels is None:
+            class_labels = metadata['class_labels']
+                
         try:
             with open(result_path,'r') as fp:
                 results = json.load(fp)
@@ -385,25 +238,38 @@ class HAutoMLBench():
            with open(result_path,'w') as fp:
             json.dump(dict_,fp)         
         
-        if task == 'binary' or task == 'multiclass' :
-            metrics =metric_class
-            
+        if task is None:
+            print('The task type of the dataset to evaluate cannot be None')
+            return None
+        if task == 'binary':
+            metrics = metric_class
+            if positive_class is None:
+                print('If the task type is Binary to evaluate the dataset the positive_class cannot be None')
+                return None
+        elif task == 'multiclass':
+            metrics = metric_class
+            if class_labels is None:
+                print('If the task type is Multiclass to evaluate the dataset the class_labels cannot be None')
+                return None
         elif task == 'regression':
-            metrics =metric_regr
-        
+            metrics = metric_regr
+        elif task =='entity':
+            metrics = metric_entity
+            
         for metric in metrics:
             metric_name =metric.__name__
             try:
-                if  metric_name == 'accuracy_score' or metric_name == 'balanced_accuracy_score':
+                if  metric_name == 'accuracy_score' or metric_name == 'balanced_accuracy_score' or metric_name == 'precision' or metric_name == 'recall' or metric_name == 'F1_beta' :
                         score = metric(y_true, y_pred)      
                 else:
+                    
                     if task == 'binary':
-                        score1 = metric(y_true,y_pred,average = 'micro')  
-                        score2 = metric(y_true,y_pred,pos_label= pos)  
+                        score1 = metric(y_true,y_pred, average = 'micro')  
+                        score2 = metric(y_true,y_pred,pos_label= positive_class)  
                         score = {'micro': score1, 'normal': score2}
                     elif task == 'multiclass':
-                        score1 = metric(y_true,y_pred,labels =labels,average = 'macro')  
-                        score2 = metric(y_true,y_pred ,labels =labels,average ='weighted')    
+                        score1 = metric(y_true,y_pred,labels = class_labels,average = 'macro')  
+                        score2 = metric(y_true,y_pred ,labels =class_labels,average ='weighted')    
                         score = {'macro': score1, 'weighted': score2}
                     elif task =='regression':
                         if metric_name == 'mean_squared_error': 
