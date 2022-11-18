@@ -234,5 +234,9 @@
         "sources": "text",
         "label": "category",
         "subjects": "syntagma"
+    },
+    "trec": {
+        "label": "category",
+        "sentence": "sentence"
     }
 }

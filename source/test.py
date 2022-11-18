@@ -14,16 +14,16 @@ HAutoMLBench.init()
 print('Benchmark datasets:')
 #names = HAutoMLBench.filter()
 #print(names)
-dataset = HAutoMLBench.get_dataset('pub-health')  
+#dataset = HAutoMLBench.get_dataset('pub-health')  
 #train,test = dataset.loader_func(dataset)
 print("holi")
 #print(test.iloc[0,7])
 path = '/media/amanda/DATA1/School/Thesis/implementation/benchmark actual/automl_benchmark/source/benchmark/columns_types.json'
 path2 = '/media/amanda/DATA1/School/Thesis/implementation/benchmark actual/automl_benchmark/source/benchmark/columns_types2.json'
-# with open(path2, 'r') as fp:
+# with open(path, 'r') as fp:
 #   all_types = json.load(fp)
 #   #del all_types['vaccine-en']
-#   all_types['pub-health'] = {'claim': 'text', 'date_published': 'datetime','explanation': 'text','fact_checkers': 'text', 'main_text': 'text','sources' : 'text','label': 'category',  'subjects': 'text'}
+#   all_types['trec'] = {'label': 'category', 'sentence': 'sentence'}
 
 # with open(path, 'w') as fp:
 #   json.dump(all_types, fp,indent= 4)

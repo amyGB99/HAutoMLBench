@@ -129,13 +129,13 @@ def create_columns_type():
         json.dump(all_types, fp,indent= 4) 
         
 def create_prperties():
-    labels  = [['label'], ['label'], ['label'], ['label'], ['label'],['label'],['stroke'],['Class Name'],['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],['is_humor'],['label'],['label'],['label'],['label'],['label'],['label'],['labels'],['account_type'],['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written']]
+    labels  = [['label'], ['label'], ['label'], ['label'], ['label'],['label'],['stroke'],['Class Name'],['fraudulent'],['price'] ,['final_status'] ,['Price'], ['Label'],['salary'],['score'],['score'],['is_humor'],['label'],['label'],['label'],['label'],['label'],['label'],['labels'],['account_type'],['question_asker_intent_understanding','question_body_critical','question_conversational','question_expect_short_answer','question_fact_seeking','question_has_commonly_accepted_answer','question_interestingness_others','question_interestingness_self','question_multi_intent','question_not_really_a_question','question_opinion_seeking','question_type_choice','question_type_compare','question_type_consequence','question_type_definition','question_type_entity','question_type_instructions','question_type_procedure','question_type_reason_explanation','question_type_spelling','question_well_written','answer_helpful', 'answer_level_of_information','answer_plausible','answer_relevance','answer_satisfaction','answer_type_instructions','answer_type_procedure','answer_type_reason_explanation', 'answer_well_written'],['label']]
     regres =['spanish-wine', 'price-book', 'stsb-en', 'stsb-es', 'google-guest']
     names = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
                     "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
                     "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
                     "stsb-es","haha", "meddocan","vaccine-es","pub-health","sentiment-lexicons-es",
-                    "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
+                    "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest",'trec']
     dict_ ={}
     
     for dataset,i in zip(names,range(len(names))):
@@ -172,7 +172,7 @@ def create_prperties():
               labels_d = None
             else:
                 number_class = len(all[target].dropna().unique())
-                number_clases_train = train[target].value_counts()
+                number_clases_train = train[target].dropna().value_counts()
                 labels_d = all[target].dropna().unique().tolist()
                 if number_class == 2:
                     task = 'binary'
@@ -225,7 +225,8 @@ def init_variables_file():
                 "stroke-prediction","women-clothing","fraudulent-jobs","spanish-wine",
                 "project-kickstarter","price-book","inferes","predict-salary","stsb-en",
                 "stsb-es","haha", "meddocan","vaccine-es","pub-health","sentiment-lexicons-es",
-                "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest"]
+                "wikineural-en","wikineural-es","language-identification","twitter-human-bots","google-guest","trec"]
+    
     datasets_urls = ["https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-en.zip",
         "https://github.com/amyGB99/automl_benchmark/releases/download/paws-x/paws-x-es.zip",
         "https://github.com/amyGB99/automl_benchmark/releases/download/wnli-es/wnli-es.zip",
@@ -251,13 +252,14 @@ def init_variables_file():
         "https://github.com/amyGB99/automl_benchmark/releases/download/wikineural/wikineural-es.zip",
         "https://github.com/amyGB99/automl_benchmark/releases/download/language-identification/language-identification.zip",
         "https://github.com/amyGB99/automl_benchmark/releases/download/twitter-human-bots/twitter-human-bots.zip",
-        "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip"]
+        "https://github.com/amyGB99/automl_benchmark/releases/download/google-guest/google-guest.zip",
+        "https://github.com/amyGB99/automl_benchmark/releases/download/trec/trec.zip"]
 
     datasets_func = ["load_paws","load_paws","load_wnli","load_wikiann","load_wikicat",
                 "load_sst_en","load_stroke", "load_women_clothing" , "load_jobs","load_wines","load_project_kickstarter",
                 "load_price_book","load_inferes", "load_predict_salary","load_stsb","load_stsb","load_haha","load_meddocan",
                 "load_vaccine","load_pub_health","load_sentiment","load_wikineural","load_wikineural","load_language",
-                "load_twitter_human","load_google_guest"]
+                "load_twitter_human","load_google_guest","load_trec"]
     
     df = pd.DataFrame()
     df['name'] = datasets_name

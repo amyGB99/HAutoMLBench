@@ -860,6 +860,56 @@ def load_language(self,  format = "pandas", in_x_y= False, samples= 2):
         else:
             print("Incorrect params")
 
+def load_trec(self,  format = "pandas", in_x_y= False, samples= 2):
+    import pandas as pd 
+    import os 
+
+    target = "label"
+    path = self.download()
+    
+    if not os.path.exists(path):
+        if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
+            return {},{}
+        elif samples == 2 and in_x_y == True:
+            return {},{}, {},{}
+        elif samples==1 and in_x_y == False:
+            return {}
+    ptrain = os.path.join(path,'train.tsv')
+    ptest =  os.path.join(path,'test.tsv')
+    
+    dftr = pd.read_csv(ptrain, sep='\t', encoding = 'utf-8')
+    dfte = pd.read_csv(ptest, sep='\t', encoding = 'utf-8')
+    dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop = True)
+    
+    if in_x_y == False:
+        if samples == 1:
+            return dfall
+        elif samples ==2:
+            return dftr,dfte
+        else:
+            print("Incorrect params") 
+    else:
+        X_tr = dftr.filter(regex='sentence') 
+        y_tr = dftr.filter(regex=target)
+
+        X_te = dfte.filter(regex='sentence') 
+        y_te = dfte.filter(regex=target) 
+        
+        if samples== 1:
+            X_all = dfall.filter(regex='sentence') 
+            y = dfall.filter(regex= target)
+            if format == "pandas":
+                return X_all,y
+            else:
+                return list(X_all['sentence']),list(y[target]) 
+        elif samples ==2:
+            if format == "pandas":
+                return X_tr,y_tr,X_te,y_te 
+            else:
+               
+                return list(X_tr['sentence']), list(y_tr[target]),list(X_te['sentence']), list(y_te[target])  
+        else:
+            print("Incorrect params")
 
 ################## Multimodales  ###########################
 

@@ -508,5 +508,26 @@
         "n_classes": null,
         "task": "regression",
         "class_balance": null
+    },
+    "trec": {
+        "n_instances": [
+            5452,
+            500
+        ],
+        "n_columns": 2,
+        "targets": "label",
+        "null_values": 0,
+        "class_labels": [
+            "DESC",
+            "ENTY",
+            "ABBR",
+            "HUM",
+            "NUM",
+            "LOC"
+        ],
+        "positive_class": null,
+        "n_classes": 6,
+        "task": "multiclass",
+        "class_balance": 0.0688
     }
 }
