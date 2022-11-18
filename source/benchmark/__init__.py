@@ -149,7 +149,6 @@ class HAutoMLBench():
                 'n_classes': int, 
                 'class_balance':float}
         '''
-        print('cacasd')
         try:
             dataset_instance = dataset.Dataset(name, url, metadata, function) 
             new_row = {'name': name, 'url': url,'func': dataset_instance.loader_func_name}

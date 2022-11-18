@@ -111,7 +111,8 @@ def create_columns_type():
             all_types[dataset] = {'tokens':'Seqtokens','tags':'Seqtags'}
             continue
         target = labels[i]
-        all = HAutoMLBench.load_dataset(dataset,format='pandas',in_xy=False,samples=1)
+        inst= load_dataset_definition(dataset)
+        all = inst.loader_func(inst,samples = 1)
         for column in all.columns:
             t = all[column].dtype.name
             if t== 'int64':
@@ -122,8 +123,6 @@ def create_columns_type():
                 types[column] = 'text' 
             else:
                 types[column] = t       
-            #print(type(all[column].dtype.name))
-            #['sentence1','sentence2','text','Title','Review Text','location','company_profile','description','requirements','benefits','country','']
         all_types[dataset] = types
     with open('/media/amanda/DATA1/School/Thesis/implementation/benchmark actual/automl_benchmark/source/benchmark/columns_types.json', 'w') as fp:
         json.dump(all_types, fp,indent= 4) 
@@ -218,7 +217,7 @@ def read_variables_bench():
     return list(df['name']),list(df['url']),list(df['func'])
 
 def init_variables_file():
-    
+
     variables_path = os.path.join(local_path,'variables.tsv')
     
     datasets_name = ["paws-x-en","paws-x-es","wnli-es","wikiann-es","wikicat-es","sst-en",
@@ -307,7 +306,6 @@ def init_information_file():
     '''
     
     informations = []
-    
     datasets_info_path = os.path.join(local_path,'datasets_info.jsonl')
     properties_path = os.path.join(local_path,'properties.json')
     columns_types_path = os.path.join(local_path,'columns_types.json')

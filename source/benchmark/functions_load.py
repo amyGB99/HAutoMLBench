@@ -6,6 +6,7 @@ def load_paws(self,format = "pandas", in_x_y = False ,samples =  2):
     import os 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -48,13 +49,8 @@ def load_paws(self,format = "pandas", in_x_y = False ,samples =  2):
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
@@ -65,6 +61,8 @@ def load_wnli(self,format = "pandas", in_x_y = False ,samples =  2 ):
     import os 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -109,13 +107,8 @@ def load_wnli(self,format = "pandas", in_x_y = False ,samples =  2 ):
             if format == "pandas":
                 return dummy_tr,y_tr,dummy_te,y_te 
             else:
-                #X_tr = list()
-                #for i in range(len(dummy_tr.axes[0])):
-                    #X_tr.append((dummy_tr.iloc[i,0],dummy_tr.iloc[i,1])) 
+                
                 X_tr = dummy_tr.to_numpy().tolist()
-                #X_te = list()
-                #for i in range(len(dummy_te.axes[0])):
-                 #   X_te.append((dummy_te.iloc[i,0],dummy_te.iloc[i,1])) 
                 X_te = dummy_te.to_numpy().tolist()
                 return X_tr, list(y_tr[target]),X_te, list(y_te[target])  
         else:
@@ -139,6 +132,8 @@ def load_wikiann(self, format = "list", in_x_y = True ,samples =  2):
 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -186,6 +181,8 @@ def load_sst_en(self,  format = "pandas", in_x_y= False, samples= 2):
     target = "label"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -242,6 +239,8 @@ def load_wikicat(self, format = "pandas",in_x_y = True, samples = 2):
     target = "label"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -292,6 +291,7 @@ def load_stsb(self,  format = "pandas", in_x_y= False, samples= 2):
     path = self.download()
     target = 'score'
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -349,6 +349,8 @@ def load_haha(self,  format = "pandas", in_x_y= False, samples= 2):
 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -577,6 +579,8 @@ def load_meddocan(self,  format = "list", in_x_y= True, samples= 2):
     import numpy as np
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -624,13 +628,6 @@ def load_meddocan(self,  format = "list", in_x_y= True, samples= 2):
                 X_test.extend(text)
                 y_test.extend(ibo_corpora)
 
-    # if max_examples is not None:
-    #     X_train = X_train[:max_examples]
-    #     X_test = X_test[:max_examples]
-    #     y_train = y_train[:max_examples]
-    #     y_test = y_test[:max_examples]
- 
-
     return X_train, y_train, X_test, y_test
 
 def load_vaccine(self,  format = "pandas", in_x_y= False, samples= 2):
@@ -640,6 +637,8 @@ def load_vaccine(self,  format = "pandas", in_x_y= False, samples= 2):
     target = "label"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -691,6 +690,8 @@ def load_sentiment(self,  format = "pandas", in_x_y= False, samples= 2):
     path = self.download()
     target = "label"
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -771,6 +772,8 @@ def load_wikineural(self , format = "list", in_x_y= False, samples= 2):
     path = self.download()
     target = "ner_tags"
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -811,6 +814,8 @@ def load_language(self,  format = "pandas", in_x_y= False, samples= 2):
     target = "labels"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -868,6 +873,8 @@ def load_trec(self,  format = "pandas", in_x_y= False, samples= 2):
     path = self.download()
     
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -923,6 +930,8 @@ def load_pub_health(self,  format = "pandas", in_x_y= False, samples= 2):
     target = "label"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -940,7 +949,6 @@ def load_pub_health(self,  format = "pandas", in_x_y= False, samples= 2):
     dftr = dftr.drop(['claim_id'],axis=1).reset_index(drop= True)
     dfte = dfte.drop(['claim_id','Unnamed: 0'],axis=1).reset_index(drop= True)
     dfall = pd.concat([dftr,dfte],axis=0).reset_index(drop= True)
-    #regex = '(claim|date_published|explanation|fact_checkers|main_text|sources|subjects)'
     
     if in_x_y == False:
         if samples == 1:
@@ -981,6 +989,7 @@ def load_twitter_human(self,  format = "pandas", in_x_y= False, samples= 2):
     target = 'account_type'
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1039,6 +1048,8 @@ def load_google_guest(self,  format = "pandas", in_x_y= False, samples= 2, targe
     
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1109,6 +1120,8 @@ def load_inferes(self,  format = "pandas", in_x_y= False, samples= 2):
     target = "Label"
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1164,6 +1177,8 @@ def load_predict_salary(self,format = "pandas" , in_x_y= False, samples= 2):
     import os 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1223,6 +1238,8 @@ def load_price_book(self,format = "pandas" , in_x_y= False, samples= 2):
     import os 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1286,6 +1303,8 @@ def load_stroke(self,format = "pandas" , in_x_y= False, samples= 2):
     target= 'stroke' 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1341,6 +1360,8 @@ def load_wines(self,format = "pandas" , in_x_y= False, samples= 2):
     target = 'price'
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1395,6 +1416,8 @@ def load_women_clothing(self,format = "pandas" , in_x_y= False, samples= 2):
     import os 
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1450,6 +1473,8 @@ def load_project_kickstarter(self, format = "pandas" , in_x_y= False, samples= 2
     target = 'final_status'
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
@@ -1511,6 +1536,8 @@ def load_jobs(self, format = "pandas" , in_x_y= False, samples= 2):
     target = 'fraudulent'
     path = self.download()
     if not os.path.exists(path):
+        print('The file with the dataset content does not exist')
+        
         if (samples == 2 and in_x_y == False) or (samples==1 and in_x_y == True):
             return {},{}
         elif samples == 2 and in_x_y == True:
