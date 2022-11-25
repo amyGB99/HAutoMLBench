@@ -48,7 +48,7 @@ class Dataset(YamlAble):
         import shutil
     
         local_path = os.path.dirname(os.path.realpath(__file__))
-        datasets_path = os.path.join(local_path,'datasets')
+        datasets_path = os.path.join(local_path,'data')
         save_path = os.path.join(datasets_path, f'{self.name}')
         zip = os.path.join(save_path,f'{self.name}.zip')
         file = os.path.join(save_path,f'{self.name}')

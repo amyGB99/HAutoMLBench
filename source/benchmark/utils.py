@@ -8,7 +8,7 @@ import pandas as pd
 
 
 local_path = os.path.dirname(os.path.realpath(__file__))
-datasets_folder_path = os.path.join(local_path,'datasets')
+datasets_folder_path = os.path.join(local_path,'data')
 
 def ensure_directory(path: str):
     try:

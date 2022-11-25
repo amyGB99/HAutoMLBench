@@ -80,7 +80,7 @@ class HAutoMLBench():
         return utils.load_dataset_definition(name)
    
     @classmethod
-    def filter(cls, task = None,expresion = None):
+    def filter(cls, task = None, expresion = None):
         '''
         task: str = 'binary', 'regression,'multiclass'
         expression: tuple(len(3)) = (property,min,max) : min <= property < max
@@ -196,7 +196,7 @@ class HAutoMLBench():
             utils.init_information_file()
 
     @classmethod
-    def evaluate(cls,name,y_true,y_pred, is_multilabel = False,task =None, positive_class = None , class_labels = None, save_path = None, name_archive ='results'):
+    def evaluate( cls, name, y_true, y_pred, is_multilabel = False, task =None, positive_class = None , class_labels = None, save_path = None, name_archive ='results'):
         if len(y_true)!= len(y_pred):
             print("Error: The predictions and the true target must have the same shape and length")
             return None

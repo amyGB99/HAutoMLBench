@@ -1,0 +1,117 @@
+{
+    "spanish-wine": {
+        "5": {
+            "mean_squared_error": {
+                "RMSE": 0.8274608888581806,
+                "MSE": 0.6846915225899702
+            },
+            "mean_absolute_error": 0.6861713451042387
+        },
+        "15": {
+            "mean_squared_error": {
+                "RMSE": 0.5581690817823023,
+                "MSE": 0.3115527238576985
+            },
+            "mean_absolute_error": 0.4474928413576898
+        },
+        "52": {
+            "mean_squared_error": {
+                "RMSE": 36.62191283660915,
+                "MSE": 1341.1644998121978
+            },
+            "mean_absolute_error": 32.09031320164087
+        }
+    },
+    "price-book": {
+        "5": {
+            "mean_squared_error": {
+                "RMSE": 32.53713417709825,
+                "MSE": 1058.6651004584953
+            },
+            "mean_absolute_error": 29.52759711331546
+        },
+        "15": {
+            "mean_squared_error": {
+                "RMSE": 40.86492984836179,
+                "MSE": 1669.94249151153
+            },
+            "mean_absolute_error": 29.48212724298937
+        },
+        "52": {
+            "mean_squared_error": {
+                "RMSE": 40.675655070174834,
+                "MSE": 1654.5089153878396
+            },
+            "mean_absolute_error": 38.38048613396789
+        }
+    },
+    "stsb-en": {
+        "5": {
+            "mean_squared_error": {
+                "RMSE": 0.45486817647654154,
+                "MSE": 0.20690505797109413
+            },
+            "mean_absolute_error": 0.3428015644656721
+        },
+        "15": {
+            "mean_squared_error": {
+                "RMSE": 0.43496586472147053,
+                "MSE": 0.18919530347289662
+            },
+            "mean_absolute_error": 0.32644614546782247
+        },
+        "52": {
+            "mean_squared_error": {
+                "RMSE": 0.47202625997520414,
+                "MSE": 0.222808790106179
+            },
+            "mean_absolute_error": 0.35329804446500235
+        }
+    },
+    "stsb-es": {
+        "5": {
+            "mean_squared_error": {
+                "RMSE": 0.6265167656496229,
+                "MSE": 0.39252325764006446
+            },
+            "mean_absolute_error": 0.475702246926891
+        },
+        "15": {
+            "mean_squared_error": {
+                "RMSE": 0.6231705320567892,
+                "MSE": 0.38834151202394174
+            },
+            "mean_absolute_error": 0.4647073440182293
+        },
+        "52": {
+            "mean_squared_error": {
+                "RMSE": 0.6265167656496229,
+                "MSE": 0.39252325764006446
+            },
+            "mean_absolute_error": 0.475702246926891
+        }
+    },
+    "google-guest": {
+        "5": {
+            "mean_squared_error": {
+                "RMSE": 1.715606209790345,
+                "MSE": 2.9433046670711933
+            },
+            "mean_absolute_error": 1.4101152334301734
+        },
+        "15": {
+            "mean_squared_error": {
+                "RMSE": 1.5355216189701781,
+                "MSE": 2.357826642324797
+            },
+            "mean_absolute_error": 1.236505830944276
+        },
+        "52": {
+            "mean_squared_error": {
+                "RMSE": 1.5171122222976567,
+                "MSE": 2.301629495044935
+            },
+            "mean_absolute_error": 1.2302991392087608
+        }
+    }
+}

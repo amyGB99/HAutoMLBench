@@ -1,0 +1,341 @@
+{
+    "paws-x-en": {
+        "accuracy_score": 0.922,
+        "precision_score": {
+            "micro": 0.922,
+            "normal": 0.8623260437375746
+        },
+        "recall_score": {
+            "micro": 0.922,
+            "normal": 0.980225988700565
+        },
+        "f1_score": {
+            "micro": 0.922,
+            "normal": 0.9175039661554732
+        },
+        "balanced_accuracy_score": 0.9280053710318968
+    },
+    "paws-x-es": {
+        "accuracy_score": 0.8455,
+        "precision_score": {
+            "micro": 0.8455,
+            "normal": 0.77734375
+        },
+        "recall_score": {
+            "micro": 0.8455,
+            "normal": 0.9076396807297605
+        },
+        "f1_score": {
+            "micro": 0.8455,
+            "normal": 0.8374539715938979
+        },
+        "balanced_accuracy_score": 0.8523060380496532
+    },
+    "wnli-es": {
+        "accuracy_score": 0.44285714285714284,
+        "precision_score": {
+            "micro": 0.44285714285714284,
+            "normal": 0.44285714285714284
+        },
+        "recall_score": {
+            "micro": 0.44285714285714284,
+            "normal": 1.0
+        },
+        "f1_score": {
+            "micro": 0.44285714285714284,
+            "normal": 0.6138613861386139
+        },
+        "balanced_accuracy_score": 0.5
+    },
+    "stroke-prediction": {
+        "accuracy_score": 0.9510763209393346,
+        "precision_score": {
+            "micro": 0.9510763209393346,
+            "normal": 0.0
+        },
+        "recall_score": {
+            "micro": 0.9510763209393346,
+            "normal": 0.0
+        },
+        "f1_score": {
+            "micro": 0.9510763209393346,
+            "normal": 0.0
+        },
+        "balanced_accuracy_score": 0.5
+    },
+    "fraudulent-jobs": {
+        "accuracy_score": 0.9332587621178225,
+        "precision_score": {
+            "micro": 0.9332587621178225,
+            "normal": 0.0
+        },
+        "recall_score": {
+            "micro": 0.9332587621178225,
+            "normal": 0.0
+        },
+        "f1_score": {
+            "micro": 0.9332587621178225,
+            "normal": 0.0
+        },
+        "balanced_accuracy_score": 0.5
+    },
+    "project-kickstarter": {
+        "accuracy_score": 0.4997400141810447,
+        "precision_score": {
+            "micro": 0.4997400141810447,
+            "normal": 0.4968289798989573
+        },
+        "recall_score": {
+            "micro": 0.4997400141810447,
+            "normal": 0.14585042600189335
+        },
+        "f1_score": {
+            "micro": 0.4997400141810447,
+            "normal": 0.2255019149610909
+        },
+        "balanced_accuracy_score": 0.4992666764155808
+    },
+    "haha": {
+        "accuracy_score": 0.799,
+        "precision_score": {
+            "micro": 0.799,
+            "normal": 0.7088235294117647
+        },
+        "recall_score": {
+            "micro": 0.799,
+            "normal": 0.8232280102476516
+        },
+        "f1_score": {
+            "micro": 0.799,
+            "normal": 0.76175424733307
+        },
+        "balanced_accuracy_score": 0.8033581275951216
+    },
+    "sentiment-lexicons-es": {
+        "accuracy_score": 0.77,
+        "precision_score": {
+            "micro": 0.77,
+            "normal": 0.8292682926829268
+        },
+        "recall_score": {
+            "micro": 0.77,
+            "normal": 0.68
+        },
+        "f1_score": {
+            "micro": 0.7699999999999999,
+            "normal": 0.7472527472527474
+        },
+        "balanced_accuracy_score": 0.77
+    },
+    "twitter-human-bots": {
+        "accuracy_score": 0.8084935897435898,
+        "precision_score": {
+            "micro": 0.8084935897435898,
+            "normal": 0.7433102081268583
+        },
+        "recall_score": {
+            "micro": 0.8084935897435898,
+            "normal": 0.6208609271523179
+        },
+        "f1_score": {
+            "micro": 0.8084935897435898,
+            "normal": 0.6765899864682003
+        },
+        "balanced_accuracy_score": 0.7593657948064428
+    },
+    "spanish-wine": {
+        "mean_squared_error": {
+            "RMSE": 13.82852241611488,
+            "MSE": 191.22803221299174
+        },
+        "mean_absolute_error": 9.442313280067896
+    },
+    "wikicat-es": {
+        "accuracy_score": 0.3856554967666079,
+        "precision_score": {
+            "macro": 0.39521912597908315,
+            "weighted": 0.45310888061671656
+        },
+        "recall_score": {
+            "macro": 0.2682030450093945,
+            "weighted": 0.3856554967666079
+        },
+        "f1_score": {
+            "macro": 0.23183004366365262,
+            "weighted": 0.32545255632766235
+        },
+        "balanced_accuracy_score": 0.26820304500939457
+    },
+    "sst-en": {
+        "accuracy_score": 0.5800904977375566,
+        "precision_score": {
+            "macro": 0.5788896400279018,
+            "weighted": 0.5802477837777767
+        },
+        "recall_score": {
+            "macro": 0.5494191311781339,
+            "weighted": 0.5800904977375566
+        },
+        "f1_score": {
+            "macro": 0.5500590568612502,
+            "weighted": 0.5664070722773459
+        },
+        "balanced_accuracy_score": 0.5494191311781339
+    },
+    "women-clothing": {
+        "accuracy_score": 0.6779372069896292,
+        "precision_score": {
+            "macro": 0.39240109593198724,
+            "weighted": 0.6392986197776214
+        },
+        "recall_score": {
+            "macro": 0.4104518386560428,
+            "weighted": 0.6779372069896292
+        },
+        "f1_score": {
+            "macro": 0.3548222942948954,
+            "weighted": 0.6187423529461956
+        },
+        "balanced_accuracy_score": 0.4560575985067143
+    },
+    "inferes": {
+        "accuracy_score": 0.651985111662531,
+        "precision_score": {
+            "macro": 0.6458780148597224,
+            "weighted": 0.6600478754215579
+        },
+        "recall_score": {
+            "macro": 0.6473054294283345,
+            "weighted": 0.651985111662531
+        },
+        "f1_score": {
+            "macro": 0.6365512273426345,
+            "weighted": 0.6465467658678591
+        },
+        "balanced_accuracy_score": 0.6473054294283345
+    },
+    "predict-salary": {
+        "accuracy_score": 0.19012270868050296,
+        "precision_score": {
+            "macro": 0.16875448106571067,
+            "weighted": 0.1825062719187434
+        },
+        "recall_score": {
+            "macro": 0.17334226034774877,
+            "weighted": 0.19012270868050296
+        },
+        "f1_score": {
+            "macro": 0.16491674123885902,
+            "weighted": 0.17949650351399912
+        },
+        "balanced_accuracy_score": 0.17334226034774872
+    },
+    "language-identification": {
+        "accuracy_score": 0.9669,
+        "precision_score": {
+            "macro": 0.9683988305261135,
+            "weighted": 0.9683988305261135
+        },
+        "recall_score": {
+            "macro": 0.9669000000000001,
+            "weighted": 0.9669
+        },
+        "f1_score": {
+            "macro": 0.9667648864136968,
+            "weighted": 0.9667648864136971
+        },
+        "balanced_accuracy_score": 0.9668999999999999
+    },
+    "vaccine-es": {
+        "accuracy_score": 0.7795389048991355,
+        "precision_score": {
+            "macro": 0.767280701754386,
+            "weighted": 0.7774249203700895
+        },
+        "recall_score": {
+            "macro": 0.7438040139990001,
+            "weighted": 0.7795389048991355
+        },
+        "f1_score": {
+            "macro": 0.7529447635612584,
+            "weighted": 0.7766902239032636
+        },
+        "balanced_accuracy_score": 0.7438040139990001
+    },
+    "vaccine-en": {
+        "accuracy_score": 0.5673076923076923,
+        "precision_score": {
+            "macro": 0.5597460604235672,
+            "weighted": 0.5874869227680881
+        },
+        "recall_score": {
+            "macro": 0.549673202614379,
+            "weighted": 0.5673076923076923
+        },
+        "f1_score": {
+            "macro": 0.5514455974801152,
+            "weighted": 0.5744387552572535
+        },
+        "balanced_accuracy_score": 0.549673202614379
+    },
+    "stsb-en": {
+        "mean_squared_error": {
+            "RMSE": 0.7200842528709684,
+            "MSE": 0.5185213312327408
+        },
+        "mean_absolute_error": 0.5389622992642813
+    },
+    "stsb-es": {
+        "mean_squared_error": {
+            "RMSE": 0.9557622008734076,
+            "MSE": 0.9134813846183799
+        },
+        "mean_absolute_error": 0.7256920347723567
+    },
+    "price-book": {
+        "mean_squared_error": {
+            "RMSE": 596.901767909682,
+            "MSE": 356291.7205337039
+        },
+        "mean_absolute_error": 563.2209238443619
+    },
+    "google-guest": {
+        "mean_squared_error": {
+            "RMSE": 0.4435707484313233,
+            "MSE": 0.1967550088639243
+        },
+        "mean_absolute_error": 0.3597128161994148
+    },
+    "pub-health": {
+        "accuracy_score": 0.6090835360908353,
+        "precision_score": {
+            "macro": 0.4089929312446695,
+            "weighted": 0.5663010998917187
+        },
+        "recall_score": {
+            "macro": 0.3701873883170075,
+            "weighted": 0.6090835360908353
+        },
+        "f1_score": {
+            "macro": 0.3591795044001853,
+            "weighted": 0.5515616608572276
+        },
+        "balanced_accuracy_score": 0.3701873883170075
+    },
+    "trec": {
+        "accuracy_score": 0.966,
+        "precision_score": {
+            "macro": 0.9725980701357342,
+            "weighted": 0.9663704052893836
+        },
+        "recall_score": {
+            "macro": 0.9331403689559719,
+            "weighted": 0.966
+        },
+        "f1_score": {
+            "macro": 0.9502273727721905,
+            "weighted": 0.9655255291256459
+        },
+        "balanced_accuracy_score": 0.9331403689559719
+    }
+}
