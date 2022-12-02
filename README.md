@@ -26,159 +26,192 @@ En el directorio source archivo test se provee algunos ejemplos de uso  para su 
    from benchmark import HAutoMLBench
    ```
 
-5. Llamar al método create_datsets de la siguiente forma el cual creará el estado inicial del benchmark:
+5. Llamar al método *init* de la siguiente forma el cual creará el estado inicial del benchmark:
 
     ```
-   HAutoMLBench.create_datsets()
-    ```
-
-### Directorio 
-
-En la figura \ref{fig:image1} se muestra la estructura de sus archivos inicialmente. Luego de ejecutar el metodo init se crean dos nuevos archivos que guardan el estado del benchmark, infos y names . Tambien se crea una carpeta dataset que contiene todos los dataset serializados y sus funciones load.
+   HAutoMLBench.init()
+   ```
 
 ### Clase  HAutoMLBench y Dataset
 
-El benchmark intervienen dos clases : HAutoMLBench y Dataset. 
+*HAutoML-Bench* está formado por dos clases principales: *HAutoMLBench* y *Dataset*.
 
-La clase HAutoMLBench es la encargada de interactuar con el usuario , en ella se encuentran todos los métodos que permiten probar los sistemas. Estos son estáticos para no necesitar instanciar la clase para utilizar sus funcionalidades. En la subsección tal se discuten cada uno de ellos. 
+La clase *HAutoMLBench* es la encargada de interactuar con el usuario, en ella se encuentran todos los métodos que permiten probar los sistemas. Estos métodos son estáticos para evitar crear instancias distintas con el fin de acceder al estado del benchmark y sus funcionalidades. 
 
-La clase Dataset por otro lado es la encargada de modelar cada uno de los datasets del benchmark y almacenar sus propiedades. Entre estas últimas está el nombre,  url  utilizada para la descarga de su contenido , informaciones de la naturaleza de sus datos y una función cargadora o llamada function_loader. Esta función es la que permite acceder al contenido de cada dataset. Dicha clase hereda de la clase YamlAble . Esto le brinda la funcionalidad de serializarse como un objeto .yaml, permitiendo guardar cada uno de sus valores y acceder a ellos de forma rápida y  fácil. 
+La clase *Dataset*, por otro lado, se encarga de modelar cada uno de los conjuntos que pertenecen al benchmark y almacena sus propiedades. Las propiedades de un conjunto son el nombre, url utilizada para la descarga de su contenido, informaciones de la naturaleza de sus datos y una función de carga llamada *loader_function*. Esta función es la que permite acceder a su contenido. 
+
+Esta clase hereda de la clase *YamlAble*. Esto le brinda la posibilidad  de serializarse como un objeto *.yaml*,  permitiendo guardar cada uno de sus valores y acceder a ellos de forma rápida y fácil. 
 
 **Propiedades de un Dataset**
 
-La propiedad info almacena algunos metadatos del dataset. El numero de columnas, el numero de instancias del conjunto de entrenamiento y de prueba. También la tarea que resuelve y el numero de valores null que posee. Se brinda para cada uno el tipo semántico inferido para cada una de sus columnas. Esta inferencia se realizó a partir de la  descripción en el dataset original. Por  ultimo también se tiene un metadato para el numero de clases en tareas de clasificación y el balance de las mismas medido por el numero de instancias de la clase minoritaria frente a la mayoritaria.    
+Las propiedades en los conjuntos permiten almacenar información relevante para su utilización. El nombre, la url y su función de carga posibilitan acceder a su contenido.
+
+La información sobre sus metadatos permite identificar la complejidad de la tarea que resuelve.
+
+Estos metadatos contienen el número de columnas, el número de instancias de sus partes: entrenamiento y prueba, la tarea que resuelven y el número de valores null que poseen. Además, se brinda para cada conjunto el tipo semántico inferido para cada una de sus columnas. Esta inferencia se realiza a partir de la interpretación de la descripción del conjunto original. El nombre de la etiqueta de salida es otro de los metadatos, para el conjunto *google-guest* se guarda una lista, ya que posee varias etiquetas que pueden utilizarse como salida. 
+
+En las tareas de clasificación se tiene una lista con los distintos valores de la etiqueta a predecir. En la binaria se tiene una propiedad *positive_class* que indica la clase positiva. Por último se tiene un metadato para el número de clases en las tareas de clasificación y el balance de las mismas. 
+
+El balance se mide por el número de instancias de la clase minoritaria frente a la mayoritaria en el conjunto de entrenamiento. 
 
 ```
 class Dataset:
-	url: str
-	name: str
-    function_loader : function
-    info : dict {'n_instances': [int,int],
-          		 'n_columns': int , 
-          		 'columns_type': {'name' : semantic_type},
-                 'targets': list[str] ,
-                 'null_values': int,
-                 'task': str 
-                 'pos_label': Any,
-                 'classes': int, 
-                 'class balance':float}
-  
+    url: str
+    name: str
+    loader_function : function
+    info : dict = {'n_instances': list[int],
+                    'n_columns': int , 
+                    'columns_types': dict{'name' : type},
+                    'targets': list[str] or str,
+                    'null_values': int,
+                    'task': str 
+                    'positive_class': Any,
+                    'class_labels': list[Any] 
+                    'n_classes': int, 
+                    'class_balance':float}
 ```
 
 **Tipos semánticos**: 
 
+Los tipos semánticos de cada columna aportan información sobre el dominio al que pertenecen los datos. El brindarlos como información garantiza que el conjunto es procesado respetando el significado de cada una de las entradas. Estos se dividen atendiendo a los diferentes tipo de datos y se agregan unas clasificaciones especiales para ayudar a entender aún más el problema.
+
+La estructura de los conjuntos es independiente de los tipos semánticos de sus columnas. Los usuarios pueden decidir si usar los tipos o no, en la evaluación. 
+
 Para las entradas de texto :  
 
-text: Posee más de una idea que pueden o no tener relación.  
+1. text: Posee más de una idea. Estas pueden o no tener relación.
 
-sentence: Es un texto que transmite una idea esencial, la cual no puede ser separada en partes para su entendimiento.
+2. sentence: Es un texto que transmite una idea esencial que para su entendimiento no puede ser separado en partes.
 
-word:  Tiene significado propio es la más pequeña entidad
+3. word:  Tiene significado fijo, es la más pequeña entidad.
 
-syntagma : No es considerado una palabra pues puede ser la unión de mas de una de estas. Es una frase que no puede dividirse en palabras porque pierde su significado , pero a la vez no llega a ser una oración porque no indica acción ni estado. 
+4. syntagma: Es considerado una estructura más compleja que word ya que puede incluir varias de estas. Es una frase que debe procesarse de forma conjunta porque pierde su significado. Esta no indica acción ni estado por tanto no se considera oración. 
 
 Para las entradas numéricas:
 
-int: numero entero.
+1. int: numero entero.
 
-float: numero decimal.
+2. float: numero decimal.
 
 Variables categóricas:
 
-category: La variable puede ser dividida en tipos o categorías.
+1. category: La variable puede ser dividida en tipos o categorías.
 
 Variables booleanas:
 
-boolean: Se tomaron solo como variables booleanas aquellas que tienen valores True o False.
+1. boolean: Se tomaron solo como variables booleanas aquellas que tienen valores True o False.
 
 Variables de tiempo :
 
-datetime: Columnas que especifican una fecha o un tiempo.
+1. datetime: Columnas que especifican una fecha o un tiempo.
 
-Variables de localización:  
+Entradas Imagen:  
 
-url: los enlaces a otros datos.
+1. image: Una entidad imagen
 
-path_image: el enlace a una imagen o el path de una carpeta de imágenes.
+2. path_image: el enlace a una imagen o el path de una carpeta de imágenes.
 
 Variables relacionadas a reconocimiento de entidades:
 
-SeqTokens : una lista de palabras a etiquetar como entidad .
+1. SeqTokens : una lista de palabras a etiquetar como entidad .
 
-SeqLabels: una lista de etiquetas que corresponden al formato IOB2. 
+2. SeqLabels: una lista de etiquetas que corresponden al formato IOB2. 
 
 **Function_loader **
 
-Todos los datasets poseen una función loader que le permite descargar , abrir  y leer el contenido propio de cada uno de ellos.
+La clase *Dataset* posee un método para descargar, abrir y leer el contenido propio de cada una de sus instancias. Este método es abstracto, por lo que cada conjunto de datos debe realizar su propia implementación para realizar las tareas antes descritas. 
 
-Cada una de estas funciones toman la mismas  entradas y depende de ellas la salida. El contenido puede ser devuelto en formato Dataframe de pandas o una lista que contiene en forma de listas las instancias, se especifica con el parámetro format. Puede escoger si utilizar el dataset entero o dividido en entrenamiento y prueba , mediante el parámetro samples. En caso de que desee separar los conjuntos tanto de entrenamiento como de prueba en la X y la y, utilice el parámetro booleano _in_x_y.  Al leer los archivos puede introducir la codificación 'utf-8' es la por defecto, se recomienda que este parámetro no se cambie. Por ultimo el target o nombre de la etiqueta de salida del modelo se recomienda solo cambiar este parámetro por los targets especificados en la info del dataset .  El usuario no trabaja directamente con estas funciones , sino con una general ubicada en la clase HAutoMLBench  que le permite hacer load a cualquier datasets mediante su nombre y todos los parámetros antes mencionados
+En el caso de los conjuntos ya pertenecientes al benchmark sus implementaciones poseen ciertos parámetros de entrada para describir las características del contenido que retornan. Es posible especificar el formato de salida del contenido mediante el parámetro *format*, este corresponde con el tipo lista o dataframe de pandas. 
+
+El parámetro *samples* indica si el conjunto se divide en dos: entrenamiento y prueba, o se retorna completo. 
+
+También es posible separar la columna de salida de las de entrada mediante el parámetro booleano *in**\_**x**\_**y*. 
+
+Cada conjunto conoce su etiqueta a predecir. El conjunto *google-guest*posee otras que pueden utilizarse como salida, por lo que su método admite un parámetro *target*.  
 
 ```
-def function_loader(self,format = "pandas", in_x_y = True ,samples =  2, encoding = "utf-8",target = "label")
-'''
-input: self: Dataset
-	   format: str
-	   in_x_y : bool
-	   samples : int
-	   encoding: str
-	   target: str
-output: tuple	   
-if in_x_y = True ,samples =  2  return X_train, y_train ,X_test, y_test
-   in_x_y = True ,samples =  1 return X_all, y_all
-   in_x_y = False samples =  2  return train, test
-   format = "pandas", in_x_y = False, samples =  1  return all
-   
-   pandas : table 
-   list : list [[intance1],[intance2]....]
-'''
+def function_loader(self, format = "pandas", in_x_y = False ,samples =  2)
+    '''
+    input: self: Dataset
+        format: str
+        in_x_y : bool
+        samples : int
+        target: str only when dataset matches google-guest
+    output: tuple	   
+        if in_x_y = True, samples = 2  return X_train, y_train ,X_test, y_test
+        in_x_y = True, samples = 1 return X_all, y_all
+        in_x_y = False, samples = 2  return train, test
+        format = "pandas", in_x_y = False, samples =  1  return all
+            format:
+            pandas : table 
+            list : list [[intance1],[intance2]....]
+    '''
 ```
 
 
 
 ### Métodos de interacción del usuario
 
-**Método create-datasets** 
-
-El método create_datasets como se mencionó anteriormente en las instrucciones de instalación se encarga de guardar el estado inicial del benchmark . Para ello almacena en archivos los nombres, urls, las informaciones  y los nombres de las funciones load de todos los dataset originales . Además se encarga de crear las instancias de los mismos y serializarlas para su uso futuro. Es importante que solo se ejecute esta función una sola vez, debido a que se perderán todos los cambios guardados y volverá a su estado inicial por defecto. No posee parámetros de entrada y no retorna ningún valor . Si ocurre algún error lo imprime en pantalla.
-
 **Método init**
 
-El método init devuelve el estado actual del benchamrk , retorna 3 salidas por defecto, los nombres,urls y nombres de las funciones loader de todos los datasets incluidos hasta el momento. Posee un parámetro opcional booleano , que si es verdadero retorna una cuarta salida que son las informaciones o info.
+El método *init* inicializa el benchmark. Para ello almacena en un archivo, de todos los conjuntos que posee, los nombres, urls, las informaciones y los nombres de las funciones de carga. Luego construye y serializa las instancias de los conjuntos para su uso futuro. Es importante que este método solo se ejecute una sola vez, debido a que los cambios que se realicen con anterioridad se perderán. El benchmark vuelve a su estado inicial por defecto, con sus conjuntos originales.
+
+**Método get_dataset**
+
+Una vez se inicializa el benchmark para evaluar los sistemas se debe tener acceso a los conjuntos de datos.
+
+El método *get**\_**dataset* a partir de un nombre obtiene la instancia de ese conjunto almacenado.
+
+A tener la instancia se puede acceder a cada una de sus propiedades, su nombre, sus metadatos, url y su función de carga.  
+
+Consultar el ejemplo:  para obtener más información respecto a la estructura del método. 
 
 ```
-def init(ret_info = False):
-	'''
-	Input: ret_info: bool 
-	Output: tuple : 
-    	names: [str]
-    	urls: [str]
-    	functions_name: [str]
-    	infos: dict {key = name : value =info}
-   
-	'''
+def get_dataset(name):
+    '''
+    Input: name: str 
+    Output: dataset : Dataset
+    ''' 
 ```
 
-**Método new_dataset**
+**Método add_dataset**
 
-El método new-datset se encarga de agregar un nuevo dataset al benchmark, del mismo debe proveer su nombre, url de donde se encuentra y  su función loader. Como parámetro no obligatorio tiene  sus metadatos, que sería la llamada info. Esta info debe tener la misma estructura que la especificada en la clase dataset. Si desconoce algunas de las propiedades presentes en ella márquelas como None.  La función load debe estar en el archivo *functions_load.py* y si necesita descargar el dataset desde una url puede utilizar la función download de la clase Dataset. 
+El método *add**\_**dataset* agrega un nuevo conjunto al benchmark. 
 
-Si existe un dataset con el mismo nombre se remplazará y si ocurre algún error durante la ejecución producto a problemas con la introducción de la funcion loader o con la info se restablece a sus valores por defecto el benchmark. 
+Recibe como entrada el nombre, la url, la función de carga y su parámetro opcional, los metadatos. Si se introducen los metadatos estos pasan por un proceso de verificación con el fin de validar que se introduzcan correctamente. Sus campos son obligatorios, si no se tiene información respecto a uno se deben marcar como *None*.
+
+Se debe tener en cuenta que si existe un conjunto con el mismo nombre se remplazará. 
 
 Todos los errores se imprimen en pantalla.
 
 Parámetros por defecto : 
 
 ```
-def new_dataset(name: str, url: str, function: str or function, info = None)
-	'''
-	Non-mandatory parameters: info: dict{}
-	output : None
-	''
+def add_dataset(cls, name, url, function, metadata = None ):
+        '''
+        Input:
+            name: str
+            url: str
+            function : function
+            metadata : dict{'n_instances': list[int],
+                            'n_columns': int , 
+                            'columns_types': dict{'name': type},
+                            'targets': list[str] or str,
+                            'null_values': int,
+                            'task': str 
+                            'positive_class': Any,
+                            'class_labels': list[Any] 
+                            'n_classes': int, 
+                            'class_balance': float}
+        Output: 
+        ''' 
 ```
 
 **Método remove_dataset**
 
-Se encarga de remover el dataset que coincida con el nombre que se pasa como parámetro de entrada.  Lanza error en caso de que ocurra algún problema durante la escritura de los archivos del estado del benchmark. 
+Este método, como su nombre lo indica, remueve el conjunto que coincida con el nombre que se introduce como parámetro de entrada. 
+
+Produce error en caso de que exista algún problema durante la escritura de los archivos del estado del benchmark.
 
   Parámetros por defecto : 
 
@@ -190,72 +223,60 @@ def remove_dataset(name):
     '''
 ```
 
-**Método load_dataset**
-
-Esta es la función a la cual se hizo referencia anteriormente, permite la descarga y utilización del contenido de los datasets.  El único parámetro obligatorio es el nombre,si los otros no se introducen se toma su configuración  por defecto. Su objetivo es  buscar el  datasets que tiene como nombre el introducido y luego llamar a la  function_loader del mismo . Debido a  esto la forma de la salida es la misma que la de  function_loader
-
-```
-def load_dataset(cls, name, format = "pandas", in_xy = True, samples = 2,encoding = 'utf-8',target = None):
-
-```
-
-**Método load_info **
-
-Dado el nombre de un dataset carga su información y la retorna . Error si el dataset no se existe. La salida tiene la misma forma que la info descrita en la clase dataset , pero si ocurre un error se retorna None.
-
-```
-def load_info(cls,name):
-'''
-input: name:str
-output : info : dict o None
-'''
-```
-
 **Método filter**
 
-El objetivo del método filter es devolver una lista de datasets que cumpla con las restricciones de los parámetros de entrada. La primera restricción que puede ser introducida es el tipo de tarea. El segundo parámetro es el cumplimiento de una propiedad numérica del dataset, esta propiedad debe estar presente en la información.  En caso de no establecer ninguna restricción se devuelve una lista con todos los datasets introducidos  
+El objetivo del método *filter* es devolver una lista con los nombres de los conjuntos de datos que cumpla con las restricciones de los parámetros de entrada. La primera restricción que puede ser introducida es el tipo de tarea. El segundo parámetro es el cumplimiento de una propiedad numérica del tipo Dataset, esta propiedad debe ser característica de los metadatos. En caso de no establecer ninguna restricción, se devuelve una lista con todos los conjuntos introducidos hasta el momento.
 
 ```
 def filter(cls, task = None,expresion = None):
-'''
-input:
-    task: str = 'binary', 'regression,'multiclass'
-    expression: tuple(len(3)) = (property,min,max) : min <= property < max
-    property: str = 'n_instances','n_columns', 'null_values','classes','class balance'
-
-output: list[str]
-'''  
+    '''
+    input:
+        task: str = 'binary', 'regression, 'multiclass', 'multiclass'
+        expression: tuple(len(3)) = (property,min,max) : min <= property < max
+        property: str = 'n_instances','n_columns', 'null_values','n_classes','class_balance'
+    output: list[str]
+    '''  
 ```
 
 **Método evaluate** 
 
-El método evaluate es el encargado de medir el rendimiento de un sistema AutoML. Recibe como entrada los datos del target  del test y los valores predictivos obtenidos con el modelo sobre el conjunto test. También el tipo de tarea , el nombre del archivo y la ruta en donde se quieren guardar los resultados. Además recibe una lista de los distintos labels del target , debería siempre introducirlo cuando la tarea sea clasificación multiclase y el target sea de tipo no numérico . EL parámetro pos debe introducirse cuando en la clasificación binaria el target es no numérico y así especificar la clase positiva.  El método utiliza las métricas implementadas en el  paquete de python sklearn. Según el tipo de tarea se evalúan sus métricas correspondientes.
+El método *evaluate* mide el rendimiento de una herramienta de aprendizaje automático. 
 
-La salida es un diccionario que tiene como llave cada una de las métricas y como value el valor obtenido para cada una de ellas. Durante la ejecución se escribe un archivo json con los resultados obtenidos en el dataset. Este archivo es capaz de almacenar todos los resultados de un sistema en todos los datasets .
+Posee parámetros obligatorios como el nombre del conjunto, la lista de valores verdaderos de la salida y los valores predichos.
+
+Ambas secuencias deben coincidir en tipos y en tamaño. En el caso de que el conjunto pertenezca al benchmark y que contenga sus metadatos correctamente etiquetados se puede prescindir de introducir los parámetros opcionales. 
+
+Los parámetros opcionales corresponden a la tarea que se pretende evaluar, los distintos valores de la etiqueta de salida, este último solo es necesario para evaluar tareas de clasificación multiclase. Otro parámetro opcional es la etiqueta de la clase positiva, es necesaria para clasificaciones binarias y cuando la salida tiene valores no numéricos. 
+
+Los últimos parámetros coinciden con el nombre del archivo y la ruta en donde se quieren guardar los resultados. 
+
+El método utiliza las métricas implementadas en el paquete de python *sklearn*. Según el tipo de tarea se evalúan sus métricas correspondientes. Para las métricas de entidades y relaciones se provee una Implementación de la *precisión*, *recobrado* y *f1**\_**beta*. 
+
+La salida incluye cada una de las métricas y el valor obtenido para cada una de ellas. Durante la ejecución se escribe un archivo *json* con los resultados obtenidos. Este archivo es capaz de almacenar todos los resultados de un sistema en todos los conjuntos.
 
 El archivo tiene la forma de: 
 
 ```
-dict{key: name_datasets, value: {key: name_metric,value: value_metric}
+dict{key: name_datasets, value: {key: name_metric,value: value_metric}}
 ```
 
 ```
-def evaluate(cls,name,y_true,y_pred, task, pos= None ,labels = None,save_path = None, name_archive ='results'):
-'''
-input: name: str
-	   y_true: array, list
-	   y_pred: array, list
-	   task: str
-Non-mandatory parameters input:
-	   pos: str
-	   labels: list[str]
-	   save_path: str : path
-	   name_archive: str
-output: 
-	result: {key: name_metric,value: value_metric}
-'''
+def evaluate( cls, name, y_true, y_pred, is_multilabel = False, task =None, positive_class = None , class_labels = None, save_path = None, name_archive ='results'):
+    '''
+    input: name: str
+           y_true: array, list
+           y_pred: array, list
+           Non-mandatory parameters input:
+           task: str
+           positive_class: str
+           class_labels: list[str]
+           save_path: str : path
+           name_archive: str
+           output: 
+           result: {key: name_metric,value: value_metric}
+           '''
 ```
 
  ### Métodos auxiliares 
 
-Existen otros métodos que fueron de utilidad para implementar las anteriores funcionalidades descritas. Ejemplo :  __update_info__, write_info,  __change_name entre otros .No debe utilizar ninguno de estos métodos pues puede perturbar la integridad del benchmark.
+En el archivo *utils.py* se tienen los métodos auxiliares que se encargan de definir las tareas de la clase *Dataset*. Ejemplo de estas funcionalidades son la capacidad de serializarse y el proceso inverso. El archivo también guarda métodos que ayudan a la clase *HAutoMLBench*, aquí se almacenan los métodos de  inicialización y cambio de sus variables de estado: nombres de los conjuntos que pertenecen, sus url, los nombres de sus funciones de carga y sus metadatos.  
